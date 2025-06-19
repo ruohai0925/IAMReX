@@ -15,6 +15,7 @@ This IAMReX repo extends the capability of original `IAMR <https://amrex-fluids.
    Introduction_Chapter
    Getting_Started
    Results
+   Algorithm
    Acknowledgements
 
 .. toctree::

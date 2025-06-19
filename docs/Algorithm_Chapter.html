@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Acknowledgements &mdash; IAMReX 0.1.0 documentation</title>
+  <title>Algorithm of IAMReX &mdash; IAMReX 0.1.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
 
@@ -16,11 +16,12 @@
       <script src="_static/documentation_options.js?v=01f34227"></script>
       <script src="_static/doctools.js?v=9bcbadda"></script>
       <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="References" href="references.html" />
-    <link rel="prev" title="Scholarly effort of IAMReX" href="Software_Chapter.html" /> 
+    <link rel="next" title="Fluid Variables" href="FluidEquations.html" />
+    <link rel="prev" title="Algorithm and Software Details" href="Algorithm.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -47,8 +48,20 @@
 <li class="toctree-l1"><a class="reference internal" href="Introduction_Chapter.html">Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Getting_Started.html">Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Results.html">Validation Cases</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Algorithm.html">Algorithm and Software Details</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Acknowledgements</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="Algorithm.html">Algorithm and Software Details</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Algorithm of IAMReX</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="FluidEquations.html">Fluid Variables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="FluidEquations.html#fluid-equations">Fluid Equations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="FluidEquations.html#time-step-godunov">Time Step - Godunov</a></li>
+<li class="toctree-l3"><a class="reference internal" href="LevelSet.html">Level Set</a></li>
+<li class="toctree-l3"><a class="reference internal" href="DiffusedIBM.html">Direct-Forcing Immersed Boundary Method</a></li>
+<li class="toctree-l3"><a class="reference internal" href="IAMRandIAMReX.html">Key Differences Between IAMR and IAMeX</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Software_Chapter.html">Scholarly effort of IAMReX</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Acknowledgements.html">Acknowledgements</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">References:</span></p>
 <ul>
@@ -69,9 +82,10 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">Acknowledgements</li>
+          <li class="breadcrumb-item"><a href="Algorithm.html">Algorithm and Software Details</a></li>
+      <li class="breadcrumb-item active">Algorithm of IAMReX</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="_sources/Acknowledgements.rst.txt" rel="nofollow"> View page source</a>
+            <a href="_sources/Algorithm_Chapter.rst.txt" rel="nofollow"> View page source</a>
       </li>
   </ul>
   <hr/>
@@ -79,17 +93,30 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="acknowledgements">
-<span id="chap-acknowledgements"></span><h1>Acknowledgements<a class="headerlink" href="#acknowledgements" title="Link to this heading"></a></h1>
-<p>We are grateful to Ann Almgren, Andy Nonaka, Andrew Myers, Axel Huebl, and Weiqun Zhang in the Lawrence Berkeley National Laboratory (LBNL) for their discussions related to <a class="reference external" href="https://github.com/AMReX-Codes/amrex">AMReX</a> and <a class="reference external" href="https://github.com/AMReX-Fluids/IAMR">IAMR</a>. Y.Z. and Z.Z. also thank Prof. Lian Shen, Prof. Ruifeng Hu, and Prof. Xiaojing Zheng during their Ph.D. studies.</p>
+  <section id="algorithm-of-iamrex">
+<span id="chap-algorithm"></span><h1>Algorithm of IAMReX<a class="headerlink" href="#algorithm-of-iamrex" title="Link to this heading"></a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="FluidEquations.html">Fluid Variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="FluidEquations.html#fluid-equations">Fluid Equations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="FluidEquations.html#time-step-godunov">Time Step - Godunov</a></li>
+<li class="toctree-l1"><a class="reference internal" href="LevelSet.html">Level Set</a></li>
+<li class="toctree-l1"><a class="reference internal" href="DiffusedIBM.html">Direct-Forcing Immersed Boundary Method</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="DiffusedIBM.html#time-advancement">Time advancement</a></li>
+<li class="toctree-l2"><a class="reference internal" href="DiffusedIBM.html#types-of-kinematic-constraints">Types of kinematic constraints</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="IAMRandIAMReX.html">Key Differences Between IAMR and IAMeX</a></li>
+</ul>
+</div>
 </section>
 
 
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="Software_Chapter.html" class="btn btn-neutral float-left" title="Scholarly effort of IAMReX" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="references.html" class="btn btn-neutral float-right" title="References" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="Algorithm.html" class="btn btn-neutral float-left" title="Algorithm and Software Details" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="FluidEquations.html" class="btn btn-neutral float-right" title="Fluid Variables" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

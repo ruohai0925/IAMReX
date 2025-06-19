@@ -3,24 +3,25 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" data-content_root="./">
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Search &mdash; IAMReX 0.1.0 documentation</title>
+  <title>Algorithm and Software Details &mdash; IAMReX 0.1.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
 
   
-    
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
       <script src="_static/documentation_options.js?v=01f34227"></script>
       <script src="_static/doctools.js?v=9bcbadda"></script>
       <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="_static/js/theme.js"></script>
-    <script src="_static/searchtools.js"></script>
-    <script src="_static/language_data.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="#" /> 
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Algorithm of IAMReX" href="Algorithm_Chapter.html" />
+    <link rel="prev" title="Validation Cases" href="Results.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -35,7 +36,7 @@
             IAMReX
           </a>
 <div role="search">
-  <form id="rtd-search-form" class="wy-form" action="#" method="get">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
@@ -43,11 +44,15 @@
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
-<ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="Introduction_Chapter.html">Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Getting_Started.html">Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Results.html">Validation Cases</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Algorithm.html">Algorithm and Software Details</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Algorithm and Software Details</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Algorithm_Chapter.html">Algorithm of IAMReX</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Software_Chapter.html">Scholarly effort of IAMReX</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="Acknowledgements.html">Acknowledgements</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">References:</span></p>
@@ -69,8 +74,9 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">Search</li>
+      <li class="breadcrumb-item active">Algorithm and Software Details</li>
       <li class="wy-breadcrumbs-aside">
+            <a href="_sources/Algorithm.rst.txt" rel="nofollow"> View page source</a>
       </li>
   </ul>
   <hr/>
@@ -78,22 +84,36 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <noscript>
-  <div id="fallback" class="admonition warning">
-    <p class="last">
-      Please activate JavaScript to enable the search functionality.
-    </p>
-  </div>
-  </noscript>
+  <section id="algorithm-and-software-details">
+<h1>Algorithm and Software Details<a class="headerlink" href="#algorithm-and-software-details" title="Link to this heading"></a></h1>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Algorithm_Chapter.html">Algorithm of IAMReX</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="FluidEquations.html">Fluid Variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="FluidEquations.html#fluid-equations">Fluid Equations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="FluidEquations.html#time-step-godunov">Time Step - Godunov</a></li>
+<li class="toctree-l2"><a class="reference internal" href="LevelSet.html">Level Set</a></li>
+<li class="toctree-l2"><a class="reference internal" href="DiffusedIBM.html">Direct-Forcing Immersed Boundary Method</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="DiffusedIBM.html#time-advancement">Time advancement</a></li>
+<li class="toctree-l3"><a class="reference internal" href="DiffusedIBM.html#types-of-kinematic-constraints">Types of kinematic constraints</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="IAMRandIAMReX.html">Key Differences Between IAMR and IAMeX</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Software_Chapter.html">Scholarly effort of IAMReX</a></li>
+</ul>
+</div>
+</section>
 
-  
-  <div id="search-results">
-  
-  </div>
 
            </div>
           </div>
-          <footer>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="Results.html" class="btn btn-neutral float-left" title="Validation Cases" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="Algorithm_Chapter.html" class="btn btn-neutral float-right" title="Algorithm of IAMReX" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
 
   <hr/>
 
@@ -115,14 +135,7 @@
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-  <script>
-    jQuery(function() { Search.loadIndex("searchindex.js"); });
-  </script>
-  
-  <script id="searchindexloader"></script>
-   
-
+  </script> 
 
 </body>
 </html>
