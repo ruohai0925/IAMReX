@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Level Set &mdash; IAMReX 0.1.0 documentation</title>
+  <title>Level Set Method &mdash; IAMReX 0.1.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
 
@@ -16,10 +16,11 @@
       <script src="_static/documentation_options.js?v=01f34227"></script>
       <script src="_static/doctools.js?v=9bcbadda"></script>
       <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Direct-Forcing Immersed Boundary Method" href="DiffusedIBM.html" />
+    <link rel="next" title="Direct Forcing Immersed Boundary Method" href="DiffusedIBM.html" />
     <link rel="prev" title="Fluid Variables" href="FluidEquations.html" /> 
 </head>
 
@@ -52,8 +53,8 @@
 <li class="toctree-l3"><a class="reference internal" href="FluidEquations.html">Fluid Variables</a></li>
 <li class="toctree-l3"><a class="reference internal" href="FluidEquations.html#fluid-equations">Fluid Equations</a></li>
 <li class="toctree-l3"><a class="reference internal" href="FluidEquations.html#time-step-godunov">Time Step - Godunov</a></li>
-<li class="toctree-l3 current"><a class="current reference internal" href="#">Level Set</a></li>
-<li class="toctree-l3"><a class="reference internal" href="DiffusedIBM.html">Direct-Forcing Immersed Boundary Method</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Level Set Method</a></li>
+<li class="toctree-l3"><a class="reference internal" href="DiffusedIBM.html">Direct Forcing Immersed Boundary Method</a></li>
 <li class="toctree-l3"><a class="reference internal" href="IAMRandIAMReX.html">Key Differences Between IAMR and IAMeX</a></li>
 <li class="toctree-l3"><a class="reference internal" href="IAMRandIAMReX.html#software-architecture">Software Architecture</a></li>
 </ul>
@@ -84,7 +85,7 @@
       <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="Algorithm.html">Algorithm and Software Details</a></li>
           <li class="breadcrumb-item"><a href="Algorithm_Chapter.html">Algorithm of IAMReX</a></li>
-      <li class="breadcrumb-item active">Level Set</li>
+      <li class="breadcrumb-item active">Level Set Method</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/LevelSet.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -94,8 +95,12 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="level-set">
-<h1>Level Set<a class="headerlink" href="#level-set" title="Link to this heading"></a></h1>
+  <section id="level-set-method">
+<h1>Level Set Method<a class="headerlink" href="#level-set-method" title="Link to this heading"></a></h1>
+<p>The level set method is a powerful tool for capturing the interface between two immiscible fluids. It is based on the idea of a signed distance function, which is a function that assigns a signed distance to each point in the domain. The level set function is defined as follows:</p>
+<div class="math notranslate nohighlight">
+\[\phi(\mathbf{x}, t) = 0\]</div>
+<p>where <span class="math notranslate nohighlight">\(\phi\)</span> is the level set function, <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> is the position vector, and <span class="math notranslate nohighlight">\(t\)</span> is the time.</p>
 </section>
 
 
@@ -103,7 +108,7 @@
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="FluidEquations.html" class="btn btn-neutral float-left" title="Fluid Variables" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="DiffusedIBM.html" class="btn btn-neutral float-right" title="Direct-Forcing Immersed Boundary Method" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="DiffusedIBM.html" class="btn btn-neutral float-right" title="Direct Forcing Immersed Boundary Method" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

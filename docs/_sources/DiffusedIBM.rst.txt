@@ -1,5 +1,5 @@
 
-Direct-Forcing Immersed Boundary Method
+Direct Forcing Immersed Boundary Method
 =======================================
 
 This section presents the numerical discretization of :ref:`FluidEquationsPart`. The discretization of the fluid system on a single level is elucidated in :ref:`sec:TimeAdvancement`, followed by an examination of two distinct types of kinematic constraints in :ref:`sec:KinematicConstraints`.
@@ -12,13 +12,14 @@ Time advancement
 
 .. _figSemiStaggeredGrid:
 
-.. Figure:: ./AlgorithmAndSoftware/semi-staggered-grid.png
+.. figure:: ./AlgorithmAndSoftware/semi-staggered-grid.png
     :align: center
     :width: 5.0in
 
     Sketch of the two-dimensional semi-staggered grid and variable locations. The blue triangles, red squares, and black circles represent cell-centered variables, node-centered variables, and interface Lagrangian markers.
 
-To solve the partial differential equations of :ref:`FluidEquationsPart`, the canonical projection is applied to the semi-staggered grid. As shown in :ref:`figSemiStaggeredGrid`, the fluid velocity (:math:`u` and :math:`v`), the Eulerian force :math:`f`, and particle volume fraction :math:`\alpha` are located at the cell center. The pressure :math:`p` and level set function :math:`\phi` are at the node center. The temporal and spatial discretizations of equations for single-level advancement are considered here. At the time :math:`t^{n}`, the Eulerian velocity :math:`\mathbf{u}^{n}` and pressure :math:`p^{n-1/2}` are known. The particle position :math:`\mathbf{X}^{n}_l` and velocity :math:`\mathbf{U}\left(\mathbf{X}^{n}_l\right)` are also available. The time advancement during the interval :math:`[t^{n}, t^{n+1}]` proceeds as follows.
+To solve the partial differential equations of :ref:`FluidEquationsPart`, the canonical projection is 
+applied to the semi-staggered grid. As shown in :ref:`figSemiStaggeredGrid`, the fluid velocity (:math:`u` and :math:`v`), the Eulerian force :math:`f`, and particle volume fraction :math:`\alpha` are located at the cell center. The pressure :math:`p` and level set function :math:`\phi` are at the node center. The temporal and spatial discretizations of equations for single-level advancement are considered here. At the time :math:`t^{n}`, the Eulerian velocity :math:`\mathbf{u}^{n}` and pressure :math:`p^{n-1/2}` are known. The particle position :math:`\mathbf{X}^{n}_l` and velocity :math:`\mathbf{U}\left(\mathbf{X}^{n}_l\right)` are also available. The time advancement during the interval :math:`[t^{n}, t^{n+1}]` proceeds as follows.
 
 
 **Step 1**: The intermediate velocity :math:`\widetilde{\mathbf{u}}^{*,n+1}` is solved semi-implicitly as
