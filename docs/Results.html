@@ -16,6 +16,7 @@
       <script src="_static/documentation_options.js?v=01f34227"></script>
       <script src="_static/doctools.js?v=9bcbadda"></script>
       <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex": {"tags": "ams", "tagSide": "right", "macros": {"bm": ["{\\boldsymbol{#1}}", 1]}}})</script>
       <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
@@ -94,7 +95,7 @@
 <span id="figpvflevelset"></span><a class="reference internal image-reference" href="_images/pvf_level_set_function.png"><img alt="Level-set function at grid cell corners" src="_images/pvf_level_set_function.png" style="width: 5.0in;" />
 </a>
 <figcaption>
-<p><span class="caption-text">Sketch of <span class="math notranslate nohighlight">\(\phi\)</span> at each corner of a grid cell with interface.</span><a class="headerlink" href="#id1" title="Link to this image"></a></p>
+<p><span class="caption-number">Figure 5 </span><span class="caption-text">Sketch of <span class="math notranslate nohighlight">\(\phi\)</span> at each corner of a grid cell with interface.</span><a class="headerlink" href="#id1" title="Link to this image"></a></p>
 </figcaption>
 </figure>
 <p>Based on the level-set function <span class="math notranslate nohighlight">\(\phi\)</span>, an approximation of PVF can be obtained by the following equation:</p>
@@ -112,7 +113,7 @@
 <span id="figpvfcase"></span><a class="reference internal image-reference" href="_images/pvf_cases_of_exact_value.png"><img alt="PVF cases with different values" src="_images/pvf_cases_of_exact_value.png" style="width: 5.0in;" />
 </a>
 <figcaption>
-<p><span class="caption-text">Sketch of PVF with different values. The white and green colors refer to the cell areas within the fluid and particle, respectively.</span><a class="headerlink" href="#id2" title="Link to this image"></a></p>
+<p><span class="caption-number">Figure 6 </span><span class="caption-text">Sketch of PVF with different values. The white and green colors refer to the cell areas within the fluid and particle, respectively.</span><a class="headerlink" href="#id2" title="Link to this image"></a></p>
 </figcaption>
 </figure>
 <p>We validate the correctness and convergence of the above PVF approximation by calculating the volumes of spherical and ellipsoidal surfaces on the Cartesian grid. The exact solutions for the sphere and ellipsoid are given by:</p>
@@ -126,11 +127,11 @@
 <span id="figpvfamr"></span><a class="reference internal image-reference" href="_images/pvf_amr_blocks5.png"><img alt="AMR grid results" src="_images/pvf_amr_blocks5.png" style="width: 5.0in;" />
 </a>
 <figcaption>
-<p><span class="caption-text">Results of a three-level AMR grid. The red, orange, and green color represents the grid on levels 0, 1, and 2, respectively. Left: a spherical particle; Right: an ellipsoidal particle.</span><a class="headerlink" href="#id3" title="Link to this image"></a></p>
+<p><span class="caption-number">Figure 7 </span><span class="caption-text">Results of a three-level AMR grid. The red, orange, and green color represents the grid on levels 0, 1, and 2, respectively. Left: a spherical particle; Right: an ellipsoidal particle.</span><a class="headerlink" href="#id3" title="Link to this image"></a></p>
 </figcaption>
 </figure>
 <table class="docutils align-default" id="tab-pvf-result-of-sphere">
-<caption><span class="caption-text">Calculate sphere volume fraction by using a three-level AMR grid</span><a class="headerlink" href="#tab-pvf-result-of-sphere" title="Link to this table"></a></caption>
+<caption><span class="caption-number">Table 3 </span><span class="caption-text">Calculate sphere volume fraction by using a three-level AMR grid</span><a class="headerlink" href="#tab-pvf-result-of-sphere" title="Link to this table"></a></caption>
 <thead>
 <tr class="row-odd"><th class="head"><p>d/h</p></th>
 <th class="head"><p>Volume</p></th>
@@ -162,7 +163,7 @@
 </tbody>
 </table>
 <table class="docutils align-default" id="tab-pvf-result-of-ellipsoid">
-<caption><span class="caption-text">Calculate ellipsoid volume fraction by using a three-level AMR grid</span><a class="headerlink" href="#tab-pvf-result-of-ellipsoid" title="Link to this table"></a></caption>
+<caption><span class="caption-number">Table 4 </span><span class="caption-text">Calculate ellipsoid volume fraction by using a three-level AMR grid</span><a class="headerlink" href="#tab-pvf-result-of-ellipsoid" title="Link to this table"></a></caption>
 <thead>
 <tr class="row-odd"><th class="head"><p>d/h</p></th>
 <th class="head"><p>Volume</p></th>
@@ -202,7 +203,7 @@
 <a class="reference internal image-reference" href="_images/FlowPastSphere.png"><img alt="_images/FlowPastSphere.png" src="_images/FlowPastSphere.png" style="width: 5.0in;" />
 </a>
 <figcaption>
-<p><span class="caption-text">The schematic of the flow passing through the spherical particles</span><a class="headerlink" href="#id4" title="Link to this image"></a></p>
+<p><span class="caption-number">Figure 8 </span><span class="caption-text">The schematic of the flow passing through the spherical particles</span><a class="headerlink" href="#id4" title="Link to this image"></a></p>
 </figcaption>
 </figure>
 <p>We validate the accuracy and efficacy of our adaptive solver by simulating a spherical particle in uniform flow with different particle Reynolds numbers. The diameter of the particle is <span class="math notranslate nohighlight">\(D_p = 1\)</span>, the computational domain is <span class="math notranslate nohighlight">\(L_x \times L_y \times L_z = 20D_p \times 10D_p \times 10D_p\)</span>, the distance of the particle from the inlet is <span class="math notranslate nohighlight">\(d = 5D_p\)</span> and located in the center of the yz plane. The inlet and outlet boundaries are applied in the x direction and the inlet velocity <span class="math notranslate nohighlight">\(U\)</span> is <span class="math notranslate nohighlight">\(1m/s\)</span>. Both y and z directions are periodic boundaries.</p>
@@ -211,7 +212,7 @@
 <a class="reference internal image-reference" href="_images/FlowPastSphereResult.png"><img alt="_images/FlowPastSphereResult.png" src="_images/FlowPastSphereResult.png" style="width: 5.0in;" />
 </a>
 <figcaption>
-<p><span class="caption-text">The drag coefficient of the particle under uniform flows varies with Particle Reynolds number at different AMR levels.</span><a class="headerlink" href="#id5" title="Link to this image"></a></p>
+<p><span class="caption-number">Figure 9 </span><span class="caption-text">The drag coefficient of the particle under uniform flows varies with Particle Reynolds number at different AMR levels.</span><a class="headerlink" href="#id5" title="Link to this image"></a></p>
 </figcaption>
 </figure>
 <p>Three different types of grid were selected: level 0 indicates the single-level grid containing no AMR, level 1 indicates the two-level grid, and level 2 indicates the three-level grid. For all three types of grid, the ratio of the diameter of the particles to the grid spacing on the finest level is 16. The drag force, including the contributions of Lagrangian force and the PVF function, is calculated by</p>
@@ -229,7 +230,7 @@
 <a class="reference internal image-reference" href="_images/MonodisperseParticlesAMR.png"><img alt="_images/MonodisperseParticlesAMR.png" src="_images/MonodisperseParticlesAMR.png" style="width: 7.0in;" />
 </a>
 <figcaption>
-<p><span class="caption-text">Monodisperse particles on a three-level AMR grid</span><a class="headerlink" href="#id6" title="Link to this image"></a></p>
+<p><span class="caption-number">Figure 10 </span><span class="caption-text">Monodisperse particles on a three-level AMR grid</span><a class="headerlink" href="#id6" title="Link to this image"></a></p>
 </figcaption>
 </figure>
 <p>80 particles of diameter <span class="math notranslate nohighlight">\(D = 1\)</span> are randomly distributed in a channel of size <span class="math notranslate nohighlight">\(L_x\times L_y \times L_z = 10\times 20 \times 10\)</span>. To choose an optimal interaction number <span class="math notranslate nohighlight">\(N_s\)</span> in this complex configuration, the maximum error of the no-slip boundary condition among 80 particles is tested with a unit flow field <span class="math notranslate nohighlight">\(u=(1,0,0)\)</span>.the maximum error of no-slip condition decreases as <span class="math notranslate nohighlight">\(N_s\)</span> increases and it is strongly reduced for <span class="math notranslate nohighlight">\(N_s=2\)</span>. According to the selection suggestions provided by Breugem et al., <span class="math notranslate nohighlight">\(N_s=2\)</span> is the optimal value for balancing the accuracy of the no-slip boundary and the computational efficiency. After determining <span class="math notranslate nohighlight">\(N_s\)</span>, the fluid flow is driven by applying a pressure gradient of 1.0 in the z direction. This case can represent a porous medium with a volume fraction of 0.02. Three levels of the AMR grid is applied. The grid resolution on the finest level is <span class="math notranslate nohighlight">\(d/h=16\)</span>. Since the multi-direct forcing immersed boundary method and fictitious domain method require cube grid cells, the grid cell requirement is equals to case 1 in Table.</p>
@@ -268,7 +269,7 @@
 <a class="reference internal image-reference" href="_images/MonodispersPDrop.png"><img alt="_images/MonodispersPDrop.png" src="_images/MonodispersPDrop.png" style="width: 5.0in;" />
 </a>
 <figcaption>
-<p><span class="caption-text">Comparison of total drag force between the theory and present results with different <span class="math notranslate nohighlight">\(N_s=2\)</span></span><a class="headerlink" href="#id7" title="Link to this image"></a></p>
+<p><span class="caption-number">Figure 11 </span><span class="caption-text">Comparison of total drag force between the theory and present results with different <span class="math notranslate nohighlight">\(N_s=2\)</span></span><a class="headerlink" href="#id7" title="Link to this image"></a></p>
 </figcaption>
 </figure>
 </section>
