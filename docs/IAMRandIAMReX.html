@@ -54,7 +54,19 @@
 <li class="toctree-l3"><a class="reference internal" href="FluidEquations.html#time-step-godunov">Time Step - Godunov</a></li>
 <li class="toctree-l3"><a class="reference internal" href="LevelSet.html">Level Set</a></li>
 <li class="toctree-l3"><a class="reference internal" href="DiffusedIBM.html">Direct-Forcing Immersed Boundary Method</a></li>
-<li class="toctree-l3 current"><a class="current reference internal" href="#">Key Differences Between IAMR and IAMeX</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Key Differences Between IAMR and IAMeX</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#iamr-base">IAMR (Base)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#iamex-extended">IAMeX (Extended)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#comparison-with-base-iamr">Comparison with Base IAMR</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#software-architecture">Software Architecture</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#core-class-hierarchy">Core Class Hierarchy</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#key-components">Key Components</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#key-files">Key Files</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#understanding-the-flow">Understanding the Flow</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="Software_Chapter.html">Scholarly effort of IAMReX</a></li>
@@ -95,6 +107,105 @@
              
   <section id="key-differences-between-iamr-and-iamex">
 <h1>Key Differences Between IAMR and IAMeX<a class="headerlink" href="#key-differences-between-iamr-and-iamex" title="Link to this heading"></a></h1>
+<section id="iamr-base">
+<h2>IAMR (Base)<a class="headerlink" href="#iamr-base" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">NUM_STATE_MAX</span> <span class="pre">=</span> <span class="pre">AMREX_SPACEDIM+4</span></code> (velocity + density + 2 tracers + temperature)</p></li>
+<li><p>Standard incompressible Navier-Stokes</p></li>
+</ul>
+</section>
+<section id="iamex-extended">
+<h2>IAMeX (Extended)<a class="headerlink" href="#iamex-extended" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">NUM_STATE_MAX</span> <span class="pre">=</span> <span class="pre">AMREX_SPACEDIM+5</span></code> (adds level set field)</p></li>
+<li><p>Additional advance methods:
+- <code class="docutils literal notranslate"><span class="pre">advance_semistaggered_twophase_ls()</span></code>: Two-phase flow with level sets
+- <code class="docutils literal notranslate"><span class="pre">advance_semistaggered_fsi_diffusedib()</span></code>: Fluid-structure interaction with particle collision</p></li>
+</ul>
+</section>
+<section id="comparison-with-base-iamr">
+<h2>Comparison with Base IAMR<a class="headerlink" href="#comparison-with-base-iamr" title="Link to this heading"></a></h2>
+<table class="docutils align-default" id="id1">
+<caption><span class="caption-text">Difference between IAMR and IAMReX</span><a class="headerlink" href="#id1" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 33.3%" />
+<col style="width: 33.3%" />
+<col style="width: 33.3%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Feature</p></th>
+<th class="head"><p>IAMR</p></th>
+<th class="head"><p>IAMeX</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>State Variables</p></td>
+<td><p>4(velocity, density, tracers, temperature)</p></td>
+<td><p>5(adds level set)</p></td>
+</tr>
+<tr class="row-odd"><td><p>Interface Methods</p></td>
+<td><p>None</p></td>
+<td><p>Level set, immersed boundary, phase field (TBD)</p></td>
+</tr>
+<tr class="row-even"><td><p>Particle Support</p></td>
+<td><p>None</p></td>
+<td><p>Full 6-DOF dynamics with collisions</p></td>
+</tr>
+<tr class="row-odd"><td><p>Multi-Physics</p></td>
+<td><p>Single-phase only</p></td>
+<td><p>Multi-phase, fluid-solid interaction</p></td>
+</tr>
+<tr class="row-even"><td><p>Collision Detection</p></td>
+<td><p>None</p></td>
+<td><p>Spatial hashing with DKT model</p></td>
+</tr>
+<tr class="row-odd"><td><p>GPU Support</p></td>
+<td><p>Basic AMReX</p></td>
+<td><p>Enhanced particle operations</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="software-architecture">
+<h1>Software Architecture<a class="headerlink" href="#software-architecture" title="Link to this heading"></a></h1>
+<section id="core-class-hierarchy">
+<h2>Core Class Hierarchy<a class="headerlink" href="#core-class-hierarchy" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">NavierStokesBase</span></code>: Base class providing AMR infrastructure and core CFD functionality</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">NavierStokes</span></code>: Derived class implementing specific solver methods</p></li>
+</ul>
+</section>
+<section id="key-components">
+<h2>Key Components<a class="headerlink" href="#key-components" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>State Management</strong>: Uses AMReX state descriptors for velocity, pressure, and scalars</p></li>
+<li><p><strong>Boundary Conditions</strong>: Defined in NS_BC.H with physical-to-mathematical BC mapping</p></li>
+<li><p><strong>Time Integration</strong>: Semi-implicit schemes with explicit advection and implicit diffusion</p></li>
+<li><p><strong>Projection Methods</strong>: MAC projection and nodal projection for incompressible flow</p></li>
+<li><p><strong>Level Set Support</strong>: Additional scalar fields for interface tracking of the multiphase flow</p></li>
+<li><p><strong>Fluid-structure interaction</strong>: Implements diffused immersed boundary method for FSI</p></li>
+<li><p><strong>Multiple resolved particles</strong>: Particle collision detection using spatial hashing</p></li>
+</ul>
+</section>
+<section id="key-files">
+<h2>Key Files<a class="headerlink" href="#key-files" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">NavierStokesBase.H/cpp</span></code>: Core AMR and CFD infrastructure</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">NavierStokes.H/cpp</span></code>: Problem-specific solver implementation</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">NS_setup.cpp</span></code>: Variable registration and boundary condition setup</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">DiffusedIB.H/cpp</span></code>: Immersed boundary method implementation</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Collision.H/cpp</span></code>: Particle collision handling</p></li>
+</ul>
+</section>
+<section id="understanding-the-flow">
+<h2>Understanding the Flow<a class="headerlink" href="#understanding-the-flow" title="Link to this heading"></a></h2>
+<ol class="arabic simple">
+<li><p>Variable setup happens in <code class="docutils literal notranslate"><span class="pre">NS_setup.cpp</span></code></p></li>
+<li><p>Time advancement occurs in <code class="docutils literal notranslate"><span class="pre">NavierStokes::advance()</span></code> methods</p></li>
+<li><p>Boundary conditions are applied via functions in NS_BC.H</p></li>
+</ol>
+</section>
 </section>
 
 

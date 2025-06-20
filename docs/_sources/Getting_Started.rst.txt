@@ -86,6 +86,7 @@ If you use ``MPI`` to run your program, you can type:
 
 This code typically generates subfolders in the current folder that are named ``plt00000``, ``plt00010``, etc, and ``chk00000``, ``chk00010``, etc. These are called plotfiles and checkpoint files. The plotfiles are used for visualization of derived fields; the checkpoint files are used for restarting the code.
 
+.. _sec:PhysicsParams:
 
 Key parameters
 ---------------

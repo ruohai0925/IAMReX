@@ -16,6 +16,8 @@ Fluid Variables
    | :math:`H_s`           | External sources                                 |
    +-----------------------+--------------------------------------------------+
 
+.. _FluidEquationsPart:
+
 Fluid Equations
 ===============
 
@@ -55,7 +57,7 @@ switch to conservation form. Tracers are passively advected by default. The inpu
 switches the first tracer to conservative. A second tracer can be included with ``ns.do_trac2 = 1``, and it can be
 conservatively advected with ``ns.do_cons_trac2 = 1``.
 
-IAMR also has the option to solve for temperature, along with a modified divergence constraint on the velocity field:
+IAMReX also has the option to solve for temperature, along with a modified divergence constraint on the velocity field:
 
 .. math:: \rho c_p \left( \frac{\partial T}{\partial t} + U \cdot \nabla T \right)  = \nabla \cdot \lambda \nabla T + H_T
 
@@ -64,8 +66,37 @@ IAMR also has the option to solve for temperature, along with a modified diverge
 Here, the divergence constraint captures compressibily effects due to thermal diffusion.
 To enable the temperature solve, use ``ns.do_temp = 1`` and set ``ns.temp_cond_coef`` to represent :math:`\lambda / c_p`,
 which is taken to be constant. More sophiticated treatments are possible; if interested, please open an issue on github:
-https://github.com/AMReX-Fluids/IAMR/issues
+https://github.com/ruohai0925/IAMReX/issues
 
 
 Time Step - Godunov
 ===================
+
+When we use the time-centered Godunov advection, we no longer need the predictor and corrector steps.
+
+-  Define the time-centered face-centered (staggered) MAC velocity which is used for advection: :math:`U^{MAC,n+1/2}`
+
+-  Define the new-time density, :math:`\rho^{n+1} = \rho^n - \Delta t (\rho^{n+1/2,pred} U^{MAC,n+1/2})` by setting
+
+-  Define an approximation to the new-time state, :math:`(\rho U)^{\ast}` by setting
+
+   .. math:: (\rho^{n+1} U^{\ast}) &= (\rho^n U^n) -
+             \Delta t \nabla \cdot (\rho U^{MAC} U) + \Delta t \nabla {p}^{n-1/2}  \\ &+
+             \frac{\Delta t}{2}  (\nabla \cdot \tau^n + \nabla \cdot \tau^\ast) +
+             \Delta t \rho g
+
+   (for implicit diffusion, which is the current default)
+
+-  Project :math:`U^{\ast}` by solving
+
+.. math:: \nabla \cdot \frac{1}{\rho} \nabla \phi = \nabla \cdot \left( \frac{1}{\Delta t}
+          U^{\ast}+ \frac{1}{\rho} \nabla {p}^{n-1/2} \right)
+
+then defining
+
+.. math:: U^{n+1} = U^{\ast} - \frac{\Delta t}{\rho} \nabla \phi
+
+and
+
+.. math:: {p}^{n+1/2} = \phi
+

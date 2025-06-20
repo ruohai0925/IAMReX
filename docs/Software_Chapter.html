@@ -49,7 +49,34 @@
 <li class="toctree-l1"><a class="reference internal" href="Results.html">Validation Cases</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="Algorithm.html">Algorithm and Software Details</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="Algorithm_Chapter.html">Algorithm of IAMReX</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Scholarly effort of IAMReX</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Scholarly effort of IAMReX</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#i-two-enhanced-time-advancement-methods">I. Two Enhanced Time Advancement Methods</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#new-specialized-advance-functions">New Specialized Advance Functions</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#ii-level-set-interface-tracking">II. Level Set Interface Tracking</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#enhanced-state-management">Enhanced State Management</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#key-computational-functions">Key Computational Functions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#level-set-methodology">Level Set Methodology</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#iii-dibm-and-particle-collision">III. DIBM and Particle Collision</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#core-architecture-of-dibm">Core Architecture of DIBM</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#key-computational-functions-ibm">Key Computational Functions (<strong>IBM</strong>)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#advanced-features">Advanced Features</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#core-architecture-of-particle-collision">Core Architecture of Particle Collision</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#iv-technical-innovations-of-iamrex">IV. Technical Innovations of IAMReX</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#multi-physics-integration">Multi-Physics Integration</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#computational-efficiency-and-memory-management">Computational Efficiency and Memory Management</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#numerical-stability">Numerical Stability</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#research-applications">Research Applications</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#v-summary">V. Summary</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="Acknowledgements.html">Acknowledgements</a></li>
@@ -86,6 +113,239 @@
              
   <section id="scholarly-effort-of-iamrex">
 <h1>Scholarly effort of IAMReX<a class="headerlink" href="#scholarly-effort-of-iamrex" title="Link to this heading"></a></h1>
+<p>IAMeX represents a significant enhancement to the baseline IAMR (Incompressible Adaptive Mesh Refinement) code, introducing advanced multi-physics capabilities for complex multi-phase flow and fluid-solid interaction simulations. This analysis identifies and summarizes the key innovations and contributions that distinguish IAMeX from the standard IAMR implementation.</p>
+<section id="i-two-enhanced-time-advancement-methods">
+<h2>I. Two Enhanced Time Advancement Methods<a class="headerlink" href="#i-two-enhanced-time-advancement-methods" title="Link to this heading"></a></h2>
+<section id="new-specialized-advance-functions">
+<h3>New Specialized Advance Functions<a class="headerlink" href="#new-specialized-advance-functions" title="Link to this heading"></a></h3>
+<p>IAMeX introduces two distinct time advancement methods, each targeting specific multi-physics scenarios:</p>
+<section id="two-phase-flow-with-level-set-method">
+<h4>1. Two-Phase Flow with Level Set Method<a class="headerlink" href="#two-phase-flow-with-level-set-method" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>Function</strong>: <code class="docutils literal notranslate"><span class="pre">NavierStokes::advance_semistaggered_twophase_ls()</span></code></p></li>
+<li><p><strong>Purpose</strong>: Sharp interface tracking for immiscible two-phase flows</p></li>
+<li><p><strong>Key Features</strong>:
+- Level set field evolution with both non-conservative and convervative advection schemes
+- Level-by-level reinitialization functions for conserving mass and avoid shape distortion
+- Interface-dependent density and viscosity updates
+- Heaviside function computation for material properties</p></li>
+</ul>
+</section>
+<section id="fluid-structure-interaction-with-diffused-immersed-boundary-method-dibm-and-particle-collision">
+<h4>2. Fluid-Structure Interaction with Diffused Immersed Boundary Method (DIBM) and Particle Collision<a class="headerlink" href="#fluid-structure-interaction-with-diffused-immersed-boundary-method-dibm-and-particle-collision" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>Function</strong>: <code class="docutils literal notranslate"><span class="pre">NavierStokes::advance_semistaggered_fsi_diffusedib()</span></code></p></li>
+<li><p><strong>Purpose</strong>: Robust fluid-solid coupling without mesh conformity</p></li>
+<li><p><strong>Key Features</strong>:
+- Particle-based immersed boundary implementation
+- 6-DOF rigid body dynamics
+- Collision detection and resolution</p></li>
+</ul>
+</section>
+</section>
+</section>
+<section id="ii-level-set-interface-tracking">
+<h2>II. Level Set Interface Tracking<a class="headerlink" href="#ii-level-set-interface-tracking" title="Link to this heading"></a></h2>
+<section id="enhanced-state-management">
+<h3>Enhanced State Management<a class="headerlink" href="#enhanced-state-management" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>Extended State Vector</strong>: <code class="docutils literal notranslate"><span class="pre">NUM_STATE_MAX</span></code> increased from 4 to 5 components</p></li>
+<li><p><strong>Level Set Component</strong>: <code class="docutils literal notranslate"><span class="pre">phicomp</span></code> for interface representation</p></li>
+<li><p><strong>Signed Distance</strong>: Maintained through reinitialization</p></li>
+</ul>
+</section>
+<section id="key-computational-functions">
+<h3>Key Computational Functions<a class="headerlink" href="#key-computational-functions" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">NavierStokesBase::get_phi_half_time()</span></code>: Get the mid point Level set function</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">NavierStokesBase::phi_to_heavi()</span></code>: Level set to Heaviside function conversion</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">NavierStokesBase::phi_to_sgn0()</span></code>: Level set to Sign function conversion</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">NavierStokesBase::heavi_to_rhoormu()</span></code>: Material property mapping</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">NavierStokesBase::reinit()</span></code>: Distance function maintenance using reinitialization</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">NavierStokesBase::reinitialization_sussman()</span></code>: Reinitialization with Sussman’s method</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">NavierStokesBase::reinitialization_consls</span></code>: Reinitialization for the conservative LS method</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">NavierStokesBase::rk_first_reinit()</span></code>: First RK step during reinitialization</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">NavierStokesBase::rk_second_reinit()</span></code>: Second RK step during reinitialization</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">NavierStokesBase::mass_fix()</span></code>: Mass fix subroutine during reinitialization</p></li>
+</ul>
+</section>
+<section id="level-set-methodology">
+<h3>Level Set Methodology<a class="headerlink" href="#level-set-methodology" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>Sharp Interface</strong>: Maintains interface thickness of 1.5~2 grid cells</p></li>
+<li><p><strong>Mass Conservation</strong>: Conservative advection schemes</p></li>
+<li><p><strong>Reinitialization</strong>: Periodic distance function correction</p></li>
+</ul>
+</section>
+</section>
+<section id="iii-dibm-and-particle-collision">
+<h2>III. DIBM and Particle Collision<a class="headerlink" href="#iii-dibm-and-particle-collision" title="Link to this heading"></a></h2>
+<section id="core-architecture-of-dibm">
+<h3>Core Architecture of DIBM<a class="headerlink" href="#core-architecture-of-dibm" title="Link to this heading"></a></h3>
+<section id="primary-classes-particle">
+<h4>Primary Classes (<strong>Particle</strong>)<a class="headerlink" href="#primary-classes-particle" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">mParticle</span></code>: Main particle management class</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">mParticleContainer</span></code>: AMReX-based parallel particle container</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">kernel</span></code>: Individual particle data structure</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Particles</span></code>: High-level particle system interface</p></li>
+</ul>
+</section>
+<section id="particle-data-structure-kernel">
+<h4>Particle Data Structure ( <strong>kernel</strong> )<a class="headerlink" href="#particle-data-structure-kernel" title="Link to this heading"></a></h4>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span><span class="w"> </span><span class="nc">kernel</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">RealVect</span><span class="w"> </span><span class="n">location</span><span class="p">,</span><span class="w"> </span><span class="n">velocity</span><span class="p">,</span><span class="w"> </span><span class="n">omega</span><span class="p">;</span><span class="w">      </span><span class="c1">// 6-DOF state</span>
+<span class="w">    </span><span class="n">RealVect</span><span class="w"> </span><span class="n">ib_force</span><span class="p">,</span><span class="w"> </span><span class="n">ib_moment</span><span class="p">;</span><span class="w">           </span><span class="c1">// Fluid forces/moments</span>
+<span class="w">    </span><span class="n">RealVect</span><span class="w"> </span><span class="n">Fcp</span><span class="p">,</span><span class="w"> </span><span class="n">Tcp</span><span class="p">;</span><span class="w">                      </span><span class="c1">// Collision forces/moments</span>
+<span class="w">    </span><span class="n">Real</span><span class="w"> </span><span class="n">radius</span><span class="p">,</span><span class="w"> </span><span class="n">rho</span><span class="p">,</span><span class="w"> </span><span class="n">Vp</span><span class="p">;</span><span class="w">                   </span><span class="c1">// Physical properties</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">ml</span><span class="p">;</span><span class="w">                                 </span><span class="c1">// Number of markers</span>
+<span class="w">    </span><span class="n">Vector</span><span class="o">&lt;</span><span class="n">Real</span><span class="o">&gt;</span><span class="w"> </span><span class="n">phiK</span><span class="p">,</span><span class="w"> </span><span class="n">thetaK</span><span class="p">;</span><span class="w">              </span><span class="c1">// Spherical marker distribution</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="key-computational-functions-ibm">
+<h3>Key Computational Functions (<strong>IBM</strong>)<a class="headerlink" href="#key-computational-functions-ibm" title="Link to this heading"></a></h3>
+<section id="fluid-solid-coupling">
+<h4>1. Fluid-Solid Coupling<a class="headerlink" href="#fluid-solid-coupling" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">mParticle::InteractWithEuler()</span></code>: Master coupling routine
+- Iterative sub-cycling for stability
+- Configurable iteration counts (<code class="docutils literal notranslate"><span class="pre">loop_ns</span></code>, <code class="docutils literal notranslate"><span class="pre">loop_solid</span></code>)
+- Force/moment accumulation and averaging</p></li>
+</ul>
+</section>
+<section id="velocity-transfer-eulerian-lagrangian">
+<h4>2. Velocity Transfer (Eulerian → Lagrangian)<a class="headerlink" href="#velocity-transfer-eulerian-lagrangian" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">mParticle::VelocityInterpolation()</span></code>: Grid-to-particle velocity mapping</p></li>
+<li><p><strong>Delta Function Types</strong>:
+- <code class="docutils literal notranslate"><span class="pre">FOUR_POINT_IB</span></code>: 4-point kernel for smooth transfer
+- <code class="docutils literal notranslate"><span class="pre">THREE_POINT_IB</span></code>: 3-point kernel for efficiency</p></li>
+<li><p><strong>Implementation</strong>: GPU-compatible parallel loops</p></li>
+</ul>
+</section>
+<section id="force-computation-and-spreading">
+<h4>3. Force Computation and Spreading<a class="headerlink" href="#force-computation-and-spreading" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">mParticle::ComputeLagrangianForce()</span></code>: No-slip constraint enforcement</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">mParticle::ForceSpreading()</span></code>: Particle-to-grid force distribution</p></li>
+<li><p><strong>Volume Integration</strong>: Marker-based volume fraction calculations</p></li>
+</ul>
+</section>
+<section id="particle-dynamics">
+<h4>4. Particle Dynamics<a class="headerlink" href="#particle-dynamics" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">mParticle::UpdateParticles()</span></code>: 6-DOF motion integration</p></li>
+<li><p><strong>Constraint Handling</strong>:
+- Translation locks (<code class="docutils literal notranslate"><span class="pre">TL[i]</span></code>): 0=fixed, 1=prescribed, 2=free
+- Rotation locks (<code class="docutils literal notranslate"><span class="pre">RL[i]</span></code>): Similar constraint system</p></li>
+<li><p><strong>Collision Integration</strong>: Seamless coupling with collision forces</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">nodal_phi_to_pvf()</span></code>: Particle volume fraction calculation</p></li>
+</ul>
+</section>
+</section>
+<section id="advanced-features">
+<h3>Advanced Features<a class="headerlink" href="#advanced-features" title="Link to this heading"></a></h3>
+<section id="marker-distribution">
+<h4>Marker Distribution<a class="headerlink" href="#marker-distribution" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>Spherical Coverage</strong>: Fibonacci spiral distribution for uniform sampling</p></li>
+<li><p><strong>Adaptive Resolution</strong>: Marker count based on particle size and grid resolution</p></li>
+<li><p><strong>Volume Conservation</strong>: Distributed volume elements for accurate integration</p></li>
+</ul>
+</section>
+<section id="gpu-acceleration">
+<h4>GPU Acceleration<a class="headerlink" href="#gpu-acceleration" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>CUDA Kernels</strong>: All particle operations GPU-compatible</p></li>
+<li><p><strong>Parallel Reductions</strong>: Efficient force/moment summation</p></li>
+<li><p><strong>Memory Coalescing</strong>: Optimized data layouts for performance</p></li>
+</ul>
+</section>
+</section>
+<section id="core-architecture-of-particle-collision">
+<h3>Core Architecture of Particle Collision<a class="headerlink" href="#core-architecture-of-particle-collision" title="Link to this heading"></a></h3>
+<section id="primary-classes-coliision">
+<h4>Primary Classes (<strong>Coliision</strong>)<a class="headerlink" href="#primary-classes-coliision" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>``ParticleCollision``</strong>: Main collision management</p></li>
+<li><p><strong>``CollisionParticle``</strong>: Particle representation for collisions</p></li>
+<li><p><strong>``CollisionPair``</strong>: Collision pair structure</p></li>
+<li><p><strong>``CollisionCell``</strong>: Spatial hashing cell</p></li>
+</ul>
+</section>
+<section id="collision-detection-algorithm">
+<h4>Collision Detection Algorithm<a class="headerlink" href="#collision-detection-algorithm" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>Spatial Hashing</strong>: O(N) complexity using background grid</p></li>
+<li><p><strong>Neighbor Search</strong>: 27-cell stencil for proximity detection</p></li>
+<li><p><strong>Pair Generation</strong>: Systematic collision pair identification</p></li>
+</ul>
+</section>
+<section id="dkt-model-for-collision-resolution">
+<h4>DKT Model for Collision Resolution<a class="headerlink" href="#dkt-model-for-collision-resolution" title="Link to this heading"></a></h4>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">F_collision</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="n">overlap</span><span class="p">)</span><span class="n">²</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">n_normal</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><strong>Spring Constant</strong>: Configurable collision stiffness</p></li>
+<li><p><strong>Overlap Calculation</strong>: Geometric intersection detection</p></li>
+<li><p><strong>Force Direction</strong>: Normal to contact surface</p></li>
+</ul>
+</section>
+<section id="integration-with-fluid-forces">
+<h4>Integration with Fluid Forces<a class="headerlink" href="#integration-with-fluid-forces" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>Force Superposition</strong>: Collision forces added to fluid forces</p></li>
+<li><p><strong>Momentum Conservation</strong>: Proper force-moment coupling</p></li>
+<li><p><strong>Stability</strong>: Sub-cycling for collision time scales</p></li>
+</ul>
+</section>
+</section>
+</section>
+<section id="iv-technical-innovations-of-iamrex">
+<h2>IV. Technical Innovations of IAMReX<a class="headerlink" href="#iv-technical-innovations-of-iamrex" title="Link to this heading"></a></h2>
+<section id="multi-physics-integration">
+<h3>Multi-Physics Integration<a class="headerlink" href="#multi-physics-integration" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>Unified Multi-Physics Framework</strong>: Single platform for diverse interface methods</p></li>
+<li><p><strong>Modular Design</strong>: Independent activation of physics models</p></li>
+<li><p><strong>Unified Interface</strong>: Common API across different methods</p></li>
+</ul>
+</section>
+<section id="computational-efficiency-and-memory-management">
+<h3>Computational Efficiency and Memory Management<a class="headerlink" href="#computational-efficiency-and-memory-management" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>Efficient Storage</strong>: Compact particle data structures</p></li>
+<li><p><strong>GPU-Accelerated Particles</strong>: High-performance particle operations</p></li>
+<li><p><strong>Load Balancing</strong>: Dynamic particle redistribution</p></li>
+<li><p><strong>Communication Optimization</strong>: Minimal inter-processor data exchange</p></li>
+</ul>
+</section>
+<section id="numerical-stability">
+<h3>Numerical Stability<a class="headerlink" href="#numerical-stability" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>Sub-cycling</strong>: Independent time stepping for different physics</p></li>
+<li><p><strong>Iterative Coupling</strong>: Multiple fluid-solid interaction iterations</p></li>
+</ul>
+</section>
+<section id="research-applications">
+<h3>Research Applications<a class="headerlink" href="#research-applications" title="Link to this heading"></a></h3>
+<ol class="arabic simple">
+<li><p><strong>Dense Particulate Flows</strong>: Fluidized beds, sediment transport</p></li>
+<li><p><strong>Multiphase Systems</strong>: Bubble dynamics, droplet collisions</p></li>
+<li><p><strong>Fluid-Structure Interaction</strong>: Flexible structures, bio-fluid mechanics</p></li>
+<li><p><strong>Industrial Processes</strong>: Mixing, separation, crystallization</p></li>
+</ol>
+</section>
+</section>
+<section id="v-summary">
+<h2>V. Summary<a class="headerlink" href="#v-summary" title="Link to this heading"></a></h2>
+<p>IAMeX represents a substantial advancement in computational multi-physics, transforming the single-phase IAMR code into a comprehensive platform for complex fluid-solid interaction simulations. The integration of diffused immersed boundary methods, particle collision dynamics, and multiple interface tracking approaches provides researchers with unprecedented capabilities for studying real-world multi-physics phenomena while maintaining computational efficiency and scalability.</p>
+<p>The modular design and robust implementation ensure that IAMeX serves as both a production simulation tool and a research platform for developing next-generation multi-physics algorithms. Its contributions to the computational fluid dynamics community extend beyond mere feature additions, representing fundamental advances in the numerical treatment of complex interfacial and particulate flows.</p>
+</section>
 </section>
 
 

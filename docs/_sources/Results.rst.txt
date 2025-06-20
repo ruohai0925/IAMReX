@@ -3,6 +3,108 @@
 Validation Cases
 ================
 
+.. _R-PVF:
+
+Particle Volume Fraction (PVF)
+------------------------------
+
+The particle volume fraction (PVF), which joins the calculation of free motion updates, is introduced and validated in this session. The PVF is approximated by the signed-distance level-set function :math:`\phi` of the fluid-particle interface. The level-set function :math:`\phi` is located at cell nodes and is calculated at the eight corners of each cell. The symbol of :math:`\phi` as well as the intersected interface is shown in :ref:`figPvfLevelSet`. Here, :math:`\phi` is negative inside the particle and positive outside the particle.
+
+.. _figPvfLevelSet:
+
+.. figure:: ./Results/pvf_level_set_function.png
+    :align: center
+    :width: 5.0in
+    :alt: Level-set function at grid cell corners
+
+    Sketch of :math:`\phi` at each corner of a grid cell with interface.
+
+Based on the level-set function :math:`\phi`, an approximation of PVF can be obtained by the following equation:
+
+.. math::
+
+   \alpha_{i,j,k} = \frac{\sum_{m=1}^{8}-\phi_mH(-\phi_m)}{\sum_{m=1}^8|\phi_m|},
+
+where :math:`H` is the Heaviside function, defined by:
+
+.. math::
+
+   H(\phi) = 
+   \begin{cases}
+   0, & \phi \le 0\\
+   1, & \phi > 0
+   \end{cases}
+
+On the right-hand side of equation :math:`\alpha_{i,j,k}`, the value of :math:`\phi` for each cell corner depends on the location of the fluid-particle interface. When the shape of the particle surface is analytically given, the :math:`\phi` value can be determined by calculating the Euclidean distance from the corner point of the cell to the particle surface. The calculation of PVF is then transformed from an exact integral to a numerical integral. As shown in :ref:`figPvfCase`, the cell value of PVF varies from :math:`0` to :math:`1`, depending on the relative position between the cell center and the fluid-particle interface.
+
+.. _figPvfCase:
+
+.. figure:: ./Results/pvf_cases_of_exact_value.png
+    :align: center
+    :width: 5.0in
+    :alt: PVF cases with different values
+
+    Sketch of PVF with different values. The white and green colors refer to the cell areas within the fluid and particle, respectively.
+
+We validate the correctness and convergence of the above PVF approximation by calculating the volumes of spherical and ellipsoidal surfaces on the Cartesian grid. The exact solutions for the sphere and ellipsoid are given by:
+
+.. math::
+   :label: equ:exact solutions of the sphere and ellipsoid
+
+   V_{exact} = 4\pi \frac{abc}{3}
+
+where :math:`a`, :math:`b`, and :math:`c` are the semi-axes of the ellipsoid. For a sphere case, we have :math:`a=b=c`. The signed-distance level-set function is:
+
+.. math::
+   :label: equ:level-set function of spheroidal geometries
+
+   \phi_{i,j,k}= \sqrt{\frac{(x_{i,j,k}-x_{p})^2}{a^2} + \frac{(y_{i,j,k}-y_{p})^2}{b^2} + \frac{(z_{i,j,k}-z_{p})^2}{c^2}}-1,
+
+for any Eulerian cell :math:`(i,j,k)`. The computational domain is :math:`L_x \times L_y \times L_z = 2 \times 2 \times 2`, the sphere diameter is :math:`D = 0.8`, and the semi-axes of the ellipsoid are set to be :math:`a = 0.4`, :math:`b = 0.6`, :math:`c = 0.4`. The centers of both particles are :math:`(x_p, y_p, z_p)=(1,1,1)`. As shown in :ref:`figPvfAmr`, three levels of AMR grid are used during the PVF calculation, and the particles are enclosed by the finest level.
+
+.. _figPvfAmr:
+
+.. figure:: ./Results/pvf_amr_blocks5.png
+    :align: center
+    :width: 5.0in
+    :alt: AMR grid results
+
+    Results of a three-level AMR grid. The red, orange, and green color represents the grid on levels 0, 1, and 2, respectively. Left: a spherical particle; Right: an ellipsoidal particle.
+
+.. table:: Calculate sphere volume fraction by using a three-level AMR grid
+   :name: tab:pvf result of sphere
+
+   +-------+----------------+-------------------+-----------+
+   | d/h   | Volume         | ε_sphere [%]      | s_sphere  |
+   +=======+================+===================+===========+
+   | 16    | 0.2667230796   | 5.071·10⁻¹        |           |
+   +-------+----------------+-------------------+-----------+
+   | 32    | 0.2677639589   | 1.188·10⁻¹        | 2.09374   |
+   +-------+----------------+-------------------+-----------+
+   | 64    | 0.2679990393   | 3.116·10⁻²        | 1.93077   |
+   +-------+----------------+-------------------+-----------+
+   | 128   | 0.2680627154   | 7.407·10⁻³        | 2.07273   |
+   +-------+----------------+-------------------+-----------+
+
+.. table:: Calculate ellipsoid volume fraction by using a three-level AMR grid
+   :name: tab:pvf result of ellipsoid
+
+   +-------+----------------+---------------------+-------------+
+   | d/h   | Volume         | ε_ellipsoid [%]     | s_ellipsoid |
+   +=======+================+=====================+=============+
+   | 16    | 0.4004903567   | 4.062·10⁻¹          |             |
+   +-------+----------------+---------------------+-------------+
+   | 32    | 0.4016884973   | 1.083·10⁻¹          | 1.90716     |
+   +-------+----------------+---------------------+-------------+
+   | 64    | 0.4020166444   | 2.666·10⁻²          | 2.02228     |
+   +-------+----------------+---------------------+-------------+
+   | 128   | 0.40209828964  | 6.359·10⁻³          | 2.0678      |
+   +-------+----------------+---------------------+-------------+
+
+The numerical errors decrease with the increase of the :math:`d/h`, where :math:`h` is the Cartesian grid spacing on level :math:`0`. If the resolution on the finest level keeps unchanged, we validated that the results of a three-level grid are the same as those of the corresponding single-level grid. In addition, our results show the second-order convergence and agree well with the results in kempe. It also matches the overall second-order accuracy of the basic fluid solver.
+
+Lastly, it is noted that this method is also applicable when multiple particles are close to each other or their surfaces are in direct contact. Because the PVF calculation is a separate operation for each particle, the total volume fraction is not needed as long as the Eulerian force considers the effects of all particles .
+
 Flow Past Fixed Sphere
 ----------------------
 
