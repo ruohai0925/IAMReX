@@ -1,6 +1,9 @@
 
+
 Fluid Variables
 ===============
+
+The fluid variables are defined as follows.
 
    +-----------------------+--------------------------------------------------+
    | Variable              | Definition                                       |
@@ -15,8 +18,15 @@ Fluid Variables
    +-----------------------+--------------------------------------------------+
    | :math:`H_s`           | External sources                                 |
    +-----------------------+--------------------------------------------------+
+   | :math:`\phi`          | Level set field                                  |
+   +-----------------------+--------------------------------------------------+
+   | :math:`\alpha_p`      | Particle volume fraction                         |
+   +-----------------------+--------------------------------------------------+
+   | :math:`\mathbf{F}_p`  | Eulerian force                                   |
+   +-----------------------+--------------------------------------------------+
 
-.. _FluidEquationsPart:
+Compared with `IAMR <https://amrex-fluids.github.io/IAMR/>`, IAMReX adds a level set field :math:`\phi` for the two-phase flow, and 
+the particle volume fraction :math:`\alpha_p`, and the Eulerian force :math:`\mathbf{F}_p` for the particle-fluid interaction.
 
 Fluid Equations
 ===============
@@ -50,7 +60,7 @@ for passively advected scalars. In general, one could advect an arbitrary number
 IAMReX has the ability to incorporate general, user-defined external forcing and source terms. The default behaviour is that
 :math:`H_s=0`, and :math:`{\bf H}_U` represents gravitational forces, with :math:`{\bf H}_U= (0 , 0 , -\rho g )` in 3d and
 :math:`{\bf H}_U= (0 , -\rho g )` in 2d, where :math:`g` is the magnitude of the gravitational acceleration. However, since
-by default, :math:`g=0`, :math:`{\bf H}_U = 0` unless ``ns.gravity`` is set (for more info see :ref:`sec:PhysicsParams`).
+by default, :math:`g=0`, :math:`{\bf H}_U = 0` unless ``ns.gravity`` is set.
 
 By default, IAMReX solves the momentum equation in convective form. The inputs parameter ``ns.do_mom_diff = 1`` is used to
 switch to conservation form. Tracers are passively advected by default. The inputs parameter ``ns.do_cons_trac = 1``
@@ -72,7 +82,7 @@ https://github.com/ruohai0925/IAMReX/issues
 Time Step - Godunov
 ===================
 
-When we use the time-centered Godunov advection, we no longer need the predictor and corrector steps.
+In IAMReX, the canonical projection is applied to solve the fluid equations. Note that we only use the time-centered Godunov advection, and there no longer needs the predictor and corrector steps.
 
 -  Define the time-centered face-centered (staggered) MAC velocity which is used for advection: :math:`U^{MAC,n+1/2}`
 

@@ -97,6 +97,7 @@
              
   <section id="fluid-variables">
 <h1>Fluid Variables<a class="headerlink" href="#fluid-variables" title="Link to this heading"></a></h1>
+<p>The fluid variables are defined as follows.</p>
 <blockquote>
 <div><table class="docutils align-default">
 <thead>
@@ -120,12 +121,23 @@
 <tr class="row-even"><td><p><span class="math notranslate nohighlight">\(H_s\)</span></p></td>
 <td><p>External sources</p></td>
 </tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(\phi\)</span></p></td>
+<td><p>Level set field</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(\alpha_p\)</span></p></td>
+<td><p>Particle volume fraction</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(\mathbf{F}_p\)</span></p></td>
+<td><p>Eulerian force</p></td>
+</tr>
 </tbody>
 </table>
 </div></blockquote>
+<p>Compared with <cite>IAMR &lt;https://amrex-fluids.github.io/IAMR/&gt;</cite>, IAMReX adds a level set field <span class="math notranslate nohighlight">\(\phi\)</span> for the two-phase flow, and
+the particle volume fraction <span class="math notranslate nohighlight">\(\alpha_p\)</span>, and the Eulerian force <span class="math notranslate nohighlight">\(\mathbf{F}_p\)</span> for the particle-fluid interaction.</p>
 </section>
 <section id="fluid-equations">
-<span id="fluidequationspart"></span><h1>Fluid Equations<a class="headerlink" href="#fluid-equations" title="Link to this heading"></a></h1>
+<h1>Fluid Equations<a class="headerlink" href="#fluid-equations" title="Link to this heading"></a></h1>
 <p>Conservation of fluid mass:</p>
 <div class="math notranslate nohighlight">
 \[\frac{\partial \rho}{\partial t} + \nabla \cdot (\rho U)  = 0\]</div>
@@ -148,7 +160,7 @@ The <span class="math notranslate nohighlight">\(S \ne 0\)</span> case is discus
 <p>IAMReX has the ability to incorporate general, user-defined external forcing and source terms. The default behaviour is that
 <span class="math notranslate nohighlight">\(H_s=0\)</span>, and <span class="math notranslate nohighlight">\({\bf H}_U\)</span> represents gravitational forces, with <span class="math notranslate nohighlight">\({\bf H}_U= (0 , 0 , -\rho g )\)</span> in 3d and
 <span class="math notranslate nohighlight">\({\bf H}_U= (0 , -\rho g )\)</span> in 2d, where <span class="math notranslate nohighlight">\(g\)</span> is the magnitude of the gravitational acceleration. However, since
-by default, <span class="math notranslate nohighlight">\(g=0\)</span>, <span class="math notranslate nohighlight">\({\bf H}_U = 0\)</span> unless <code class="docutils literal notranslate"><span class="pre">ns.gravity</span></code> is set (for more info see <a class="reference internal" href="Getting_Started.html#sec-physicsparams"><span class="std std-ref">Key parameters</span></a>).</p>
+by default, <span class="math notranslate nohighlight">\(g=0\)</span>, <span class="math notranslate nohighlight">\({\bf H}_U = 0\)</span> unless <code class="docutils literal notranslate"><span class="pre">ns.gravity</span></code> is set.</p>
 <p>By default, IAMReX solves the momentum equation in convective form. The inputs parameter <code class="docutils literal notranslate"><span class="pre">ns.do_mom_diff</span> <span class="pre">=</span> <span class="pre">1</span></code> is used to
 switch to conservation form. Tracers are passively advected by default. The inputs parameter <code class="docutils literal notranslate"><span class="pre">ns.do_cons_trac</span> <span class="pre">=</span> <span class="pre">1</span></code>
 switches the first tracer to conservative. A second tracer can be included with <code class="docutils literal notranslate"><span class="pre">ns.do_trac2</span> <span class="pre">=</span> <span class="pre">1</span></code>, and it can be
@@ -163,7 +175,7 @@ which is taken to be constant. More sophiticated treatments are possible; if int
 </section>
 <section id="time-step-godunov">
 <h1>Time Step - Godunov<a class="headerlink" href="#time-step-godunov" title="Link to this heading"></a></h1>
-<p>When we use the time-centered Godunov advection, we no longer need the predictor and corrector steps.</p>
+<p>In IAMReX, the canonical projection is applied to solve the fluid equations. Note that we only use the time-centered Godunov advection, and there no longer needs the predictor and corrector steps.</p>
 <ul>
 <li><p>Define the time-centered face-centered (staggered) MAC velocity which is used for advection: <span class="math notranslate nohighlight">\(U^{MAC,n+1/2}\)</span></p></li>
 <li><p>Define the new-time density, <span class="math notranslate nohighlight">\(\rho^{n+1} = \rho^n - \Delta t (\rho^{n+1/2,pred} U^{MAC,n+1/2})\)</span> by setting</p></li>
