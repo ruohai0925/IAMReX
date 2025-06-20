@@ -1,4 +1,3 @@
-
 Key Differences Between IAMR and IAMeX
 ======================================
 
@@ -7,7 +6,7 @@ IAMR (Base)
 - ``NUM_STATE_MAX = AMREX_SPACEDIM+4`` (velocity + density + 2 tracers + temperature)
 - Standard incompressible Navier-Stokes
 
-IAMeX (Extended)
+IAMReX (Extended)
 ----------------
 - ``NUM_STATE_MAX = AMREX_SPACEDIM+5`` (adds level set field)
 - Additional advance methods:
@@ -23,7 +22,7 @@ Comparison with Base IAMR
 
     * - Feature
       - IAMR
-      - IAMeX
+      - IAMReX
     * - State Variables
       - 4(velocity, density, tracers, temperature)
       - 5(adds level set)

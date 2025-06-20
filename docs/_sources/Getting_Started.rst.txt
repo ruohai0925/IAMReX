@@ -37,7 +37,7 @@ First, make sure that git is installed on your machine.
 
    This will create a folder called ``IAMReX/`` on your machine.
 
-After cloning, one will have three folder in your current directory: ``AMReX``, ``AMReX-Hydro``, ``IAMReX``.
+After cloning, one will have three folders in your current directory: ``AMReX``, ``AMReX-Hydro``, ``IAMReX``.
 
 
 Building the code
@@ -72,7 +72,7 @@ If the compilation is successful, an executable file will be generated. Usually 
 
 Running the code
 ----------------
-You should takes an input file as its first command-line argument. The file may contain a set of parameter definitions that will overrides defaults set in the code. In the ``FlowPastSphere``, you can find a file named ``inputs.3d.flow_past_sphere``, run:
+You should take an input file as its first command-line argument. The file may contain a set of parameter definitions that will overrides defaults set in the code. In the ``FlowPastSphere``, you can find a file named ``inputs.3d.flow_past_sphere``, run:
 
     .. code:: shell
 
@@ -82,7 +82,7 @@ If you use ``MPI`` to run your program, you can type:
 
     .. code:: shell
 
-        mpirun -np how_many_threads amr3d.GNU.MPI.ex inputs.3d.flow_past_sphere
+        mpirun -np how_many_processes amr3d.GNU.MPI.ex inputs.3d.flow_past_sphere
 
 This code typically generates subfolders in the current folder that are named ``plt00000``, ``plt00010``, etc, and ``chk00000``, ``chk00010``, etc. These are called plotfiles and checkpoint files. The plotfiles are used for visualization of derived fields; the checkpoint files are used for restarting the code.
 
@@ -225,7 +225,7 @@ The above parameters are designed for the immersed boundary (IB) method. Additio
 Among the above parameters, array-type parameters are used to specify parameters for multiple particles individually, or define particle positions via an init file (e.g., a precomputed position data file).
 If particle positions are provided through an external file, other array-type parameters only need to provide a single value, which will be applied to all particles uniformly.
 
-example inputs file as blow :
+example inputs file as below :
 
 ::
 

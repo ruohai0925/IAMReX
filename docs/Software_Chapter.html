@@ -113,7 +113,7 @@
              
   <section id="scholarly-effort-of-iamrex">
 <h1>Scholarly effort of IAMReX<a class="headerlink" href="#scholarly-effort-of-iamrex" title="Link to this heading"></a></h1>
-<p>IAMeX represents a significant enhancement to the baseline IAMR (Incompressible Adaptive Mesh Refinement) code, introducing advanced multi-physics capabilities for complex multi-phase flow and fluid-solid interaction simulations. This analysis identifies and summarizes the key innovations and contributions that distinguish IAMeX from the standard IAMR implementation.</p>
+<p>IAMReX represents a significant enhancement to the baseline IAMR (Incompressible Adaptive Mesh Refinement) code, introducing advanced multi-physics capabilities for complex multi-phase flow and fluid-solid interaction simulations. This analysis identifies and summarizes the key innovations and contributions that distinguish IAMeX from the standard IAMR implementation.</p>
 <section id="i-two-enhanced-time-advancement-methods">
 <h2>I. Two Enhanced Time Advancement Methods<a class="headerlink" href="#i-two-enhanced-time-advancement-methods" title="Link to this heading"></a></h2>
 <section id="new-specialized-advance-functions">
@@ -125,7 +125,7 @@
 <li><p><strong>Function</strong>: <code class="docutils literal notranslate"><span class="pre">NavierStokes::advance_semistaggered_twophase_ls()</span></code></p></li>
 <li><p><strong>Purpose</strong>: Sharp interface tracking for immiscible two-phase flows</p></li>
 <li><p><strong>Key Features</strong>:
-- Level set field evolution with both non-conservative and convervative advection schemes
+- Level set field evolution with both non-conservative and conservative advection schemes
 - Level-by-level reinitialization functions for conserving mass and avoid shape distortion
 - Interface-dependent density and viscosity updates
 - Heaviside function computation for material properties</p></li>
@@ -267,8 +267,8 @@
 </section>
 <section id="core-architecture-of-particle-collision">
 <h3>Core Architecture of Particle Collision<a class="headerlink" href="#core-architecture-of-particle-collision" title="Link to this heading"></a></h3>
-<section id="primary-classes-coliision">
-<h4>Primary Classes (<strong>Coliision</strong>)<a class="headerlink" href="#primary-classes-coliision" title="Link to this heading"></a></h4>
+<section id="primary-classes-collision">
+<h4>Primary Classes (<strong>Collision</strong>)<a class="headerlink" href="#primary-classes-collision" title="Link to this heading"></a></h4>
 <ul class="simple">
 <li><p><strong>``ParticleCollision``</strong>: Main collision management</p></li>
 <li><p><strong>``CollisionParticle``</strong>: Particle representation for collisions</p></li>

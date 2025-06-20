@@ -1,8 +1,7 @@
-
 Scholarly effort of IAMReX
 ==========================
 
-IAMeX represents a significant enhancement to the baseline IAMR (Incompressible Adaptive Mesh Refinement) code, introducing advanced multi-physics capabilities for complex multi-phase flow and fluid-solid interaction simulations. This analysis identifies and summarizes the key innovations and contributions that distinguish IAMeX from the standard IAMR implementation.
+IAMReX represents a significant enhancement to the baseline IAMR (Incompressible Adaptive Mesh Refinement) code, introducing advanced multi-physics capabilities for complex multi-phase flow and fluid-solid interaction simulations. This analysis identifies and summarizes the key innovations and contributions that distinguish IAMeX from the standard IAMR implementation.
 
 I. Two Enhanced Time Advancement Methods
 ----------------------------------------
@@ -17,7 +16,7 @@ IAMeX introduces two distinct time advancement methods, each targeting specific 
 - **Function**: ``NavierStokes::advance_semistaggered_twophase_ls()``
 - **Purpose**: Sharp interface tracking for immiscible two-phase flows
 - **Key Features**:
-  - Level set field evolution with both non-conservative and convervative advection schemes
+  - Level set field evolution with both non-conservative and conservative advection schemes
   - Level-by-level reinitialization functions for conserving mass and avoid shape distortion
   - Interface-dependent density and viscosity updates
   - Heaviside function computation for material properties
@@ -137,7 +136,7 @@ GPU Acceleration
 Core Architecture of Particle Collision
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Primary Classes (**Coliision**)
+Primary Classes (**Collision**)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 - **``ParticleCollision``**: Main collision management
 - **``CollisionParticle``**: Particle representation for collisions
