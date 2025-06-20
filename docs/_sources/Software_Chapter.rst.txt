@@ -68,8 +68,8 @@ Primary Classes (**Particle**)
 - ``kernel``: Individual particle data structure
 - ``Particles``: High-level particle system interface
 
-Particle Data Structure ( **kernel** )
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Particle Data Structure (**Kernel**)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: cpp
 

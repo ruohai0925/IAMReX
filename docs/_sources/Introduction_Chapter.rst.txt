@@ -15,7 +15,7 @@ Key software and algorithmic features of IAMR include:
 
 * Particle Collision Algorithms with Discrete Element Method
 
-Figures
+Sample Cases
 ------------------
 
 .. figure:: ./GettingStarted/RSV.jpeg
@@ -23,14 +23,14 @@ Figures
     :alt:  Profiles of drop interface in the RSV problem at t/T=1 after one rotation. Black line: Analytical Solution; Red line: 64*64; Blue line: 128*128; Green line: 256*256 
     :width: 5.00000in
 
-    Profiles of drop interface in the RSV problem at t/T=1 after one rotation. Black line: Analytical Solution; Red line: 64*64; Blue line: 128*128; Green line: 256*256
+    Profiles of drop interface in the Reverse Single Vortex (RSV) problem at t/T=1 after one rotation. Black line: Analytical Solution; Red line: 64*64; Blue line: 128*128; Green line: 256*256
 
 .. figure:: ./GettingStarted/IAMR_LSAMR.png
     :align: center
-    :alt:  (a) Density profile at t/T=2.42 using LS method. (b) Density profile at t/T=2.42 using IAMR convective scheme. 
+    :alt:  (a) Density profile at t/T=2.42 using Level Set (LS) method. (b) Density profile at t/T=2.42 using IAMReX convective scheme. 
     :width: 5.00000in
 
-    Density profile: a. Density profile at t/T=2.42 using LS method. b. Density profile at t/T=2.42 using IAMR convective scheme.
+    Density profile: a. Density profile at t/T=2.42 using LS method. b. Density profile at t/T=2.42 using IAMReX convective scheme.
 
 .. figure:: ./GettingStarted/RT_tip.png
     :align: center
