@@ -8,7 +8,7 @@ Validation Cases
 Particle Volume Fraction (PVF)
 ------------------------------
 
-The particle volume fraction (PVF), which joins the calculation of free motion updates, is introduced and validated in this session. The PVF is approximated by the signed-distance level-set function :math:`\phi` of the fluid-particle interface. The level-set function :math:`\phi` is located at cell nodes and is calculated at the eight corners of each cell. The symbol of :math:`\phi` as well as the intersected interface is shown in :ref:`figPvfLevelSet`. Here, :math:`\phi` is negative inside the particle and positive outside the particle.
+The particle volume fraction (PVF), which joins the calculation of free motion updates, is introduced and validated in this session. The PVF is approximated by the signed-distance level-set function :math:`\phi` of the fluid-particle interface. The level-set function :math:`\phi` is located at cell nodes and is calculated at the eight corners of each cell. The symbol of :math:`\phi` as well as the intersected interface is shown in :numref:`figPvfLevelSet`. Here, :math:`\phi` is negative inside the particle and positive outside the particle.
 
 .. _figPvfLevelSet:
 
@@ -35,7 +35,7 @@ where :math:`H` is the Heaviside function, defined by:
    1, & \phi > 0
    \end{cases}
 
-On the right-hand side of equation :math:`\alpha_{i,j,k}`, the value of :math:`\phi` for each cell corner depends on the location of the fluid-particle interface. When the shape of the particle surface is analytically given, the :math:`\phi` value can be determined by calculating the Euclidean distance from the corner point of the cell to the particle surface. The calculation of PVF is then transformed from an exact integral to a numerical integral. As shown in :ref:`figPvfCase`, the cell value of PVF varies from :math:`0` to :math:`1`, depending on the relative position between the cell center and the fluid-particle interface.
+On the right-hand side of equation :math:`\alpha_{i,j,k}`, the value of :math:`\phi` for each cell corner depends on the location of the fluid-particle interface. When the shape of the particle surface is analytically given, the :math:`\phi` value can be determined by calculating the Euclidean distance from the corner point of the cell to the particle surface. The calculation of PVF is then transformed from an exact integral to a numerical integral. As shown in :numref:`figPvfCase`, the cell value of PVF varies from :math:`0` to :math:`1`, depending on the relative position between the cell center and the fluid-particle interface.
 
 .. _figPvfCase:
 
@@ -60,7 +60,7 @@ where :math:`a`, :math:`b`, and :math:`c` are the semi-axes of the ellipsoid. Fo
 
    \phi_{i,j,k}= \sqrt{\frac{(x_{i,j,k}-x_{p})^2}{a^2} + \frac{(y_{i,j,k}-y_{p})^2}{b^2} + \frac{(z_{i,j,k}-z_{p})^2}{c^2}}-1,
 
-for any Eulerian cell :math:`(i,j,k)`. The computational domain is :math:`L_x \times L_y \times L_z = 2 \times 2 \times 2`, the sphere diameter is :math:`D = 0.8`, and the semi-axes of the ellipsoid are set to be :math:`a = 0.4`, :math:`b = 0.6`, :math:`c = 0.4`. The centers of both particles are :math:`(x_p, y_p, z_p)=(1,1,1)`. As shown in :ref:`figPvfAmr`, three levels of AMR grid are used during the PVF calculation, and the particles are enclosed by the finest level.
+for any Eulerian cell :math:`(i,j,k)`. The computational domain is :math:`L_x \times L_y \times L_z = 2 \times 2 \times 2`, the sphere diameter is :math:`D = 0.8`, and the semi-axes of the ellipsoid are set to be :math:`a = 0.4`, :math:`b = 0.6`, :math:`c = 0.4`. The centers of both particles are :math:`(x_p, y_p, z_p)=(1,1,1)`. As shown in :numref:`figPvfAmr`, three levels of AMR grid are used during the PVF calculation, and the particles are enclosed by the finest level.
 
 .. _figPvfAmr:
 
