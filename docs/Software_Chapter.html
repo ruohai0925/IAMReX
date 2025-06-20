@@ -51,19 +51,20 @@
 <li class="toctree-l2"><a class="reference internal" href="Algorithm_Chapter.html">Algorithm of IAMReX</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Scholarly effort of IAMReX</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#i-two-enhanced-time-advancement-methods">I. Two Enhanced Time Advancement Methods</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#new-specialized-advance-functions">New Specialized Advance Functions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#two-phase-flow-with-level-set-method">1. Two-Phase Flow with Level Set Method</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#fluid-structure-interaction-with-diffused-immersed-boundary-method-dibm-and-particle-collision">2. Fluid-Structure Interaction with Diffused Immersed Boundary Method (DIBM) and Particle Collision</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#ii-level-set-interface-tracking">II. Level Set Interface Tracking</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#ii-level-set-method">II. Level Set Method</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#enhanced-state-management">Enhanced State Management</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#key-computational-functions">Key Computational Functions</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#level-set-methodology">Level Set Methodology</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#features">Features</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#iii-dibm-and-particle-collision">III. DIBM and Particle Collision</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#core-architecture-of-dibm">Core Architecture of DIBM</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#key-computational-functions-ibm">Key Computational Functions (<strong>IBM</strong>)</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#advanced-features">Advanced Features</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id1">Key Computational functions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id2">Features</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#core-architecture-of-particle-collision">Core Architecture of Particle Collision</a></li>
 </ul>
 </li>
@@ -116,11 +117,9 @@
 <p>IAMReX represents a significant enhancement to the baseline IAMR (Incompressible Adaptive Mesh Refinement) code, introducing advanced multi-physics capabilities for complex multi-phase flow and fluid-solid interaction simulations. This analysis identifies and summarizes the key innovations and contributions that distinguish IAMeX from the standard IAMR implementation.</p>
 <section id="i-two-enhanced-time-advancement-methods">
 <h2>I. Two Enhanced Time Advancement Methods<a class="headerlink" href="#i-two-enhanced-time-advancement-methods" title="Link to this heading"></a></h2>
-<section id="new-specialized-advance-functions">
-<h3>New Specialized Advance Functions<a class="headerlink" href="#new-specialized-advance-functions" title="Link to this heading"></a></h3>
 <p>IAMeX introduces two distinct time advancement methods, each targeting specific multi-physics scenarios:</p>
 <section id="two-phase-flow-with-level-set-method">
-<h4>1. Two-Phase Flow with Level Set Method<a class="headerlink" href="#two-phase-flow-with-level-set-method" title="Link to this heading"></a></h4>
+<h3>1. Two-Phase Flow with Level Set Method<a class="headerlink" href="#two-phase-flow-with-level-set-method" title="Link to this heading"></a></h3>
 <ul class="simple">
 <li><p><strong>Function</strong>: <code class="docutils literal notranslate"><span class="pre">NavierStokes::advance_semistaggered_twophase_ls()</span></code></p></li>
 <li><p><strong>Purpose</strong>: Sharp interface tracking for immiscible two-phase flows</p></li>
@@ -132,7 +131,7 @@
 </ul>
 </section>
 <section id="fluid-structure-interaction-with-diffused-immersed-boundary-method-dibm-and-particle-collision">
-<h4>2. Fluid-Structure Interaction with Diffused Immersed Boundary Method (DIBM) and Particle Collision<a class="headerlink" href="#fluid-structure-interaction-with-diffused-immersed-boundary-method-dibm-and-particle-collision" title="Link to this heading"></a></h4>
+<h3>2. Fluid-Structure Interaction with Diffused Immersed Boundary Method (DIBM) and Particle Collision<a class="headerlink" href="#fluid-structure-interaction-with-diffused-immersed-boundary-method-dibm-and-particle-collision" title="Link to this heading"></a></h3>
 <ul class="simple">
 <li><p><strong>Function</strong>: <code class="docutils literal notranslate"><span class="pre">NavierStokes::advance_semistaggered_fsi_diffusedib()</span></code></p></li>
 <li><p><strong>Purpose</strong>: Robust fluid-solid coupling without mesh conformity</p></li>
@@ -143,9 +142,8 @@
 </ul>
 </section>
 </section>
-</section>
-<section id="ii-level-set-interface-tracking">
-<h2>II. Level Set Interface Tracking<a class="headerlink" href="#ii-level-set-interface-tracking" title="Link to this heading"></a></h2>
+<section id="ii-level-set-method">
+<h2>II. Level Set Method<a class="headerlink" href="#ii-level-set-method" title="Link to this heading"></a></h2>
 <section id="enhanced-state-management">
 <h3>Enhanced State Management<a class="headerlink" href="#enhanced-state-management" title="Link to this heading"></a></h3>
 <ul class="simple">
@@ -169,8 +167,8 @@
 <li><p><code class="docutils literal notranslate"><span class="pre">NavierStokesBase::mass_fix()</span></code>: Mass fix subroutine during reinitialization</p></li>
 </ul>
 </section>
-<section id="level-set-methodology">
-<h3>Level Set Methodology<a class="headerlink" href="#level-set-methodology" title="Link to this heading"></a></h3>
+<section id="features">
+<h3>Features<a class="headerlink" href="#features" title="Link to this heading"></a></h3>
 <ul class="simple">
 <li><p><strong>Sharp Interface</strong>: Maintains interface thickness of 1.5~2 grid cells</p></li>
 <li><p><strong>Mass Conservation</strong>: Conservative advection schemes</p></li>
@@ -205,8 +203,8 @@
 </div>
 </section>
 </section>
-<section id="key-computational-functions-ibm">
-<h3>Key Computational Functions (<strong>IBM</strong>)<a class="headerlink" href="#key-computational-functions-ibm" title="Link to this heading"></a></h3>
+<section id="id1">
+<h3>Key Computational functions<a class="headerlink" href="#id1" title="Link to this heading"></a></h3>
 <section id="fluid-solid-coupling">
 <h4>1. Fluid-Solid Coupling<a class="headerlink" href="#fluid-solid-coupling" title="Link to this heading"></a></h4>
 <ul class="simple">
@@ -246,8 +244,8 @@
 </ul>
 </section>
 </section>
-<section id="advanced-features">
-<h3>Advanced Features<a class="headerlink" href="#advanced-features" title="Link to this heading"></a></h3>
+<section id="id2">
+<h3>Features<a class="headerlink" href="#id2" title="Link to this heading"></a></h3>
 <section id="marker-distribution">
 <h4>Marker Distribution<a class="headerlink" href="#marker-distribution" title="Link to this heading"></a></h4>
 <ul class="simple">

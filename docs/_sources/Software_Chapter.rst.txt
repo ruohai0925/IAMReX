@@ -6,13 +6,10 @@ IAMReX represents a significant enhancement to the baseline IAMR (Incompressible
 I. Two Enhanced Time Advancement Methods
 ----------------------------------------
 
-New Specialized Advance Functions
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
 IAMeX introduces two distinct time advancement methods, each targeting specific multi-physics scenarios:
 
 1. Two-Phase Flow with Level Set Method
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 - **Function**: ``NavierStokes::advance_semistaggered_twophase_ls()``
 - **Purpose**: Sharp interface tracking for immiscible two-phase flows
 - **Key Features**:
@@ -22,7 +19,7 @@ IAMeX introduces two distinct time advancement methods, each targeting specific 
   - Heaviside function computation for material properties
 
 2. Fluid-Structure Interaction with Diffused Immersed Boundary Method (DIBM) and Particle Collision
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 - **Function**: ``NavierStokes::advance_semistaggered_fsi_diffusedib()``
 - **Purpose**: Robust fluid-solid coupling without mesh conformity
 - **Key Features**:
@@ -30,8 +27,8 @@ IAMeX introduces two distinct time advancement methods, each targeting specific 
   - 6-DOF rigid body dynamics
   - Collision detection and resolution
 
-II. Level Set Interface Tracking
---------------------------------
+II. Level Set Method
+--------------------
 
 Enhanced State Management
 ^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -52,8 +49,8 @@ Key Computational Functions
 - ``NavierStokesBase::rk_second_reinit()``: Second RK step during reinitialization
 - ``NavierStokesBase::mass_fix()``: Mass fix subroutine during reinitialization
 
-Level Set Methodology
-^^^^^^^^^^^^^^^^^^^^^
+Features
+^^^^^^^^
 - **Sharp Interface**: Maintains interface thickness of 1.5~2 grid cells
 - **Mass Conservation**: Conservative advection schemes
 - **Reinitialization**: Periodic distance function correction
@@ -85,8 +82,8 @@ Particle Data Structure ( **kernel** )
         Vector<Real> phiK, thetaK;              // Spherical marker distribution
     }
 
-Key Computational Functions (**IBM**)
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Key Computational functions
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 1. Fluid-Solid Coupling
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -118,8 +115,8 @@ Key Computational Functions (**IBM**)
 - **Collision Integration**: Seamless coupling with collision forces
 - ``nodal_phi_to_pvf()``: Particle volume fraction calculation
 
-Advanced Features
-^^^^^^^^^^^^^^^^^
+Features
+^^^^^^^^
 
 Marker Distribution
 ~~~~~~~~~~~~~~~~~~~
