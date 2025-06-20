@@ -33,11 +33,17 @@ Fluid Equations
 
 Conservation of fluid mass:
 
-.. math:: \frac{\partial \rho}{\partial t} + \nabla \cdot (\rho U)  = 0
+.. math::
+   :label: eq:div
+
+   \frac{\partial \rho}{\partial t} + \nabla \cdot (\rho U)  = 0
 
 Conservation of fluid momentum:
 
-.. math:: \frac{ \partial (\rho U)}{\partial t}
+.. math::
+   :label: eq:ns
+
+   \frac{ \partial (\rho U)}{\partial t}
    + \nabla \cdot (\rho U U) + \nabla p = \nabla \cdot \tau + {\bf H}_U
 
 Velocity constraint:
@@ -56,6 +62,13 @@ for conservatively advected scalars and
 .. math:: \frac{\partial s}{\partial t} + U \cdot \nabla s  = \nabla \cdot \beta \nabla s + H_s
 
 for passively advected scalars. In general, one could advect an arbitrary number of scalars.
+
+Level set equation:
+
+.. math::
+   :label: eq:phi
+
+   \frac{\partial \phi}{\partial t} + U \cdot \nabla \phi = 0
 
 IAMReX has the ability to incorporate general, user-defined external forcing and source terms. The default behaviour is that
 :math:`H_s=0`, and :math:`{\bf H}_U` represents gravitational forces, with :math:`{\bf H}_U= (0 , 0 , -\rho g )` in 3d and

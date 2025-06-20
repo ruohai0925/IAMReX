@@ -105,7 +105,7 @@ The numerical errors decrease with the increase of the :math:`d/h`, where :math:
 
 Lastly, it is noted that this method is also applicable when multiple particles are close to each other or their surfaces are in direct contact. Because the PVF calculation is a separate operation for each particle, the total volume fraction is not needed as long as the Eulerian force considers the effects of all particles .
 
-Flow Past Fixed Sphere
+Flow Past Sphere
 ----------------------
 
 .. figure:: ./Results/FlowPastSphere.png
@@ -114,7 +114,7 @@ Flow Past Fixed Sphere
 
     The schematic of the flow passing through the spherical particles
 
-we validate the accuracy and efficacy of our adaptive solver by simulating a spherical particle in uniform flow with different particle Reynolds numbers. The diameter of the particle is :math:`D_p = 1`, the computational domain is :math:`L_x \times L_y \times L_z = 20D_p \times 10D_p \times 10D_p`, the distance of the particle from the inlet is :math:`d = 5D_p` and located in the center of the yz plane. The inlet and outlet boundaries are applied in the x direction and the inlet velocity :math:`U` is :math:`1m/s`. Both y and z directions are periodic boundaries. 
+We validate the accuracy and efficacy of our adaptive solver by simulating a spherical particle in uniform flow with different particle Reynolds numbers. The diameter of the particle is :math:`D_p = 1`, the computational domain is :math:`L_x \times L_y \times L_z = 20D_p \times 10D_p \times 10D_p`, the distance of the particle from the inlet is :math:`d = 5D_p` and located in the center of the yz plane. The inlet and outlet boundaries are applied in the x direction and the inlet velocity :math:`U` is :math:`1m/s`. Both y and z directions are periodic boundaries. 
 
 The influence of AMR on the simulation results is investigated by using the subcycling method with different levels. As shown in Fig.
 

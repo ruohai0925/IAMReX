@@ -49,7 +49,7 @@
 <li class="toctree-l1"><a class="reference internal" href="Getting_Started.html">Getting Started</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Validation Cases</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#particle-volume-fraction-pvf">Particle Volume Fraction (PVF)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#flow-past-fixed-sphere">Flow Past Fixed Sphere</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#flow-past-sphere">Flow Past Sphere</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#cluster-of-monodisperse-particles">Cluster of monodisperse particles</a></li>
 </ul>
 </li>
@@ -196,8 +196,8 @@
 <p>The numerical errors decrease with the increase of the <span class="math notranslate nohighlight">\(d/h\)</span>, where <span class="math notranslate nohighlight">\(h\)</span> is the Cartesian grid spacing on level <span class="math notranslate nohighlight">\(0\)</span>. If the resolution on the finest level keeps unchanged, we validated that the results of a three-level grid are the same as those of the corresponding single-level grid. In addition, our results show the second-order convergence and agree well with the results in kempe. It also matches the overall second-order accuracy of the basic fluid solver.</p>
 <p>Lastly, it is noted that this method is also applicable when multiple particles are close to each other or their surfaces are in direct contact. Because the PVF calculation is a separate operation for each particle, the total volume fraction is not needed as long as the Eulerian force considers the effects of all particles .</p>
 </section>
-<section id="flow-past-fixed-sphere">
-<h2>Flow Past Fixed Sphere<a class="headerlink" href="#flow-past-fixed-sphere" title="Link to this heading"></a></h2>
+<section id="flow-past-sphere">
+<h2>Flow Past Sphere<a class="headerlink" href="#flow-past-sphere" title="Link to this heading"></a></h2>
 <figure class="align-center" id="id4">
 <a class="reference internal image-reference" href="_images/FlowPastSphere.png"><img alt="_images/FlowPastSphere.png" src="_images/FlowPastSphere.png" style="width: 5.0in;" />
 </a>
@@ -205,7 +205,7 @@
 <p><span class="caption-text">The schematic of the flow passing through the spherical particles</span><a class="headerlink" href="#id4" title="Link to this image"></a></p>
 </figcaption>
 </figure>
-<p>we validate the accuracy and efficacy of our adaptive solver by simulating a spherical particle in uniform flow with different particle Reynolds numbers. The diameter of the particle is <span class="math notranslate nohighlight">\(D_p = 1\)</span>, the computational domain is <span class="math notranslate nohighlight">\(L_x \times L_y \times L_z = 20D_p \times 10D_p \times 10D_p\)</span>, the distance of the particle from the inlet is <span class="math notranslate nohighlight">\(d = 5D_p\)</span> and located in the center of the yz plane. The inlet and outlet boundaries are applied in the x direction and the inlet velocity <span class="math notranslate nohighlight">\(U\)</span> is <span class="math notranslate nohighlight">\(1m/s\)</span>. Both y and z directions are periodic boundaries.</p>
+<p>We validate the accuracy and efficacy of our adaptive solver by simulating a spherical particle in uniform flow with different particle Reynolds numbers. The diameter of the particle is <span class="math notranslate nohighlight">\(D_p = 1\)</span>, the computational domain is <span class="math notranslate nohighlight">\(L_x \times L_y \times L_z = 20D_p \times 10D_p \times 10D_p\)</span>, the distance of the particle from the inlet is <span class="math notranslate nohighlight">\(d = 5D_p\)</span> and located in the center of the yz plane. The inlet and outlet boundaries are applied in the x direction and the inlet velocity <span class="math notranslate nohighlight">\(U\)</span> is <span class="math notranslate nohighlight">\(1m/s\)</span>. Both y and z directions are periodic boundaries.</p>
 <p>The influence of AMR on the simulation results is investigated by using the subcycling method with different levels. As shown in Fig.</p>
 <figure class="align-center" id="id5">
 <a class="reference internal image-reference" href="_images/FlowPastSphereResult.png"><img alt="_images/FlowPastSphereResult.png" src="_images/FlowPastSphereResult.png" style="width: 5.0in;" />

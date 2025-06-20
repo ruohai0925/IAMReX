@@ -1,4 +1,3 @@
-
 Algorithm and Software Details
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -7,3 +6,4 @@ Algorithm and Software Details
 
    Algorithm_Chapter
    Software_Chapter
+   LevelSet
