@@ -1,7 +1,7 @@
 .. _LevelSetMethod:
 
 Level Set Method
-===============
+================
 
 The level set method is a powerful tool for capturing the interface between two immiscible fluids. It is based on the idea of a signed distance function, which is a function that assigns a signed distance to each point in the domain. The level set function is defined as follows:
 
@@ -12,7 +12,7 @@ The level set method is a powerful tool for capturing the interface between two 
 where :math:`\phi` is the level set function, :math:`\mathbf{x}` is the position vector, and :math:`t` is the time.
 
 Material Properties
-------------------
+-------------------
 
 The density and viscosity are defined as functions of the level set field:
 
@@ -36,7 +36,7 @@ where :math:`H(\phi)` is the Heaviside function:
    \end{cases}
 
 Time Discretization
-------------------
+-------------------
 
 For a single level, the momentum equation :eq:`eq:ns` is advanced by a fractional step method with the approximate projection to enforce the incompressibility condition (equation :eq:`eq:div`). The LS advection equation :eq:`eq:phi` is updated using the Godunov scheme.
 
@@ -56,9 +56,9 @@ At the beginning of each time advancement of level :math:`l`, the velocity :math
    .. math::
       :label: eq:viscsolve
 
-      \begin{aligned} 
-      &\boldsymbol{u^{*,n+1}}-\frac{\Delta t}{2\rho(\phi^{n+1/2})Re}{\nabla} \cdot {\mu(\phi^{n+1})}{\nabla}\boldsymbol{u^{*,n+1}} = 
-      \boldsymbol{u^n}-\Delta t \left[\nabla \cdot (\boldsymbol{uu})\right]^{n+1/2} + \\ &\frac{\Delta t}{\rho(\phi^{n+1/2})}\bigg[-\nabla p^{n-1/2}+ 
+      \begin{aligned}
+      &\boldsymbol{u^{*,n+1}}-\frac{\Delta t}{2\rho(\phi^{n+1/2})Re}{\nabla} \cdot {\mu(\phi^{n+1})}{\nabla}\boldsymbol{u^{*,n+1}} =
+      \boldsymbol{u^n}-\Delta t \left[\nabla \cdot (\boldsymbol{uu})\right]^{n+1/2} + \\ &\frac{\Delta t}{\rho(\phi^{n+1/2})}\bigg[-\nabla p^{n-1/2}+
       \frac{1}{2Re}{\nabla}\cdot{\mu(\phi^{n})}{\nabla}\boldsymbol{u^n} + \rho(\phi^{n+1/2}) \frac{z}{Fr^2} -  \frac{1}{We}\kappa(\phi^{n+1/2})\delta(x^{n+1/2})\boldsymbol{n}\bigg].
       \end{aligned}
 
@@ -74,25 +74,25 @@ At the beginning of each time advancement of level :math:`l`, the velocity :math
 3. **Apply the projection method** to obtain the pressure and a solenoidal velocity field. To conduct the level projection, a temporary variable :math:`\boldsymbol{V}` is defined as
 
    .. math::
-      :label: eq:ns_lp1
+      :label: eq:ns_lp_ls1
 
       \boldsymbol{V} =  \frac{\boldsymbol{{u^{*,n+1}}}}{\Delta t} + \frac{1}{\rho(\phi^{n+1/2})} \nabla p^{n-1/2}
 
    Then the updated pressure :math:`p^{n+1/2}` is calculated by
 
    .. math::
-      :label: eq:ns_lp2
+      :label: eq:ns_lp_ls2
 
       L^{cc,\mathrm{level}}_{\rho^{n+1/2}} p^{n+1/2} =  \nabla \cdot \boldsymbol{V}
 
    where :math:`L^{cc,\mathrm{level}}_{\rho^{n+1/2}}p^{n+1/2}` is a density-weighted approximation to :math:`\nabla \cdot (1/\rho^{n+1/2} \nabla p^{n+1/2})`. Finally, the velocity can be calculated as
 
    .. math::
-      :label: eq:ns_lp3
+      :label: eq:ns_lp_ls3
 
       \boldsymbol{{u^{n+1}}} = \Delta t \left(\boldsymbol{V} - \frac{1}{\rho^{n+1/2}} \nabla p^{n+1/2}\right)
 
-   As defined in the AMReX framework, :math:`\nabla \cdot` and :math:`\nabla` are the cell-centered level divergence operator :math:`D^{cc,\mathrm{level}}` and level gradient operator :math:`G^{cc,\mathrm{level}}`, respectively. The level gradient operator :math:`G^{cc,\mathrm{level}}` is not the minus transpose of the level divergence operator :math:`D^{cc,\mathrm{level}}`, i.e., :math:`G^{cc,\mathrm{level}} \neq -(D^{cc,\mathrm{level}})^T`. As a result, the idempotency of the approximate projection :math:`\boldsymbol{P} = I - G^{cc,\mathrm{level}}(L^{cc,\mathrm{level}})^{-1}D^{cc,\mathrm{level}}` is not ensured, i.e., :math:`\boldsymbol{P}^{2} \neq \boldsymbol{P}`. Yet, this nonidempotent approximate projection is stable and appears to be well-behaved in various numerical tests and practical applications. Notably, for a uniform single grid with periodic boundary conditions, Lai theoretically proved that this approximate projection method is stable, in that :math:`\|\boldsymbol{P}\| \leq 1`. It should be noted that the approximate projection is applied to the intermediate velocity :math:`\boldsymbol{{u^{*,n+1}}}` (equation :eq:`eq:ns_lp1`). Compared with the form that projects the increment velocity :math:`\boldsymbol{u^{*,n+1}}-\boldsymbol{u^n}`, e.g. as that used in other methods, the projection method used here can reduce the accumulation of pressure errors and lead to a more stable algorithm. The effectiveness and stability of this approximate projection has been validated through various numerical tests.
+   As defined in the AMReX framework, :math:`\nabla \cdot` and :math:`\nabla` are the cell-centered level divergence operator :math:`D^{cc,\mathrm{level}}` and level gradient operator :math:`G^{cc,\mathrm{level}}`, respectively. The level gradient operator :math:`G^{cc,\mathrm{level}}` is not the minus transpose of the level divergence operator :math:`D^{cc,\mathrm{level}}`, i.e., :math:`G^{cc,\mathrm{level}} \neq -(D^{cc,\mathrm{level}})^T`. As a result, the idempotency of the approximate projection :math:`\boldsymbol{P} = I - G^{cc,\mathrm{level}}(L^{cc,\mathrm{level}})^{-1}D^{cc,\mathrm{level}}` is not ensured, i.e., :math:`\boldsymbol{P}^{2} \neq \boldsymbol{P}`. Yet, this nonidempotent approximate projection is stable and appears to be well-behaved in various numerical tests and practical applications. Notably, for a uniform single grid with periodic boundary conditions, Lai theoretically proved that this approximate projection method is stable, in that :math:`\|\boldsymbol{P}\| \leq 1`. It should be noted that the approximate projection is applied to the intermediate velocity :math:`\boldsymbol{{u^{*,n+1}}}` (equation :eq:`eq:ns_lp_ls1`). Compared with the form that projects the increment velocity :math:`\boldsymbol{u^{*,n+1}}-\boldsymbol{u^n}`, e.g. as that used in other methods, the projection method used here can reduce the accumulation of pressure errors and lead to a more stable algorithm. The effectiveness and stability of this approximate projection has been validated through various numerical tests.
 
 4. **Reinitialize the LS function** :math:`\phi` to maintain :math:`\phi` as a signed distance function of the interface and guarantee the conservation of the mass of the two phases. In this step, a temporary LS function :math:`d(\boldsymbol{x},\tau)` is updated iteratively using the following pseudo evolution equation:
 
@@ -121,6 +121,6 @@ At last, we give a summary of the single-level advancement algorithm as follows.
 
 1. Advance the LS function using equation :eq:`eq:s0phin1`
 2. Solve the intermediate velocity using equation :eq:`eq:viscsolve`
-3. Apply the projection method to update the pressure and velocity field following equations :eq:`eq:ns_lp1`--:eq:`eq:ns_lp3`
+3. Apply the projection method to update the pressure and velocity field following equations :eq:`eq:ns_lp_ls1`--:eq:`eq:ns_lp_ls3`
 4. Re-initialize the LS function on the single level using equations :eq:`eq:ns_reinit1`--:eq:`eq:ns_reinit3`
 

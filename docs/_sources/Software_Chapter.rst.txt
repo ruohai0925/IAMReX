@@ -49,8 +49,8 @@ Key Computational Functions
 - ``NavierStokesBase::rk_second_reinit()``: Second RK step during reinitialization
 - ``NavierStokesBase::mass_fix()``: Mass fix subroutine during reinitialization
 
-Features
-^^^^^^^^
+Features(**Level Set**)
+^^^^^^^^^^^^^^^^^^^^^^^
 - **Sharp Interface**: Maintains interface thickness of 1.5~2 grid cells
 - **Mass Conservation**: Conservative advection schemes
 - **Reinitialization**: Periodic distance function correction
@@ -82,8 +82,8 @@ Particle Data Structure (**Kernel**)
         Vector<Real> phiK, thetaK;              // Spherical marker distribution
     }
 
-Key Computational functions
-^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Key Computational functions(**IBM**)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 1. Fluid-Solid Coupling
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -109,14 +109,14 @@ Key Computational functions
 4. Particle Dynamics
 ~~~~~~~~~~~~~~~~~~~~
 - ``mParticle::UpdateParticles()``: 6-DOF motion integration
-- **Constraint Handling**: 
+- **Constraint Handling**:
   - Translation locks (``TL[i]``): 0=fixed, 1=prescribed, 2=free
   - Rotation locks (``RL[i]``): Similar constraint system
 - **Collision Integration**: Seamless coupling with collision forces
 - ``nodal_phi_to_pvf()``: Particle volume fraction calculation
 
-Features
-^^^^^^^^
+Features(**IBM**)
+^^^^^^^^^^^^^^^^^
 
 Marker Distribution
 ~~~~~~~~~~~~~~~~~~~
@@ -135,10 +135,10 @@ Core Architecture of Particle Collision
 
 Primary Classes (**Collision**)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-- **``ParticleCollision``**: Main collision management
-- **``CollisionParticle``**: Particle representation for collisions
-- **``CollisionPair``**: Collision pair structure
-- **``CollisionCell``**: Spatial hashing cell
+- ``ParticleCollision``: Main collision management
+- ``CollisionParticle``: Particle representation for collisions
+- ``CollisionPair``: Collision pair structure
+- ``CollisionCell``: Spatial hashing cell
 
 Collision Detection Algorithm
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

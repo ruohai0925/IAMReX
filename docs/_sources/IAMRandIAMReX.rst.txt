@@ -7,7 +7,7 @@ IAMR (Base)
 - Standard incompressible Navier-Stokes
 
 IAMReX (Extended)
-----------------
+-----------------
 - ``NUM_STATE_MAX = AMREX_SPACEDIM+5`` (adds level set field)
 - Additional advance methods:
   - ``advance_semistaggered_twophase_ls()``: Two-phase flow with level sets

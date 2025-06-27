@@ -58,13 +58,13 @@
 <li class="toctree-l3"><a class="reference internal" href="#ii-level-set-method">II. Level Set Method</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#enhanced-state-management">Enhanced State Management</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#key-computational-functions">Key Computational Functions</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#features">Features</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#features-level-set">Features(<strong>Level Set</strong>)</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#iii-dibm-and-particle-collision">III. DIBM and Particle Collision</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#core-architecture-of-dibm">Core Architecture of DIBM</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id1">Key Computational functions</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id2">Features</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#key-computational-functions-ibm">Key Computational functions(<strong>IBM</strong>)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#features-ibm">Features(<strong>IBM</strong>)</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#core-architecture-of-particle-collision">Core Architecture of Particle Collision</a></li>
 </ul>
 </li>
@@ -167,8 +167,8 @@
 <li><p><code class="docutils literal notranslate"><span class="pre">NavierStokesBase::mass_fix()</span></code>: Mass fix subroutine during reinitialization</p></li>
 </ul>
 </section>
-<section id="features">
-<h3>Features<a class="headerlink" href="#features" title="Link to this heading"></a></h3>
+<section id="features-level-set">
+<h3>Features(<strong>Level Set</strong>)<a class="headerlink" href="#features-level-set" title="Link to this heading"></a></h3>
 <ul class="simple">
 <li><p><strong>Sharp Interface</strong>: Maintains interface thickness of 1.5~2 grid cells</p></li>
 <li><p><strong>Mass Conservation</strong>: Conservative advection schemes</p></li>
@@ -203,8 +203,8 @@
 </div>
 </section>
 </section>
-<section id="id1">
-<h3>Key Computational functions<a class="headerlink" href="#id1" title="Link to this heading"></a></h3>
+<section id="key-computational-functions-ibm">
+<h3>Key Computational functions(<strong>IBM</strong>)<a class="headerlink" href="#key-computational-functions-ibm" title="Link to this heading"></a></h3>
 <section id="fluid-solid-coupling">
 <h4>1. Fluid-Solid Coupling<a class="headerlink" href="#fluid-solid-coupling" title="Link to this heading"></a></h4>
 <ul class="simple">
@@ -244,8 +244,8 @@
 </ul>
 </section>
 </section>
-<section id="id2">
-<h3>Features<a class="headerlink" href="#id2" title="Link to this heading"></a></h3>
+<section id="features-ibm">
+<h3>Features(<strong>IBM</strong>)<a class="headerlink" href="#features-ibm" title="Link to this heading"></a></h3>
 <section id="marker-distribution">
 <h4>Marker Distribution<a class="headerlink" href="#marker-distribution" title="Link to this heading"></a></h4>
 <ul class="simple">
@@ -268,10 +268,10 @@
 <section id="primary-classes-collision">
 <h4>Primary Classes (<strong>Collision</strong>)<a class="headerlink" href="#primary-classes-collision" title="Link to this heading"></a></h4>
 <ul class="simple">
-<li><p><strong>``ParticleCollision``</strong>: Main collision management</p></li>
-<li><p><strong>``CollisionParticle``</strong>: Particle representation for collisions</p></li>
-<li><p><strong>``CollisionPair``</strong>: Collision pair structure</p></li>
-<li><p><strong>``CollisionCell``</strong>: Spatial hashing cell</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ParticleCollision</span></code>: Main collision management</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">CollisionParticle</span></code>: Particle representation for collisions</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">CollisionPair</span></code>: Collision pair structure</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">CollisionCell</span></code>: Spatial hashing cell</p></li>
 </ul>
 </section>
 <section id="collision-detection-algorithm">
