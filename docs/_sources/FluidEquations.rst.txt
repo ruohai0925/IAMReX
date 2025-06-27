@@ -95,7 +95,7 @@ https://github.com/ruohai0925/IAMReX/issues
 Time Step - Godunov
 ===================
 
-In IAMReX, the canonical projection is applied to solve the fluid equations. Note that we only use the time-centered Godunov advection, and there no longer needs the predictor and corrector steps.
+In IAMReX, the canonical projection is applied to solve the fluid equations. Note that we only use the time-centered Godunov advection :cite:`almgren1998conservative,zeng2022aparallel`, and there no longer needs the predictor and corrector steps.
 
 -  Define the time-centered face-centered (staggered) MAC velocity which is used for advection: :math:`U^{MAC,n+1/2}`
 

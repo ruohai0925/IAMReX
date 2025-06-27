@@ -179,7 +179,7 @@ which is taken to be constant. More sophiticated treatments are possible; if int
 </section>
 <section id="time-step-godunov">
 <h1>Time Step - Godunov<a class="headerlink" href="#time-step-godunov" title="Link to this heading"></a></h1>
-<p>In IAMReX, the canonical projection is applied to solve the fluid equations. Note that we only use the time-centered Godunov advection, and there no longer needs the predictor and corrector steps.</p>
+<p>In IAMReX, the canonical projection is applied to solve the fluid equations. Note that we only use the time-centered Godunov advection <span id="id1">[<a class="reference internal" href="references.html#id16" title="Ann S Almgren, John B Bell, Phillip Colella, Louis H Howell, and Michael L Welcome. A conservative adaptive projection method for the variable density incompressible Navier–Stokes equations. Journal of Computational Physics, 142(1):1–46, 1998.">11</a>, <a class="reference internal" href="references.html#id14" title="Yadong Zeng, Anqing Xuan, Johannes Blaschke, and Lian Shen. A parallel cell-centered adaptive level set framework for efficient simulation of two-phase flows with subcycling and non-subcycling. Journal of Computational Physics, 448:110740, 2022.">12</a>]</span>, and there no longer needs the predictor and corrector steps.</p>
 <ul>
 <li><p>Define the time-centered face-centered (staggered) MAC velocity which is used for advection: <span class="math notranslate nohighlight">\(U^{MAC,n+1/2}\)</span></p></li>
 <li><p>Define the new-time density, <span class="math notranslate nohighlight">\(\rho^{n+1} = \rho^n - \Delta t (\rho^{n+1/2,pred} U^{MAC,n+1/2})\)</span> by setting</p></li>
