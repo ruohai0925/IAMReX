@@ -55,7 +55,10 @@ For example, if we want to compile in the ``FlowPastSphere``, refer to the follo
 
 #. Modify compilation parameters in GNUmakefile.
 
-    The compilation parameters depend on your computing platform. If you use MPI to run your program, then set USE_MPI = TRUE. If you are running the program with Nvidia GPU(CUDA), then set USE_CUDA = TRUE. When using GPU runtime, please make sure your CUDA environment is ok.
+    The compilation parameters depend on your computing platform. If you use MPI to run your program, then set ``USE_MPI = TRUE``. If you are running the program with Nvidia GPU(CUDA), then set ``USE_CUDA = TRUE``. When using GPU runtime, please make sure your CUDA environment is ok.
+
+    Here present an overview of typical MPI and CUDA configurations and environments : `OpenMPI <https://docs.open-mpi.org>`_, `MPICH <https://www.mpich.org/documentation/guides/>`_, `IntelMPI <https://www.intel.com/content/www/us/en/developer/tools/oneapi/mpi-library.html>`_, `CUDA <https://developer.nvidia.com/cuda-toolkit>`_.
+
 
 #. Compile
 
@@ -84,7 +87,35 @@ If you use ``MPI`` to run your program, you can type:
 
         mpirun -np how_many_processes amr3d.GNU.MPI.ex inputs.3d.flow_past_sphere
 
-This code typically generates subfolders in the current folder that are named ``plt00000``, ``plt00010``, etc, and ``chk00000``, ``chk00010``, etc. These are called plotfiles and checkpoint files. The plotfiles are used for visualization of derived fields; the checkpoint files are used for restarting the code.
+This code typically generates subfolders in the current folder that are named ``plt00000``, ``plt00010``, etc, and ``chk00000``, ``chk00010``, etc. These are called **plotfiles** and **checkpoint** files. The plotfiles are used for visualization of derived fields; the checkpoint files are used for restarting the code.
+
+
+Visualization
+--------------
+
+Various tools are available for data reading and processing , you can check `AMReX <https://erf.readthedocs.io/en/latest/Visualization.html>`_ for reference. As for the specific settings and output content, `IAMR <https://amrex-fluids.github.io/IAMR/RunningProblems.html#output-options>`_ provides more details.
+
+**IAMReX currently generates plotfile in the native AMReX format.** The particle data will be generated in the case directory as corresponding CSV files named according to the particle IDs, following the naming convention ``IB_Particle_<ID>.csv``
+
+.. figure:: ./GettingStarted/ParaView_Plotfiles.png
+    :align: center
+    :alt:  To visualize plotfiles, use ParaView to process and display the results.
+    :width: 5.00000in
+
+    To visualize plotfiles, use ParaView to process and display the results.
+
+Plotfiles can include the quantities of several simulation parameters as output(density, gradpx, gradpy, gradpz, x_velocity, y_velocity, z_velocity and tracer). We recommend using ``ParaView`` to process **plotfiles**.
+
+Checkpoints are used to resume simulations. You typically need to specify how often to save checkpoint files. To restart a simulation from a particular checkpoint, you must specify it in the ``restart`` parameters. These settings are usually defined under the ``amr`` field.
+
+::
+
+    # how many timesteps to save
+    amr.check_int = 4000
+    # which check point to restart
+    amr.restart = chk00010
+
+Furthermore, particle data processing scripts are provided herein `IBParticle2VTK <https://github.com/S-Explorer/IBParticle2VTK>`_. These utilities enable conversion of particle **CSV** files to **VTK** format, facilitating further analysis in ParaView.
 
 .. _sec:PhysicsParams:
 
@@ -98,7 +129,7 @@ Key parameters
    :widths: 40 100 20 20
    :header-rows: 1
 
-   * - 
+   * -
      - Description
      - Type
      - Default
@@ -117,16 +148,16 @@ The above parameters are designed for the immersed boundary (IB) method. Additio
    :widths: 40 100 20 20
    :header-rows: 1
 
-   * - 
+   * -
      - Description
      - Type
      - Default
    * - x
-     - particle x position 
+     - particle x position
      - Real Array
      - 0.0
    * - y
-     - particle y position 
+     - particle y position
      - Real Array
      - 0.0
    * - z
@@ -153,15 +184,15 @@ The above parameters are designed for the immersed boundary (IB) method. Additio
      - The initial velocity of the particles in the z direction
      - Real Array
      - 0.0
-   * - omega_x 
+   * - omega_x
      - The initial angular velocity of the particle around the x-axis
      - Real Array
      - 0.0
-   * - omega_y 
+   * - omega_y
      - The initial angular velocity of the particle around the y-axis
      - Real Array
      - 0.0
-   * - omega_z 
+   * - omega_z
      - The initial angular velocity of the particle around the z-axis
      - Real Array
      - 0.0
@@ -220,7 +251,7 @@ The above parameters are designed for the immersed boundary (IB) method. Additio
    * - init
      - particle init file path
      - file path
-     - 
+     -
 
 Among the above parameters, array-type parameters are used to specify parameters for multiple particles individually, or define particle positions via an init file (e.g., a precomputed position data file).
 If particle positions are provided through an external file, other array-type parameters only need to provide a single value, which will be applied to all particles uniformly.
@@ -264,16 +295,16 @@ example inputs file as below :
     #*******************************************************************************
 
     # Number of cells in each coordinate direction at the coarsest level
-    # amr.n_cell 		= 16 8 8 
-    amr.n_cell 		= 256 128 128 
-    # amr.n_cell 		= 288 128 128 
+    # amr.n_cell 		= 16 8 8
+    amr.n_cell 		= 256 128 128
+    # amr.n_cell 		= 288 128 128
     amr.max_grid_size	= 16
     # amr.max_grid_size	= 32
 
     #*******************************************************************************
 
     # Interval (in number of level l timesteps) between regridding
-    amr.regrid_int		= 1 # regrid_int 
+    amr.regrid_int		= 1 # regrid_int
 
     #*******************************************************************************
 
@@ -311,7 +342,7 @@ example inputs file as below :
 
     #*******************************************************************************
 
-    # Viscosity coefficient 
+    # Viscosity coefficient
     ns.vel_visc_coef        = 0.01
 
     #*******************************************************************************
@@ -326,13 +357,13 @@ example inputs file as below :
 
     #*******************************************************************************
 
-    # skip level_projector 
+    # skip level_projector
     ns.skip_level_projector = 0
 
     #*******************************************************************************
 
-    # subcycling vs. non-subcycling 
-    amr.subcycling_mode     = None 
+    # subcycling vs. non-subcycling
+    amr.subcycling_mode     = None
 
     #*******************************************************************************
 
@@ -402,7 +433,7 @@ example inputs file as below :
     #                          #
     ############################
 
-    # particle's location 
+    # particle's location
     # x = p1x p2x p3x ...
     particle_inputs.x = 5.0
     particle_inputs.y = 5.0

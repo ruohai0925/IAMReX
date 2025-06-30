@@ -136,6 +136,7 @@ The theoretical S-N law for calculating the drag coefficient of the shaped parti
 
 which is proposed by Schiller :cite:`schiller1933uber`., and :math:`Re_p = UD_p/\nu` represents the particle Reynolds number. It can be seen from above Fig that the present results under different particle Reynolds numbers are in good agreement with S-N law. The fact that different levels of grid produce the nearly identical results validated the accuracy of our solver on the adaptive grid.
 
+.. _sec:ClusterParticles:
 
 Cluster of monodisperse particles
 ---------------------------------

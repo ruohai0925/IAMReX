@@ -16,6 +16,8 @@
       <script src="_static/documentation_options.js?v=01f34227"></script>
       <script src="_static/doctools.js?v=9bcbadda"></script>
       <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script>window.MathJax = {"tex": {"tags": "ams", "tag_side": "right"}}</script>
+      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -97,6 +99,7 @@
 </section>
 <section id="sample-cases">
 <h2>Sample Cases<a class="headerlink" href="#sample-cases" title="Link to this heading"></a></h2>
+<p>case path : <a class="reference external" href="https://github.com/ruohai0925/IAMReX/tree/development/Tutorials/RSV">RSV</a>.</p>
 <figure class="align-center" id="id1">
 <a class="reference internal image-reference" href="_images/RSV.jpeg"><img alt="Profiles of drop interface in the RSV problem at t/T=1 after one rotation. Black line: Analytical Solution; Red line: 64*64; Blue line: 128*128; Green line: 256*256" src="_images/RSV.jpeg" style="width: 5.00000in;" />
 </a>
@@ -104,6 +107,7 @@
 <p><span class="caption-number">Figure 1 </span><span class="caption-text">Profiles of drop interface in the Reverse Single Vortex (RSV) problem at t/T=1 after one rotation. Black line: Analytical Solution; Red line: 64*64; Blue line: 128*128; Green line: 256*256</span><a class="headerlink" href="#id1" title="Link to this image"></a></p>
 </figcaption>
 </figure>
+<p>case path : <a class="reference external" href="https://github.com/ruohai0925/IAMReX/tree/development/Tutorials/RayleighTaylor_LS">RayleighTaylor</a>.</p>
 <figure class="align-center" id="id2">
 <a class="reference internal image-reference" href="_images/IAMR_LSAMR.png"><img alt="(a) Density profile at t/T=2.42 using Level Set (LS) method. (b) Density profile at t/T=2.42 using IAMReX convective scheme." src="_images/IAMR_LSAMR.png" style="width: 5.00000in;" />
 </a>
@@ -118,6 +122,9 @@
 <p><span class="caption-number">Figure 3 </span><span class="caption-text">Comparison of the tip locations of the falling fluid and the rising fluid.</span><a class="headerlink" href="#id3" title="Link to this image"></a></p>
 </figcaption>
 </figure>
+<p>This case simulates fluid-particle interactions for 80 randomly distributed particles in a channel using multi-level AMR grids. By optimizing the interaction number (<span class="math notranslate nohighlight">\(N_s=2\)</span>) in the immersed boundary method, it achieves a balance between accuracy and computational efficiency, with flow driven by a pressure gradient in the z-direction.
+for more details, you can check <a class="reference internal" href="Results.html#sec-clusterparticles"><span class="std std-ref">Cluster of monodisperse particles</span></a>.</p>
+<p>case path : <a class="reference external" href="https://github.com/ruohai0925/IAMReX/tree/development/Tutorials/Monodisperse">Monodisperse</a>.</p>
 <figure class="align-center" id="id4">
 <a class="reference internal image-reference" href="_images/Monodisperse.png"><img alt="_images/Monodisperse.png" src="_images/Monodisperse.png" style="width: 5.00000in;" />
 </a>
