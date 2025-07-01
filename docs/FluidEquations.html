@@ -141,10 +141,10 @@ the particle volume fraction <span class="math notranslate nohighlight">\(\alpha
 <span id="fluidequationspart"></span><h1>Fluid Equations<a class="headerlink" href="#fluid-equations" title="Link to this heading"></a></h1>
 <p>Conservation of fluid mass:</p>
 <div class="math notranslate nohighlight" id="equation-eq-div">
-<span class="eqno">(3)<a class="headerlink" href="#equation-eq-div" title="Link to this equation"></a></span>\[\frac{\partial \rho}{\partial t} + \nabla \cdot (\rho U)  = 0\]</div>
+<span class="eqno">(4)<a class="headerlink" href="#equation-eq-div" title="Link to this equation"></a></span>\[\frac{\partial \rho}{\partial t} + \nabla \cdot (\rho U)  = 0\]</div>
 <p>Conservation of fluid momentum:</p>
 <div class="math notranslate nohighlight" id="equation-eq-ns">
-<span class="eqno">(4)<a class="headerlink" href="#equation-eq-ns" title="Link to this equation"></a></span>\[\frac{ \partial (\rho U)}{\partial t}
+<span class="eqno">(5)<a class="headerlink" href="#equation-eq-ns" title="Link to this equation"></a></span>\[\frac{ \partial (\rho U)}{\partial t}
 + \nabla \cdot (\rho U U) + \nabla p = \nabla \cdot \tau + {\bf H}_U\]</div>
 <p>Velocity constraint:</p>
 <div class="math notranslate nohighlight">
@@ -160,7 +160,7 @@ The <span class="math notranslate nohighlight">\(S \ne 0\)</span> case is discus
 <p>for passively advected scalars. In general, one could advect an arbitrary number of scalars.</p>
 <p>Level set equation:</p>
 <div class="math notranslate nohighlight" id="equation-eq-phi">
-<span class="eqno">(5)<a class="headerlink" href="#equation-eq-phi" title="Link to this equation"></a></span>\[\frac{\partial \phi}{\partial t} + U \cdot \nabla \phi = 0\]</div>
+<span class="eqno">(6)<a class="headerlink" href="#equation-eq-phi" title="Link to this equation"></a></span>\[\frac{\partial \phi}{\partial t} + U \cdot \nabla \phi = 0\]</div>
 <p>IAMReX has the ability to incorporate general, user-defined external forcing and source terms. The default behaviour is that
 <span class="math notranslate nohighlight">\(H_s=0\)</span>, and <span class="math notranslate nohighlight">\({\bf H}_U\)</span> represents gravitational forces, with <span class="math notranslate nohighlight">\({\bf H}_U= (0 , 0 , -\rho g )\)</span> in 3d and
 <span class="math notranslate nohighlight">\({\bf H}_U= (0 , -\rho g )\)</span> in 2d, where <span class="math notranslate nohighlight">\(g\)</span> is the magnitude of the gravitational acceleration. However, since

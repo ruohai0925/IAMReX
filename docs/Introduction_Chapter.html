@@ -99,7 +99,17 @@
 </section>
 <section id="sample-cases">
 <h2>Sample Cases<a class="headerlink" href="#sample-cases" title="Link to this heading"></a></h2>
-<p>case path : <a class="reference external" href="https://github.com/ruohai0925/IAMReX/tree/development/Tutorials/RSV">RSV</a>.</p>
+<p>In the first case, we test the order of convergence for in a 2D reversed single vortex problem.
+A 2D circular drop with radius $R=0.15$ is placed at $(0.5,0.75)$ in a unit computational domain $[0, 1] times [0, 1]$.
+The velocity field is given by the stream function,</p>
+<blockquote>
+<div><div class="math notranslate nohighlight" id="equation-eq-stream-function">
+<span class="eqno">(1)<a class="headerlink" href="#equation-eq-stream-function" title="Link to this equation"></a></span>\[\Psi(x, y, t)=\frac{1}{\pi} \sin ^{2}(\pi x) \sin ^{2}(\pi y) \cos \left(\frac{\pi t}{T}\right),\]</div>
+</div></blockquote>
+<p>in which the rotational period is $T=4.0$. The velocities in the $x$ and $y$ directions are defined as $u(x,y,t)=partial Psi / partial y$ and $v(x,y,t)=-partial Psi / partial x$, respectively.
+The periodic boundary condition is applied in both $x$ and $y$ directions. At $t=T$, the interfacial profile of the drop at the high resolution converges to its initial profile, which represents the exact solution.
+On the other hand, the circular shape of the drop is distorted for the simulation with low resolution.
+Here is the case path : <a class="reference external" href="https://github.com/ruohai0925/IAMReX/tree/development/Tutorials/RSV">RSV</a>.</p>
 <figure class="align-center" id="id1">
 <a class="reference internal image-reference" href="_images/RSV.jpeg"><img alt="Profiles of drop interface in the RSV problem at t/T=1 after one rotation. Black line: Analytical Solution; Red line: 64*64; Blue line: 128*128; Green line: 256*256" src="_images/RSV.jpeg" style="width: 5.00000in;" />
 </a>
@@ -107,7 +117,7 @@
 <p><span class="caption-number">Figure 1 </span><span class="caption-text">Profiles of drop interface in the Reverse Single Vortex (RSV) problem at t/T=1 after one rotation. Black line: Analytical Solution; Red line: 64*64; Blue line: 128*128; Green line: 256*256</span><a class="headerlink" href="#id1" title="Link to this image"></a></p>
 </figcaption>
 </figure>
-<p>case path : <a class="reference external" href="https://github.com/ruohai0925/IAMReX/tree/development/Tutorials/RayleighTaylor_LS">RayleighTaylor</a>.</p>
+<p>Case path : <a class="reference external" href="https://github.com/ruohai0925/IAMReX/tree/development/Tutorials/RayleighTaylor_LS">RayleighTaylor</a>.</p>
 <figure class="align-center" id="id2">
 <a class="reference internal image-reference" href="_images/IAMR_LSAMR.png"><img alt="(a) Density profile at t/T=2.42 using Level Set (LS) method. (b) Density profile at t/T=2.42 using IAMReX convective scheme." src="_images/IAMR_LSAMR.png" style="width: 5.00000in;" />
 </a>
@@ -124,7 +134,7 @@
 </figure>
 <p>This case simulates fluid-particle interactions for 80 randomly distributed particles in a channel using multi-level AMR grids. By optimizing the interaction number (<span class="math notranslate nohighlight">\(N_s=2\)</span>) in the immersed boundary method, it achieves a balance between accuracy and computational efficiency, with flow driven by a pressure gradient in the z-direction.
 for more details, you can check <a class="reference internal" href="Results.html#sec-clusterparticles"><span class="std std-ref">Cluster of monodisperse particles</span></a>.</p>
-<p>case path : <a class="reference external" href="https://github.com/ruohai0925/IAMReX/tree/development/Tutorials/Monodisperse">Monodisperse</a>.</p>
+<p>Case path : <a class="reference external" href="https://github.com/ruohai0925/IAMReX/tree/development/Tutorials/Monodisperse">Monodisperse</a>.</p>
 <figure class="align-center" id="id4">
 <a class="reference internal image-reference" href="_images/Monodisperse.png"><img alt="_images/Monodisperse.png" src="_images/Monodisperse.png" style="width: 5.00000in;" />
 </a>

@@ -18,7 +18,19 @@ Key software and algorithmic features of IAMR include:
 Sample Cases
 ------------------
 
-case path : `RSV <https://github.com/ruohai0925/IAMReX/tree/development/Tutorials/RSV>`_.
+In the first case, we test the order of convergence for in a 2D reversed single vortex problem. 
+A 2D circular drop with radius $R=0.15$ is placed at $(0.5,0.75)$ in a unit computational domain $[0, 1] \times [0, 1]$.
+The velocity field is given by the stream function,
+
+   .. math::
+      :label: eq:stream_function
+
+      \Psi(x, y, t)=\frac{1}{\pi} \sin ^{2}(\pi x) \sin ^{2}(\pi y) \cos \left(\frac{\pi t}{T}\right),
+
+in which the rotational period is $T=4.0$. The velocities in the $x$ and $y$ directions are defined as $u(x,y,t)=\partial \Psi / \partial y$ and $v(x,y,t)=-\partial \Psi / \partial x$, respectively.
+The periodic boundary condition is applied in both $x$ and $y$ directions. At $t=T$, the interfacial profile of the drop at the high resolution converges to its initial profile, which represents the exact solution. 
+On the other hand, the circular shape of the drop is distorted for the simulation with low resolution.
+Here is the case path : `RSV <https://github.com/ruohai0925/IAMReX/tree/development/Tutorials/RSV>`_.
 
 .. figure:: ./GettingStarted/RSV.jpeg
     :align: center
@@ -27,7 +39,7 @@ case path : `RSV <https://github.com/ruohai0925/IAMReX/tree/development/Tutorial
 
     Profiles of drop interface in the Reverse Single Vortex (RSV) problem at t/T=1 after one rotation. Black line: Analytical Solution; Red line: 64*64; Blue line: 128*128; Green line: 256*256
 
-case path : `RayleighTaylor <https://github.com/ruohai0925/IAMReX/tree/development/Tutorials/RayleighTaylor_LS>`_.
+Case path : `RayleighTaylor <https://github.com/ruohai0925/IAMReX/tree/development/Tutorials/RayleighTaylor_LS>`_.
 
 .. figure:: ./GettingStarted/IAMR_LSAMR.png
     :align: center
@@ -47,7 +59,7 @@ This case simulates fluid-particle interactions for 80 randomly distributed part
 for more details, you can check :ref:`sec:ClusterParticles`.
 
 
-case path : `Monodisperse <https://github.com/ruohai0925/IAMReX/tree/development/Tutorials/Monodisperse>`_.
+Case path : `Monodisperse <https://github.com/ruohai0925/IAMReX/tree/development/Tutorials/Monodisperse>`_.
 
 .. figure:: ./GettingStarted/Monodisperse.png
     :align: center
