@@ -131,8 +131,19 @@ and AMReX-Hydro.</p>
 </li>
 <li><p>Modify compilation parameters in GNUmakefile.</p>
 <blockquote>
-<div><p>The compilation parameters depend on your computing platform. If you use MPI to run your program, then set <code class="docutils literal notranslate"><span class="pre">USE_MPI</span> <span class="pre">=</span> <span class="pre">TRUE</span></code>. If you are running the program with Nvidia GPU(CUDA), then set <code class="docutils literal notranslate"><span class="pre">USE_CUDA</span> <span class="pre">=</span> <span class="pre">TRUE</span></code>. When using GPU runtime, please make sure your CUDA environment is ok.</p>
-<p>Here present an overview of typical MPI and CUDA configurations and environments : <a class="reference external" href="https://docs.open-mpi.org">OpenMPI</a>, <a class="reference external" href="https://www.mpich.org/documentation/guides/">MPICH</a>, <a class="reference external" href="https://www.intel.com/content/www/us/en/developer/tools/oneapi/mpi-library.html">IntelMPI</a>, <a class="reference external" href="https://developer.nvidia.com/cuda-toolkit">CUDA</a>.</p>
+<div><p>The compilation parameters depend on your computing platform. AMReX uses an <strong>MPI+X</strong> strategy, where <strong>MPI</strong> distributes work across nodes (and GPUs), and <strong>X</strong> is a node-level parallelization backend—on GPUs, this is typically <strong>CUDA</strong></p>
+<ul class="simple">
+<li><dl class="simple">
+<dt>Use the following flags:</dt><dd><ul>
+<li><p><cite>USE_MPI=TRUE</cite> to enable MPI</p></li>
+<li><p><cite>USE_CUDA=TRUE</cite> to enable CUDA</p></li>
+<li><p><cite>CUDA_ARCH=XX</cite> to specify the CUDA architecture (e.g., 80 for Ampere)</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+<p>For more information on setting up MPI and CUDA environments, please refer to: <a class="reference external" href="https://docs.open-mpi.org">OpenMPI</a>, <a class="reference external" href="https://www.mpich.org/documentation/guides/">MPICH</a>, <a class="reference external" href="https://www.intel.com/content/www/us/en/developer/tools/oneapi/mpi-library.html">IntelMPI</a>, and <a class="reference external" href="https://developer.nvidia.com/cuda-toolkit">CUDA</a>.</p>
 </div></blockquote>
 </li>
 <li><p>Compile</p>
@@ -165,8 +176,8 @@ and AMReX-Hydro.</p>
 </section>
 <section id="visualization">
 <h2>Visualization<a class="headerlink" href="#visualization" title="Link to this heading"></a></h2>
-<p>Various tools are available for data reading and processing , you can check <a class="reference external" href="https://erf.readthedocs.io/en/latest/Visualization.html">AMReX</a> for reference. As for the specific settings and output content, <a class="reference external" href="https://amrex-fluids.github.io/IAMR/RunningProblems.html#output-options">IAMR</a> provides more details.</p>
-<p><strong>IAMReX currently generates plotfile in the native AMReX format.</strong> The particle data will be generated in the case directory as corresponding CSV files named according to the particle IDs, following the naming convention <code class="docutils literal notranslate"><span class="pre">IB_Particle_&lt;ID&gt;.csv</span></code></p>
+<p>Various tools are available for data postprocessing and visualization, one can check <a class="reference external" href="https://erf.readthedocs.io/en/latest/Visualization.html">AMReX</a> for reference. As for the specific settings and output content, <a class="reference external" href="https://amrex-fluids.github.io/IAMR/RunningProblems.html#output-options">IAMR</a> also provides more details.</p>
+<p>Since IAMReX uses the native plotfile format, the particle data is generated as CSV files in the same case directory following the naming convention <code class="docutils literal notranslate"><span class="pre">IB_Particle_&lt;ID&gt;.csv</span></code></p>
 <figure class="align-center" id="id2">
 <a class="reference internal image-reference" href="_images/ParaView_Plotfiles.png"><img alt="To visualize plotfiles, use ParaView to process and display the results." src="_images/ParaView_Plotfiles.png" style="width: 5.00000in;" />
 </a>
@@ -174,21 +185,14 @@ and AMReX-Hydro.</p>
 <p><span class="caption-number">Figure 5 </span><span class="caption-text">To visualize plotfiles, use ParaView to process and display the results.</span><a class="headerlink" href="#id2" title="Link to this image"></a></p>
 </figcaption>
 </figure>
-<p>Plotfiles can include the quantities of several simulation parameters as output(density, gradpx, gradpy, gradpz, x_velocity, y_velocity, z_velocity and tracer). We recommend using <code class="docutils literal notranslate"><span class="pre">ParaView</span></code> to process <strong>plotfiles</strong>.</p>
-<p>Checkpoints are used to resume simulations. You typically need to specify how often to save checkpoint files. To restart a simulation from a particular checkpoint, you must specify it in the <code class="docutils literal notranslate"><span class="pre">restart</span></code> parameters. These settings are usually defined under the <code class="docutils literal notranslate"><span class="pre">amr</span></code> field.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># how many timesteps to save</span>
-<span class="n">amr</span><span class="o">.</span><span class="n">check_int</span> <span class="o">=</span> <span class="mi">4000</span>
-<span class="c1"># which check point to restart</span>
-<span class="n">amr</span><span class="o">.</span><span class="n">restart</span> <span class="o">=</span> <span class="n">chk00010</span>
-</pre></div>
-</div>
+<p>The plotfiles include the quantities of several simulation parameters as output (density, gradpx, gradpy, gradpz, x_velocity, y_velocity, z_velocity and tracer).</p>
 <p>Furthermore, particle data processing scripts are provided herein <a class="reference external" href="https://github.com/S-Explorer/IBParticle2VTK">IBParticle2VTK</a>. These utilities enable conversion of particle <strong>CSV</strong> files to <strong>VTK</strong> format, facilitating further analysis in ParaView.</p>
 </section>
 <section id="key-parameters">
 <span id="sec-physicsparams"></span><h2>Key parameters<a class="headerlink" href="#key-parameters" title="Link to this heading"></a></h2>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
-<p>you can find more parameters in <a class="reference external" href="https://amrex-fluids.github.io/IAMR/SetupAndRunning.html">IAMR guide</a>.</p>
+<p>One can also find more parameters in the <a class="reference external" href="https://amrex-fluids.github.io/IAMR/SetupAndRunning.html">IAMR guide</a>.</p>
 </div>
 <table class="docutils align-default" id="id3">
 <caption><span class="caption-number">Table 1 </span><span class="caption-text">NavierStokes parameters</span><a class="headerlink" href="#id3" title="Link to this table"></a></caption>
@@ -362,9 +366,16 @@ and AMReX-Hydro.</p>
 </tr>
 </tbody>
 </table>
-<p>Among the above parameters, array-type parameters are used to specify parameters for multiple particles individually, or define particle positions via an init file (e.g., a precomputed position data file).
+<p>Checkpoints are used to resume simulations. You typically need to specify how often to save checkpoint files. To restart a simulation from a particular checkpoint, you must specify it in the <code class="docutils literal notranslate"><span class="pre">restart</span></code> parameters. These settings are usually defined under the <code class="docutils literal notranslate"><span class="pre">amr</span></code> field.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># how many timestep frequency to save checkpoint files</span>
+<span class="n">amr</span><span class="o">.</span><span class="n">check_int</span> <span class="o">=</span> <span class="mi">4000</span>
+<span class="c1"># which checkpoint file to restart</span>
+<span class="n">amr</span><span class="o">.</span><span class="n">restart</span> <span class="o">=</span> <span class="n">chk00010</span>
+</pre></div>
+</div>
+<p>Among above parameters, array-type parameters are used to specify parameters for multiple particles individually, or define particle positions via an init file (e.g., a precomputed position data file).
 If particle positions are provided through an external file, other array-type parameters only need to provide a single value, which will be applied to all particles uniformly.</p>
-<p>example inputs file as below :</p>
+<p>Example inputs file:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#*******************************************************************************</span>
 <span class="c1"># INPUTS.3D.FLOW_PAST_SPHERE</span>
 <span class="c1">#*******************************************************************************</span>

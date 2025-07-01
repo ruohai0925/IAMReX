@@ -55,10 +55,14 @@ For example, if we want to compile in the ``FlowPastSphere``, refer to the follo
 
 #. Modify compilation parameters in GNUmakefile.
 
-    The compilation parameters depend on your computing platform. If you use MPI to run your program, then set ``USE_MPI = TRUE``. If you are running the program with Nvidia GPU(CUDA), then set ``USE_CUDA = TRUE``. When using GPU runtime, please make sure your CUDA environment is ok.
+    The compilation parameters depend on your computing platform. AMReX uses an **MPI+X** strategy, where **MPI** distributes work across nodes (and GPUs), and **X** is a node-level parallelization backend—on GPUs, this is typically **CUDA**
 
-    Here present an overview of typical MPI and CUDA configurations and environments : `OpenMPI <https://docs.open-mpi.org>`_, `MPICH <https://www.mpich.org/documentation/guides/>`_, `IntelMPI <https://www.intel.com/content/www/us/en/developer/tools/oneapi/mpi-library.html>`_, `CUDA <https://developer.nvidia.com/cuda-toolkit>`_.
+    - Use the following flags:
+        - `USE_MPI=TRUE` to enable MPI
+        - `USE_CUDA=TRUE` to enable CUDA
+        - `CUDA_ARCH=XX` to specify the CUDA architecture (e.g., 80 for Ampere)
 
+    For more information on setting up MPI and CUDA environments, please refer to: `OpenMPI <https://docs.open-mpi.org>`_, `MPICH <https://www.mpich.org/documentation/guides/>`_, `IntelMPI <https://www.intel.com/content/www/us/en/developer/tools/oneapi/mpi-library.html>`_, and `CUDA <https://developer.nvidia.com/cuda-toolkit>`_.
 
 #. Compile
 
@@ -93,9 +97,9 @@ This code typically generates subfolders in the current folder that are named ``
 Visualization
 --------------
 
-Various tools are available for data reading and processing , you can check `AMReX <https://erf.readthedocs.io/en/latest/Visualization.html>`_ for reference. As for the specific settings and output content, `IAMR <https://amrex-fluids.github.io/IAMR/RunningProblems.html#output-options>`_ provides more details.
+Various tools are available for data postprocessing and visualization, one can check `AMReX <https://erf.readthedocs.io/en/latest/Visualization.html>`_ for reference. As for the specific settings and output content, `IAMR <https://amrex-fluids.github.io/IAMR/RunningProblems.html#output-options>`_ also provides more details.
 
-**IAMReX currently generates plotfile in the native AMReX format.** The particle data will be generated in the case directory as corresponding CSV files named according to the particle IDs, following the naming convention ``IB_Particle_<ID>.csv``
+Since IAMReX uses the native plotfile format, the particle data is generated as CSV files in the same case directory following the naming convention ``IB_Particle_<ID>.csv``
 
 .. figure:: ./GettingStarted/ParaView_Plotfiles.png
     :align: center
@@ -104,16 +108,7 @@ Various tools are available for data reading and processing , you can check `AMR
 
     To visualize plotfiles, use ParaView to process and display the results.
 
-Plotfiles can include the quantities of several simulation parameters as output(density, gradpx, gradpy, gradpz, x_velocity, y_velocity, z_velocity and tracer). We recommend using ``ParaView`` to process **plotfiles**.
-
-Checkpoints are used to resume simulations. You typically need to specify how often to save checkpoint files. To restart a simulation from a particular checkpoint, you must specify it in the ``restart`` parameters. These settings are usually defined under the ``amr`` field.
-
-::
-
-    # how many timesteps to save
-    amr.check_int = 4000
-    # which check point to restart
-    amr.restart = chk00010
+The plotfiles include the quantities of several simulation parameters as output (density, gradpx, gradpy, gradpz, x_velocity, y_velocity, z_velocity and tracer).
 
 Furthermore, particle data processing scripts are provided herein `IBParticle2VTK <https://github.com/S-Explorer/IBParticle2VTK>`_. These utilities enable conversion of particle **CSV** files to **VTK** format, facilitating further analysis in ParaView.
 
@@ -123,7 +118,7 @@ Key parameters
 ---------------
 
 .. tip::
-    you can find more parameters in `IAMR guide <https://amrex-fluids.github.io/IAMR/SetupAndRunning.html>`_.
+    One can also find more parameters in the `IAMR guide <https://amrex-fluids.github.io/IAMR/SetupAndRunning.html>`_.
 
 .. list-table:: NavierStokes parameters
    :widths: 40 100 20 20
@@ -253,10 +248,19 @@ The above parameters are designed for the immersed boundary (IB) method. Additio
      - file path
      -
 
-Among the above parameters, array-type parameters are used to specify parameters for multiple particles individually, or define particle positions via an init file (e.g., a precomputed position data file).
+Checkpoints are used to resume simulations. You typically need to specify how often to save checkpoint files. To restart a simulation from a particular checkpoint, you must specify it in the ``restart`` parameters. These settings are usually defined under the ``amr`` field.
+
+::
+
+    # how many timestep frequency to save checkpoint files
+    amr.check_int = 4000
+    # which checkpoint file to restart
+    amr.restart = chk00010
+
+Among above parameters, array-type parameters are used to specify parameters for multiple particles individually, or define particle positions via an init file (e.g., a precomputed position data file).
 If particle positions are provided through an external file, other array-type parameters only need to provide a single value, which will be applied to all particles uniformly.
 
-example inputs file as below :
+Example inputs file:
 
 ::
 
