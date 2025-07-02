@@ -30,7 +30,7 @@ The velocity field is given by the stream function,
 in which the rotational period is $T=4.0$. The velocities in the $x$ and $y$ directions are defined as $u(x,y,t)=\partial \Psi / \partial y$ and $v(x,y,t)=-\partial \Psi / \partial x$, respectively.
 The periodic boundary condition is applied in both x and y directions. At t=T, the interfacial profile of the drop at the high resolution converges to its initial profile, which represents the exact solution. 
 On the other hand, the circular shape of the drop is distorted for the simulation with low resolution.
-Here is the case path: `RSV <https://github.com/ruohai0925/IAMReX/tree/development/Tutorials/RSV>`_.
+Here is the case directory: `RSV <https://github.com/ruohai0925/IAMReX/tree/development/Tutorials/RSV>`_.
 
 .. figure:: ./GettingStarted/RSV.jpeg
     :align: center
@@ -42,7 +42,7 @@ Here is the case path: `RSV <https://github.com/ruohai0925/IAMReX/tree/developme
 The second Rayleigh--Taylor (RT) instability case is simulated here to validate the adaptive two-phase flow algorithms when small vorticity structures are involved.
 This instability phenomenon occurs for any perturbation to the interface between a lighter fluid ($\rho_2$) at the bottom and a heavier fluid ($\rho_1$) at the top.
 In the simulation, the computational domain is $[0,1] \times [0,4]$. The initial interface is given by $y(x)=2.0+0.1\cos(2\pi x)$.
-The density ratio is set to $\lambda=\rho_2/\rho_1=1/3$ and the Reynolds number is set to be $Re=\rho_1 g^{1/2}/\mu_1=3000$. Here is the case path: `RayleighTaylor <https://github.com/ruohai0925/IAMReX/tree/development/Tutorials/RayleighTaylor_LS>`_.
+The density ratio is set to $\lambda=\rho_2/\rho_1=1/3$ and the Reynolds number is set to be $Re=\rho_1 g^{1/2}/\mu_1=3000$. Here is the case directory: `RayleighTaylor <https://github.com/ruohai0925/IAMReX/tree/development/Tutorials/RayleighTaylor_LS>`_.
 
 .. figure:: ./GettingStarted/IAMR_LSAMR.png
     :align: center
@@ -50,9 +50,10 @@ The density ratio is set to $\lambda=\rho_2/\rho_1=1/3$ and the Reynolds number 
     :width: 5.00000in
 
     Density profile: a. Density profile at t/T=2.42 using Level Set (LS) method with sharp interface. b. Density profile at t/T=2.42 using IAMReX convective method with diffuse interface.
-    One can the former is more accurate than the latter to capture the details of the interface.
+    One can see that the former is more accurate than the latter to capture the details of the interface.
 
-The evolution of the air--water interface is shown in the above Figure. Compared with previous work, our algorithms can also accurately capture the transient locations of the fluid appearing in the Rayleigh--Taylor instability problem. 
+The evolution of the air--water interface is shown in the above Figure. Compared with previous work, our algorithms can also accurately capture the transient locations of the fluid appearing in the Rayleigh--Taylor instability problem.
+For more details of this case, one can check our previous work :cite:`zeng2022aparallel`.
 
 .. figure:: ./GettingStarted/RT_tip.png
     :align: center
@@ -63,7 +64,7 @@ The evolution of the air--water interface is shown in the above Figure. Compared
 
 The third case refers to fluid-particle interactions with 80 randomly distributed particles in a channel. The following Figure represents the velocity contour of an interface in the x direction at the steady state.
 The flow passes around the particles and generates the wakes behind.
-Here is the case path: `Monodisperse <https://github.com/ruohai0925/IAMReX/tree/development/Tutorials/Monodisperse>`_.
+Here is the case directory: `Monodisperse <https://github.com/ruohai0925/IAMReX/tree/development/Tutorials/Monodisperse>`_.
 For more details of this case, one can check :ref:`sec:ClusterParticles`.
 
 .. figure:: ./GettingStarted/Monodisperse.png
@@ -71,3 +72,5 @@ For more details of this case, one can check :ref:`sec:ClusterParticles`.
     :width: 5.00000in
 
     Contours of velocity magnitude in yz plane
+
+All input scripts and raw postprocessing data of IAMReX have been uploaded into `Baidu Cloud <https://pan.baidu.com/s/1bZRoDunjBv7bqYL8CI3ASA?pwd=i5c2>`_ for interested readers to reproduce the results.
