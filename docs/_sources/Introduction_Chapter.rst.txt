@@ -18,7 +18,7 @@ Key software and algorithmic features of IAMR include:
 Sample Cases
 ------------------
 
-In the first case, we test the order of convergence for in a 2D reversed single vortex problem. 
+In the first case, we test the order of convergence for in a 2D reversed single vortex problem.
 A 2D circular drop with radius R=0.15 is placed at (0.5,0.75) in a unit computational domain [0, 1] x [0, 1].
 The velocity field is given by the stream function,
 
@@ -27,8 +27,8 @@ The velocity field is given by the stream function,
 
       \Psi(x, y, t)=\frac{1}{\pi} \sin ^{2}(\pi x) \sin ^{2}(\pi y) \cos \left(\frac{\pi t}{T}\right),
 
-in which the rotational period is $T=4.0$. The velocities in the $x$ and $y$ directions are defined as $u(x,y,t)=\partial \Psi / \partial y$ and $v(x,y,t)=-\partial \Psi / \partial x$, respectively.
-The periodic boundary condition is applied in both x and y directions. At t=T, the interfacial profile of the drop at the high resolution converges to its initial profile, which represents the exact solution. 
+in which the rotational period is :math:`T=4.0`. The velocities in the :math:`x` and :math:`y` directions are defined as :math:`u(x,y,t)=\partial \Psi / \partial y` and :math:`v(x,y,t)=-\partial \Psi / \partial x`, respectively.
+The periodic boundary condition is applied in both x and y directions. At t=T, the interfacial profile of the drop at the high resolution converges to its initial profile, which represents the exact solution.
 On the other hand, the circular shape of the drop is distorted for the simulation with low resolution.
 Here is the case directory: `RSV <https://github.com/ruohai0925/IAMReX/tree/development/Tutorials/RSV>`_.
 
@@ -40,9 +40,9 @@ Here is the case directory: `RSV <https://github.com/ruohai0925/IAMReX/tree/deve
     Profiles of drop interface in the Reverse Single Vortex (RSV) problem at t/T=1 after one rotation. Black line: Analytical Solution; Red line: 64*64; Blue line: 128*128; Green line: 256*256
 
 The second Rayleigh--Taylor (RT) instability case is simulated here to validate the adaptive two-phase flow algorithms when small vorticity structures are involved.
-This instability phenomenon occurs for any perturbation to the interface between a lighter fluid ($\rho_2$) at the bottom and a heavier fluid ($\rho_1$) at the top.
-In the simulation, the computational domain is $[0,1] \times [0,4]$. The initial interface is given by $y(x)=2.0+0.1\cos(2\pi x)$.
-The density ratio is set to $\lambda=\rho_2/\rho_1=1/3$ and the Reynolds number is set to be $Re=\rho_1 g^{1/2}/\mu_1=3000$. Here is the case directory: `RayleighTaylor <https://github.com/ruohai0925/IAMReX/tree/development/Tutorials/RayleighTaylor_LS>`_.
+This instability phenomenon occurs for any perturbation to the interface between a lighter fluid (:math:`\rho_2`) at the bottom and a heavier fluid (:math:`\rho_1`) at the top.
+In the simulation, the computational domain is :math:`[0,1] \times [0,4]`. The initial interface is given by :math:`y(x)=2.0+0.1\cos(2\pi x)`.
+The density ratio is set to :math:`\lambda=\rho_2/\rho_1=1/3` and the Reynolds number is set to be :math:`Re=\rho_1 g^{1/2}/\mu_1=3000`. Here is the case directory: `RayleighTaylor <https://github.com/ruohai0925/IAMReX/tree/development/Tutorials/RayleighTaylor_LS>`_.
 
 .. figure:: ./GettingStarted/IAMR_LSAMR.png
     :align: center

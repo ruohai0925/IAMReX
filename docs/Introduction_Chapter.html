@@ -106,7 +106,7 @@ The velocity field is given by the stream function,</p>
 <div><div class="math notranslate nohighlight" id="equation-eq-stream-function">
 <span class="eqno">(1)<a class="headerlink" href="#equation-eq-stream-function" title="Link to this equation"></a></span>\[\Psi(x, y, t)=\frac{1}{\pi} \sin ^{2}(\pi x) \sin ^{2}(\pi y) \cos \left(\frac{\pi t}{T}\right),\]</div>
 </div></blockquote>
-<p>in which the rotational period is $T=4.0$. The velocities in the $x$ and $y$ directions are defined as $u(x,y,t)=partial Psi / partial y$ and $v(x,y,t)=-partial Psi / partial x$, respectively.
+<p>in which the rotational period is <span class="math notranslate nohighlight">\(T=4.0\)</span>. The velocities in the <span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(y\)</span> directions are defined as <span class="math notranslate nohighlight">\(u(x,y,t)=\partial \Psi / \partial y\)</span> and <span class="math notranslate nohighlight">\(v(x,y,t)=-\partial \Psi / \partial x\)</span>, respectively.
 The periodic boundary condition is applied in both x and y directions. At t=T, the interfacial profile of the drop at the high resolution converges to its initial profile, which represents the exact solution.
 On the other hand, the circular shape of the drop is distorted for the simulation with low resolution.
 Here is the case directory: <a class="reference external" href="https://github.com/ruohai0925/IAMReX/tree/development/Tutorials/RSV">RSV</a>.</p>
@@ -118,9 +118,9 @@ Here is the case directory: <a class="reference external" href="https://github.c
 </figcaption>
 </figure>
 <p>The second Rayleigh–Taylor (RT) instability case is simulated here to validate the adaptive two-phase flow algorithms when small vorticity structures are involved.
-This instability phenomenon occurs for any perturbation to the interface between a lighter fluid ($rho_2$) at the bottom and a heavier fluid ($rho_1$) at the top.
-In the simulation, the computational domain is $[0,1] times [0,4]$. The initial interface is given by $y(x)=2.0+0.1cos(2pi x)$.
-The density ratio is set to $lambda=rho_2/rho_1=1/3$ and the Reynolds number is set to be $Re=rho_1 g^{1/2}/mu_1=3000$. Here is the case directory: <a class="reference external" href="https://github.com/ruohai0925/IAMReX/tree/development/Tutorials/RayleighTaylor_LS">RayleighTaylor</a>.</p>
+This instability phenomenon occurs for any perturbation to the interface between a lighter fluid (<span class="math notranslate nohighlight">\(\rho_2\)</span>) at the bottom and a heavier fluid (<span class="math notranslate nohighlight">\(\rho_1\)</span>) at the top.
+In the simulation, the computational domain is <span class="math notranslate nohighlight">\([0,1] \times [0,4]\)</span>. The initial interface is given by <span class="math notranslate nohighlight">\(y(x)=2.0+0.1\cos(2\pi x)\)</span>.
+The density ratio is set to <span class="math notranslate nohighlight">\(\lambda=\rho_2/\rho_1=1/3\)</span> and the Reynolds number is set to be <span class="math notranslate nohighlight">\(Re=\rho_1 g^{1/2}/\mu_1=3000\)</span>. Here is the case directory: <a class="reference external" href="https://github.com/ruohai0925/IAMReX/tree/development/Tutorials/RayleighTaylor_LS">RayleighTaylor</a>.</p>
 <figure class="align-center" id="id4">
 <a class="reference internal image-reference" href="_images/IAMR_LSAMR.png"><img alt="(a) Density profile at t/T=2.42 using Level Set (LS) method with sharp interface. (b) Density profile at t/T=2.42 using IAMReX convective method with diffuse interface." src="_images/IAMR_LSAMR.png" style="width: 5.00000in;" />
 </a>
