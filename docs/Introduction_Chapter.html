@@ -87,7 +87,7 @@
              
   <section id="introduction">
 <h1>Introduction<a class="headerlink" href="#introduction" title="Link to this heading"></a></h1>
-<p>This IAMReX repo extends the capability of original <a class="reference external" href="https://amrex-fluids.github.io/IAMR/">IAMR</a> codes, aiming at simulating the multiphase incompressible flows and fluid structure interaction problems on both CPUs and GPUs with/without subcycling. The Navier-Stokes equations are solved on an adaptive semi-staggered grid using the projection method. The gas-liquid interface is captured using the level set (LS) method. The fluid-solid interface is resolved using the multidirect forcing immersed boundary method (IBM).
+<p>This IAMReX repo extends the capability of original <a class="reference external" href="https://amrex-fluids.github.io/IAMR/">IAMR</a> codes, aiming at simulating the 2D/3D multiphase incompressible flows and fluid structure interaction problems on both CPUs and GPUs with/without subcycling. The Navier-Stokes equations are solved on an adaptive semi-staggered grid using the projection method. The gas-liquid interface is captured using the level set (LS) method. The fluid-solid interface is resolved using the multidirect forcing immersed boundary method (IBM).
 The particle-wall as well as the particle-particle collisions are also captured by the adaptive collision time model (ACTM).</p>
 <p>IAMReX is suitable for modeling multiphase flow problems and fluid-structure interaction problems.
 Its Level Set-based interface capturing technique can be beneficial for researchers studying phenomena such as wind over waves,
@@ -102,6 +102,10 @@ Researchers working on studies of biological particle aggregation, sandstorms, w
 <li><p>Multidirect forcing Immersed Boundary Method</p></li>
 <li><p>Particle Collision Algorithms with Discrete Element Method</p></li>
 </ul>
+<p>In addition to the above key features, IAMReX supports simulation of passive scalar, including temperature and species concentration.
+The material properties (e.g., density and viscosity) are independent of temperature at this stage.
+One can easily extend the code to support temperature-dependent material properties by modifying the source code.
+The fluid is always assumed to be a Newtonian flow. Please refer to the library incflo &lt;<a class="reference external" href="https://amrex-fluids.github.io/incflo/">https://amrex-fluids.github.io/incflo/</a>&gt; if one wants to simulate non-Newtonian flows.</p>
 </section>
 <section id="sample-cases">
 <h2>Sample Cases<a class="headerlink" href="#sample-cases" title="Link to this heading"></a></h2>
