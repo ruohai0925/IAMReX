@@ -87,7 +87,13 @@
              
   <section id="introduction">
 <h1>Introduction<a class="headerlink" href="#introduction" title="Link to this heading"></a></h1>
-<p>This IAMReX repo extends the capability of original <a class="reference external" href="https://amrex-fluids.github.io/IAMR/">IAMR</a> codes, aiming at simulating the multiphase incompressible flows and fluid structure interaction problems on both CPUs and GPUs with/without subcycling. The Navier-Stokes equations are solved on an adaptive semi-staggered grid using the projection method. The gas-liquid interface is captured using the level set (LS) method. The fluid-solid interface is resolved using the multidirect forcing immersed boundary method (IBM). The particle-wall as well as the particle-particle collisions are also captured by the adaptive collision time model (ACTM).</p>
+<p>This IAMReX repo extends the capability of original <a class="reference external" href="https://amrex-fluids.github.io/IAMR/">IAMR</a> codes, aiming at simulating the multiphase incompressible flows and fluid structure interaction problems on both CPUs and GPUs with/without subcycling. The Navier-Stokes equations are solved on an adaptive semi-staggered grid using the projection method. The gas-liquid interface is captured using the level set (LS) method. The fluid-solid interface is resolved using the multidirect forcing immersed boundary method (IBM).
+The particle-wall as well as the particle-particle collisions are also captured by the adaptive collision time model (ACTM).</p>
+<p>IAMReX is suitable for modeling multiphase flow problems and fluid-structure interaction problems.
+Its Level Set-based interface capturing technique can be beneficial for researchers studying phenomena such as wind over waves,
+breaking waves, and simulating the formation and disappearance of bubbles and droplets.
+Additionally, the immersed boundary method along with the collision models can parallelly resolve large-scale particles and capture their motions.
+Researchers working on studies of biological particle aggregation, sandstorms, wind erosion of ground surfaces, and seawater erosion of riverbeds are also among the target audience for this software.</p>
 <section id="features">
 <h2>Features<a class="headerlink" href="#features" title="Link to this heading"></a></h2>
 <p>Key software and algorithmic features of IAMR include:</p>

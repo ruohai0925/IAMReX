@@ -1,8 +1,14 @@
 Introduction
 ===================
 
-This IAMReX repo extends the capability of original `IAMR <https://amrex-fluids.github.io/IAMR/>`_ codes, aiming at simulating the multiphase incompressible flows and fluid structure interaction problems on both CPUs and GPUs with/without subcycling. The Navier-Stokes equations are solved on an adaptive semi-staggered grid using the projection method. The gas-liquid interface is captured using the level set (LS) method. The fluid-solid interface is resolved using the multidirect forcing immersed boundary method (IBM). The particle-wall as well as the particle-particle collisions are also captured by the adaptive collision time model (ACTM).
+This IAMReX repo extends the capability of original `IAMR <https://amrex-fluids.github.io/IAMR/>`_ codes, aiming at simulating the multiphase incompressible flows and fluid structure interaction problems on both CPUs and GPUs with/without subcycling. The Navier-Stokes equations are solved on an adaptive semi-staggered grid using the projection method. The gas-liquid interface is captured using the level set (LS) method. The fluid-solid interface is resolved using the multidirect forcing immersed boundary method (IBM). 
+The particle-wall as well as the particle-particle collisions are also captured by the adaptive collision time model (ACTM).
 
+IAMReX is suitable for modeling multiphase flow problems and fluid-structure interaction problems. 
+Its Level Set-based interface capturing technique can be beneficial for researchers studying phenomena such as wind over waves, 
+breaking waves, and simulating the formation and disappearance of bubbles and droplets. 
+Additionally, the immersed boundary method along with the collision models can parallelly resolve large-scale particles and capture their motions. 
+Researchers working on studies of biological particle aggregation, sandstorms, wind erosion of ground surfaces, and seawater erosion of riverbeds are also among the target audience for this software.
 
 Features
 ------------------
