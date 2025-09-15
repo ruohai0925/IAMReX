@@ -24,7 +24,7 @@ Key software and algorithmic features of IAMR include:
 In addition to the above key features, IAMReX supports simulation of passive scalar, including temperature and species concentration.
 The material properties (e.g., density and viscosity) are independent of temperature at this stage. 
 One can easily extend the code to support temperature-dependent material properties by modifying the source code.
-The fluid is always assumed to be a Newtonian flow. Please refer to the library incflo <https://amrex-fluids.github.io/incflo/> if one wants to simulate non-Newtonian flows.
+The fluid is always assumed to be a Newtonian flow. Please refer to another AMReX-based library `incflo <https://amrex-fluids.github.io/incflo/>`_ if one wants to simulate non-Newtonian flows.
 
 Sample Cases
 ------------------

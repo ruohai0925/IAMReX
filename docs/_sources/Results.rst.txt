@@ -19,7 +19,8 @@ The particle volume fraction (PVF), which joins the calculation of free motion u
 
     Sketch of :math:`\phi` at each corner of a grid cell with interface.
 
-Based on the level-set function :math:`\phi`, an approximation of PVF can be obtained by the following equation:
+The PVF variable is defined as the volume fraction of the fluid in the cell, which can be calculated by the level-set function :math:`\phi` 
+and the Heaviside function :math:`H`. Based on the level-set function :math:`\phi`, an approximation of PVF can be obtained by the following equation:
 
 .. math::
 

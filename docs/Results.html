@@ -98,7 +98,8 @@
 <p><span class="caption-number">Figure 6 </span><span class="caption-text">Sketch of <span class="math notranslate nohighlight">\(\phi\)</span> at each corner of a grid cell with interface.</span><a class="headerlink" href="#id9" title="Link to this image"></a></p>
 </figcaption>
 </figure>
-<p>Based on the level-set function <span class="math notranslate nohighlight">\(\phi\)</span>, an approximation of PVF can be obtained by the following equation:</p>
+<p>The PVF variable is defined as the volume fraction of the fluid in the cell, which can be calculated by the level-set function <span class="math notranslate nohighlight">\(\phi\)</span>
+and the Heaviside function <span class="math notranslate nohighlight">\(H\)</span>. Based on the level-set function <span class="math notranslate nohighlight">\(\phi\)</span>, an approximation of PVF can be obtained by the following equation:</p>
 <div class="math notranslate nohighlight">
 \[\alpha_{i,j,k} = \frac{\sum_{m=1}^{8}-\phi_mH(-\phi_m)}{\sum_{m=1}^8|\phi_m|},\]</div>
 <p>where <span class="math notranslate nohighlight">\(H\)</span> is the Heaviside function, defined by:</p>
