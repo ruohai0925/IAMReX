@@ -91,11 +91,11 @@
 <section id="particle-volume-fraction-pvf">
 <span id="r-pvf"></span><h2>Particle Volume Fraction (PVF)<a class="headerlink" href="#particle-volume-fraction-pvf" title="Link to this heading"></a></h2>
 <p>The particle volume fraction (PVF), which joins the calculation of free motion updates, is introduced and validated in this session. The PVF is approximated by the signed-distance level-set function <span class="math notranslate nohighlight">\(\phi\)</span> of the fluid-particle interface. The level-set function <span class="math notranslate nohighlight">\(\phi\)</span> is located at cell nodes and is calculated at the eight corners of each cell. The symbol of <span class="math notranslate nohighlight">\(\phi\)</span> as well as the intersected interface is shown in <a class="reference internal" href="#figpvflevelset"><span class="std std-numref">Figure 6</span></a>. Here, <span class="math notranslate nohighlight">\(\phi\)</span> is negative inside the particle and positive outside the particle.</p>
-<figure class="align-center" id="id8">
+<figure class="align-center" id="id9">
 <span id="figpvflevelset"></span><a class="reference internal image-reference" href="_images/pvf_level_set_function.png"><img alt="Level-set function at grid cell corners" src="_images/pvf_level_set_function.png" style="width: 5.0in;" />
 </a>
 <figcaption>
-<p><span class="caption-number">Figure 6 </span><span class="caption-text">Sketch of <span class="math notranslate nohighlight">\(\phi\)</span> at each corner of a grid cell with interface.</span><a class="headerlink" href="#id8" title="Link to this image"></a></p>
+<p><span class="caption-number">Figure 6 </span><span class="caption-text">Sketch of <span class="math notranslate nohighlight">\(\phi\)</span> at each corner of a grid cell with interface.</span><a class="headerlink" href="#id9" title="Link to this image"></a></p>
 </figcaption>
 </figure>
 <p>Based on the level-set function <span class="math notranslate nohighlight">\(\phi\)</span>, an approximation of PVF can be obtained by the following equation:</p>
@@ -109,11 +109,11 @@
 1, &amp; \phi &gt; 0
 \end{cases}\end{split}\]</div>
 <p>On the right-hand side of equation <span class="math notranslate nohighlight">\(\alpha_{i,j,k}\)</span>, the value of <span class="math notranslate nohighlight">\(\phi\)</span> for each cell corner depends on the location of the fluid-particle interface. When the shape of the particle surface is analytically given, the <span class="math notranslate nohighlight">\(\phi\)</span> value can be determined by calculating the Euclidean distance from the corner point of the cell to the particle surface. The calculation of PVF is then transformed from an exact integral to a numerical integral. As shown in <a class="reference internal" href="#figpvfcase"><span class="std std-numref">Figure 7</span></a>, the cell value of PVF varies from <span class="math notranslate nohighlight">\(0\)</span> to <span class="math notranslate nohighlight">\(1\)</span>, depending on the relative position between the cell center and the fluid-particle interface.</p>
-<figure class="align-center" id="id9">
+<figure class="align-center" id="id10">
 <span id="figpvfcase"></span><a class="reference internal image-reference" href="_images/pvf_cases_of_exact_value.png"><img alt="PVF cases with different values" src="_images/pvf_cases_of_exact_value.png" style="width: 5.0in;" />
 </a>
 <figcaption>
-<p><span class="caption-number">Figure 7 </span><span class="caption-text">Sketch of PVF with different values. The white and green colors refer to the cell areas within the fluid and particle, respectively.</span><a class="headerlink" href="#id9" title="Link to this image"></a></p>
+<p><span class="caption-number">Figure 7 </span><span class="caption-text">Sketch of PVF with different values. The white and green colors refer to the cell areas within the fluid and particle, respectively.</span><a class="headerlink" href="#id10" title="Link to this image"></a></p>
 </figcaption>
 </figure>
 <p>We validate the correctness and convergence of the above PVF approximation by calculating the volumes of spherical and ellipsoidal surfaces on the Cartesian grid. The exact solutions for the sphere and ellipsoid are given by:</p>
@@ -123,11 +123,11 @@
 <div class="math notranslate nohighlight" id="equation-equ-level-set-function-of-spheroidal-geometries">
 <span class="eqno">(3)<a class="headerlink" href="#equation-equ-level-set-function-of-spheroidal-geometries" title="Link to this equation"></a></span>\[\phi_{i,j,k}= \sqrt{\frac{(x_{i,j,k}-x_{p})^2}{a^2} + \frac{(y_{i,j,k}-y_{p})^2}{b^2} + \frac{(z_{i,j,k}-z_{p})^2}{c^2}}-1,\]</div>
 <p>for any Eulerian cell <span class="math notranslate nohighlight">\((i,j,k)\)</span>. The computational domain is <span class="math notranslate nohighlight">\(L_x \times L_y \times L_z = 2 \times 2 \times 2\)</span>, the sphere diameter is <span class="math notranslate nohighlight">\(D = 0.8\)</span>, and the semi-axes of the ellipsoid are set to be <span class="math notranslate nohighlight">\(a = 0.4\)</span>, <span class="math notranslate nohighlight">\(b = 0.6\)</span>, <span class="math notranslate nohighlight">\(c = 0.4\)</span>. The centers of both particles are <span class="math notranslate nohighlight">\((x_p, y_p, z_p)=(1,1,1)\)</span>. As shown in <a class="reference internal" href="#figpvfamr"><span class="std std-numref">Figure 8</span></a>, three levels of AMR grid are used during the PVF calculation, and the particles are enclosed by the finest level.</p>
-<figure class="align-center" id="id10">
+<figure class="align-center" id="id11">
 <span id="figpvfamr"></span><a class="reference internal image-reference" href="_images/pvf_amr_blocks5.png"><img alt="AMR grid results" src="_images/pvf_amr_blocks5.png" style="width: 5.0in;" />
 </a>
 <figcaption>
-<p><span class="caption-number">Figure 8 </span><span class="caption-text">Results of a three-level AMR grid. The red, orange, and green color represents the grid on levels 0, 1, and 2, respectively. Left: a spherical particle; Right: an ellipsoidal particle.</span><a class="headerlink" href="#id10" title="Link to this image"></a></p>
+<p><span class="caption-number">Figure 8 </span><span class="caption-text">Results of a three-level AMR grid. The red, orange, and green color represents the grid on levels 0, 1, and 2, respectively. Left: a spherical particle; Right: an ellipsoidal particle.</span><a class="headerlink" href="#id11" title="Link to this image"></a></p>
 </figcaption>
 </figure>
 <table class="docutils align-default" id="tab-pvf-result-of-sphere">
@@ -199,20 +199,20 @@
 </section>
 <section id="flow-past-sphere">
 <h2>Flow Past Sphere<a class="headerlink" href="#flow-past-sphere" title="Link to this heading"></a></h2>
-<figure class="align-center" id="id11">
+<figure class="align-center" id="id12">
 <a class="reference internal image-reference" href="_images/FlowPastSphere.png"><img alt="_images/FlowPastSphere.png" src="_images/FlowPastSphere.png" style="width: 5.0in;" />
 </a>
 <figcaption>
-<p><span class="caption-number">Figure 9 </span><span class="caption-text">The schematic of the flow passing through the spherical particles</span><a class="headerlink" href="#id11" title="Link to this image"></a></p>
+<p><span class="caption-number">Figure 9 </span><span class="caption-text">The schematic of the flow passing through the spherical particles</span><a class="headerlink" href="#id12" title="Link to this image"></a></p>
 </figcaption>
 </figure>
 <p>We validate the accuracy and efficacy of our adaptive solver by simulating a spherical particle in uniform flow with different particle Reynolds numbers <span id="id2">[<a class="reference internal" href="references.html#id68" title="Von L Schiller. On the basic calculations in gravity processing. Z. Association of German Engineers, 77:318–321, 1933.">5</a>, <a class="reference internal" href="references.html#id57" title="Zhengping Zhu, Ruifeng Hu, Yinghaonan Lei, Lian Shen, and Xiaojing Zheng. Particle resolved simulation of sediment transport by a hybrid parallel approach. International Journal of Multiphase Flow, 152:104072, 2022.">6</a>]</span>. The diameter of the particle is <span class="math notranslate nohighlight">\(D_p = 1\)</span>, the computational domain is <span class="math notranslate nohighlight">\(L_x \times L_y \times L_z = 20D_p \times 10D_p \times 10D_p\)</span>, the distance of the particle from the inlet is <span class="math notranslate nohighlight">\(d = 5D_p\)</span> and located in the center of the yz plane. The inlet and outlet boundaries are applied in the x direction and the inlet velocity <span class="math notranslate nohighlight">\(U\)</span> is <span class="math notranslate nohighlight">\(1m/s\)</span>. Both y and z directions are periodic boundaries.</p>
 <p>The influence of AMR on the simulation results is investigated by using the subcycling method with different levels. As shown in Fig.</p>
-<figure class="align-center" id="id12">
+<figure class="align-center" id="id13">
 <a class="reference internal image-reference" href="_images/FlowPastSphereResult.png"><img alt="_images/FlowPastSphereResult.png" src="_images/FlowPastSphereResult.png" style="width: 5.0in;" />
 </a>
 <figcaption>
-<p><span class="caption-number">Figure 10 </span><span class="caption-text">The drag coefficient of the particle under uniform flows varies with Particle Reynolds number at different AMR levels.</span><a class="headerlink" href="#id12" title="Link to this image"></a></p>
+<p><span class="caption-number">Figure 10 </span><span class="caption-text">The drag coefficient of the particle under uniform flows varies with Particle Reynolds number at different AMR levels.</span><a class="headerlink" href="#id13" title="Link to this image"></a></p>
 </figcaption>
 </figure>
 <p>Three different types of grid were selected: level 0 indicates the single-level grid containing no AMR, level 1 indicates the two-level grid, and level 2 indicates the three-level grid. For all three types of grid, the ratio of the diameter of the particles to the grid spacing on the finest level is 16. The drag force, including the contributions of Lagrangian force and the PVF function, is calculated by</p>
@@ -226,11 +226,11 @@
 <section id="cluster-of-monodisperse-particles">
 <span id="sec-clusterparticles"></span><h2>Cluster of monodisperse particles<a class="headerlink" href="#cluster-of-monodisperse-particles" title="Link to this heading"></a></h2>
 <p>We demonstrate the accuracy and efficacy of our codes for simulating clusters of particles on the multi-level grid. As shown in Fig.</p>
-<figure class="align-center" id="id13">
+<figure class="align-center" id="id14">
 <a class="reference internal image-reference" href="_images/MonodisperseParticlesAMR.png"><img alt="_images/MonodisperseParticlesAMR.png" src="_images/MonodisperseParticlesAMR.png" style="width: 7.0in;" />
 </a>
 <figcaption>
-<p><span class="caption-number">Figure 11 </span><span class="caption-text">Monodisperse particles on a three-level AMR grid</span><a class="headerlink" href="#id13" title="Link to this image"></a></p>
+<p><span class="caption-number">Figure 11 </span><span class="caption-text">Monodisperse particles on a three-level AMR grid</span><a class="headerlink" href="#id14" title="Link to this image"></a></p>
 </figcaption>
 </figure>
 <p>80 particles of diameter <span class="math notranslate nohighlight">\(D = 1\)</span> are randomly distributed in a channel of size <span class="math notranslate nohighlight">\(L_x\times L_y \times L_z = 10\times 20 \times 10\)</span>. To choose an optimal interaction number <span class="math notranslate nohighlight">\(N_s\)</span> in this complex configuration, the maximum error of the no-slip boundary condition among 80 particles is tested with a unit flow field <span class="math notranslate nohighlight">\(u=(1,0,0)\)</span>.the maximum error of no-slip condition decreases as <span class="math notranslate nohighlight">\(N_s\)</span> increases and it is strongly reduced for <span class="math notranslate nohighlight">\(N_s=2\)</span>. According to the selection suggestions provided by Breugem <span id="id4">[<a class="reference internal" href="references.html#id54" title="Wim-Paul Breugem. A second-order accurate immersed boundary method for fully resolved simulations of particle-laden flows. Journal of Computational Physics, 231(13):4469–4498, 2012.">7</a>]</span>. <span class="math notranslate nohighlight">\(N_s=2\)</span> is the optimal value for balancing the accuracy of the no-slip boundary and the computational efficiency. After determining <span class="math notranslate nohighlight">\(N_s\)</span>, the fluid flow is driven by applying a pressure gradient of 1.0 in the z direction. This case can represent a porous medium with a volume fraction of 0.02. Three levels of the AMR grid is applied. The grid resolution on the finest level is <span class="math notranslate nohighlight">\(d/h=16\)</span>. Since the multi-direct forcing immersed boundary method <span id="id5">[<a class="reference internal" href="references.html#id103" title="Aman G Kidanemariam, Markus Scherer, and Markus Uhlmann. Open-channel flow over evolving subaqueous ripples. Journal of Fluid Mechanics, 937:A26, 2022.">8</a>, <a class="reference internal" href="references.html#id136" title="Ali Yousefi, Pedro Costa, Francesco Picano, and Luca Brandt. On the role of inertia in channel flows of finite-size neutrally buoyant particles. Journal of Fluid Mechanics, 955:A30, 2023.">9</a>]</span> and fictitious domain method <span id="id6">[<a class="reference internal" href="references.html#id137" title="Yan Xia, Hongbing Xiong, Zhaosheng Yu, and Chenlin Zhu. Effects of the collision model in interface-resolved simulations of particle-laden turbulent channel flows. Physics of Fluids, 2020.">10</a>, <a class="reference internal" href="references.html#id138" title="Peifei Fan, Zhaowu Lin, Jian Xu, and Zhaosheng Yu. A three-dimensional fictitious domain method for direct numerical simulations of particle-laden flows with heat transfer. Physics of Fluids, 2023.">11</a>]</span> require cube grid cells, the grid cell requirement is equals to case 1 in Table.</p>
@@ -261,15 +261,16 @@
 </table>
 </div></blockquote>
 <p>Compared with them, our algorithm has a 72.5% grid reduction with <span class="math notranslate nohighlight">\(d/h=16\)</span>. And it has a 62.5% Lagrangian markers reduction compared with the DLM method <span id="id7">[<a class="reference internal" href="references.html#id139" title="Govind Sharma, Nishant Nangia, Amneet Pal Singh Bhalla, and Bahni Ray. A coupled distributed lagrange multiplier (dlm) and discrete element method (dem) approach to simulate particulate flow with collisions. Powder Technology, 398:117091, 2022.">12</a>, <a class="reference internal" href="references.html#id5" title="Yadong Zeng, Amneet Pal Singh Bhalla, and Lian Shen. A subcycling/non-subcycling time advancement scheme-based dlm immersed boundary method framework for solving single and multiphase fluid–structure interaction problems on dynamically adaptive grids. Computers &amp; Fluids, 238:105358, 2022.">13</a>]</span> with <span class="math notranslate nohighlight">\(d/h=16\)</span>.</p>
-<p>When the simulation reaches the steady state, the total pressure drop balances the IB force generated by all particles in the streamwise z direction. Following the equation in akiki et al., the theoretical drag force is given by</p>
+<p>When the simulation reaches the steady state, the total pressure drop balances the IB force generated by all particles in the streamwise z direction.
+Following the equation in Akiki et al. <span id="id8">[<a class="reference internal" href="references.html#id56" title="Georges Akiki and S Balachandar. Immersed boundary method with non-uniform distribution of Lagrangian markers for a non-uniform Eulerian mesh. Journal of Computational Physics, 307:34–59, 2016.">14</a>]</span>, the theoretical drag force is given by</p>
 <div class="math notranslate nohighlight">
 \[F_{theory} = (\frac{\Delta p}{\Delta z}L_z)L_xL_y\]</div>
 <p>Fig. shows the time series of total IB force for all particles. The resistance gradually reaches a steady state after 40000 steps. In this case, the theoretical value of drag force given by <span class="math notranslate nohighlight">\(F_{theory}\)</span> is 2000, while the present average values at steady state with <span class="math notranslate nohighlight">\(N_s=2\)</span> and 4 are all converged around 2000. It indicates that <span class="math notranslate nohighlight">\(N_s=2\)</span> is sufficient for this case. And the agreement between theory and present results validates the accuracy of our proposed framework in dealing with large amounts of particles in the fluid system.</p>
-<figure class="align-center" id="id14">
+<figure class="align-center" id="id15">
 <a class="reference internal image-reference" href="_images/MonodispersPDrop.png"><img alt="_images/MonodispersPDrop.png" src="_images/MonodispersPDrop.png" style="width: 5.0in;" />
 </a>
 <figcaption>
-<p><span class="caption-number">Figure 12 </span><span class="caption-text">Comparison of total drag force between the theory and present results with different <span class="math notranslate nohighlight">\(N_s=2\)</span></span><a class="headerlink" href="#id14" title="Link to this image"></a></p>
+<p><span class="caption-number">Figure 12 </span><span class="caption-text">Comparison of total drag force between the theory and present results with different <span class="math notranslate nohighlight">\(N_s=2\)</span></span><a class="headerlink" href="#id15" title="Link to this image"></a></p>
 </figcaption>
 </figure>
 </section>
