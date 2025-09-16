@@ -110,14 +110,14 @@ The fluid is always assumed to be a Newtonian flow. Please refer to another AMRe
 <section id="sample-cases">
 <h2>Sample Cases<a class="headerlink" href="#sample-cases" title="Link to this heading"></a></h2>
 <p>In the first case, we test the order of convergence for in a 2D reversed single vortex problem.
-A 2D circular drop with radius R=0.15 is placed at (0.5,0.75) in a unit computational domain [0, 1] x [0, 1].
+A 2D circular drop with radius <span class="math notranslate nohighlight">\(R=0.15\)</span> is placed at (0.5,0.75) in a unit computational domain <span class="math notranslate nohighlight">\([0,1] \times [0,1]\)</span>.
 The velocity field is given by the stream function,</p>
 <blockquote>
 <div><div class="math notranslate nohighlight" id="equation-eq-stream-function">
 <span class="eqno">(1)<a class="headerlink" href="#equation-eq-stream-function" title="Link to this equation"></a></span>\[\Psi(x, y, t)=\frac{1}{\pi} \sin ^{2}(\pi x) \sin ^{2}(\pi y) \cos \left(\frac{\pi t}{T}\right),\]</div>
 </div></blockquote>
 <p>in which the rotational period is <span class="math notranslate nohighlight">\(T=4.0\)</span>. The velocities in the <span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(y\)</span> directions are defined as <span class="math notranslate nohighlight">\(u(x,y,t)=\partial \Psi / \partial y\)</span> and <span class="math notranslate nohighlight">\(v(x,y,t)=-\partial \Psi / \partial x\)</span>, respectively.
-The periodic boundary condition is applied in both x and y directions. At t=T, the interfacial profile of the drop at the high resolution converges to its initial profile, which represents the exact solution.
+The periodic boundary condition is applied in both <span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(y\)</span> directions. At <span class="math notranslate nohighlight">\(t=T\)</span>, the interfacial profile of the drop at the high resolution converges to its initial profile, which represents the exact solution.
 On the other hand, the circular shape of the drop is distorted for the simulation with low resolution.
 Here is the case directory: <a class="reference external" href="https://github.com/ruohai0925/IAMReX/tree/development/Tutorials/RSV">RSV</a>.</p>
 <figure class="align-center" id="id3">
@@ -148,7 +148,7 @@ For more details of this case, one can check our previous work <span id="id1">[<
 <p><span class="caption-number">Figure 3 </span><span class="caption-text">Comparison of the tip locations of the falling fluid and the rising fluid with the previous work <span id="id2">[<a class="reference internal" href="references.html#id142" title="J-L Guermond and Luigi Quartapelle. A projection FEM for variable density incompressible flows. J. Comput. Phys., 165(1):167–188, 2000.">2</a>, <a class="reference internal" href="references.html#id143" title="Grétar Tryggvason. Numerical simulations of the Rayleigh–Taylor instability. J. Comput. Phys., 75(2):253–282, 1988.">3</a>]</span>.</span><a class="headerlink" href="#id5" title="Link to this image"></a></p>
 </figcaption>
 </figure>
-<p>The third case refers to fluid-particle interactions with 80 randomly distributed particles in a channel. The following Figure represents the velocity contour of an interface in the x direction at the steady state.
+<p>The third case refers to fluid-particle interactions with 80 randomly distributed particles in a channel. The following Figure represents the velocity contour of an interface in the <span class="math notranslate nohighlight">\(x\)</span> direction at the steady state.
 The flow passes around the particles and generates the wakes behind.
 Here is the case directory: <a class="reference external" href="https://github.com/ruohai0925/IAMReX/tree/development/Tutorials/Monodisperse">Monodisperse</a>.
 For more details of this case, one can check <a class="reference internal" href="Results.html#sec-clusterparticles"><span class="std std-ref">Cluster of monodisperse particles</span></a>.</p>

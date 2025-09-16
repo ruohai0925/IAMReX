@@ -19,7 +19,7 @@ The particle volume fraction (PVF), which joins the calculation of free motion u
 
     Sketch of :math:`\phi` at each corner of a grid cell with interface.
 
-The PVF variable is defined as the volume fraction of the fluid in the cell, which can be calculated by the level-set function :math:`\phi` 
+The PVF variable is defined as the volume fraction of the fluid in the cell, which can be calculated by the level-set function :math:`\phi`
 and the Heaviside function :math:`H`. Based on the level-set function :math:`\phi`, an approximation of PVF can be obtained by the following equation:
 
 .. math::
@@ -115,15 +115,17 @@ Flow Past Sphere
 
     The schematic of the flow passing through the spherical particles
 
-We validate the accuracy and efficacy of our adaptive solver by simulating a spherical particle in uniform flow with different particle Reynolds numbers :cite:`schiller1933uber,zhu2022particle`. The diameter of the particle is :math:`D_p = 1`, the computational domain is :math:`L_x \times L_y \times L_z = 20D_p \times 10D_p \times 10D_p`, the distance of the particle from the inlet is :math:`d = 5D_p` and located in the center of the yz plane. The inlet and outlet boundaries are applied in the x direction and the inlet velocity :math:`U` is :math:`1m/s`. Both y and z directions are periodic boundaries.
+We validate the accuracy and efficacy of our adaptive solver by simulating a spherical particle in uniform flow with different particle Reynolds numbers :cite:`schiller1933uber,zhu2022particle`. The diameter of the particle is :math:`D_p = 1`, the computational domain is :math:`L_x \times L_y \times L_z = 20D_p \times 10D_p \times 10D_p`, the distance of the particle from the inlet is :math:`d = 5D_p` and located in the center of the :math:`yz` plane. The inlet and outlet boundaries are applied in the :math:`x` direction and the inlet velocity :math:`U` is :math:`1m/s`. Both :math:`y` and :math:`z` directions are periodic boundaries.
 
-The influence of AMR on the simulation results is investigated by using the subcycling method with different levels. As shown in Fig.
+.. _figFPSR_ref:
 
 .. figure:: ./Results/FlowPastSphereResult.png
     :align: center
     :width: 5.0in
 
     The drag coefficient of the particle under uniform flows varies with Particle Reynolds number at different AMR levels.
+
+The influence of AMR on the simulation results is investigated by using the subcycling method with different levels. As shown in :numref:`figFPSR_ref`.
 
 Three different types of grid were selected: level 0 indicates the single-level grid containing no AMR, level 1 indicates the two-level grid, and level 2 indicates the three-level grid. For all three types of grid, the ratio of the diameter of the particles to the grid spacing on the finest level is 16. The drag force, including the contributions of Lagrangian force and the PVF function, is calculated by
 
@@ -135,14 +137,18 @@ The theoretical S-N law for calculating the drag coefficient of the shaped parti
 .. math::
     C_D = (24/Re_p)(1+0.15Re_p^{0.687}),
 
-which is proposed by Schiller :cite:`schiller1933uber`., and :math:`Re_p = UD_p/\nu` represents the particle Reynolds number. It can be seen from above Fig that the present results under different particle Reynolds numbers are in good agreement with S-N law. The fact that different levels of grid produce the nearly identical results validated the accuracy of our solver on the adaptive grid.
+which is proposed by Schiller :cite:`schiller1933uber` and :math:`Re_p = UD_p/\nu` represents the particle Reynolds number. It can be seen from :numref:`figFPSR_ref` that the present results under different particle Reynolds numbers are in good agreement with S-N law. The fact that different levels of grid produce the nearly identical results validated the accuracy of our solver on the adaptive grid.
+
+Refer to this `link <https://github.com/ruohai0925/IAMReX/blob/development/Tutorials/FlowPastSphere/inputs.3d.flow_past_sphere>`_ for the input file of this case.
 
 .. _sec:ClusterParticles:
 
 Cluster of monodisperse particles
 ---------------------------------
 
-We demonstrate the accuracy and efficacy of our codes for simulating clusters of particles on the multi-level grid. As shown in Fig.
+We demonstrate the accuracy and efficacy of our codes for simulating clusters of particles on the multi-level grid. As shown in :numref:`figMPAMR`.
+
+.. _figMPAMR:
 
 .. figure:: ./Results/MonodisperseParticlesAMR.png
     :align: center
@@ -150,7 +156,7 @@ We demonstrate the accuracy and efficacy of our codes for simulating clusters of
 
     Monodisperse particles on a three-level AMR grid
 
-80 particles of diameter :math:`D = 1` are randomly distributed in a channel of size :math:`L_x\times L_y \times L_z = 10\times 20 \times 10`. To choose an optimal interaction number :math:`N_s` in this complex configuration, the maximum error of the no-slip boundary condition among 80 particles is tested with a unit flow field :math:`u=(1,0,0)`.the maximum error of no-slip condition decreases as :math:`N_s` increases and it is strongly reduced for :math:`N_s=2`. According to the selection suggestions provided by Breugem :cite:`breugem2012second`. :math:`N_s=2` is the optimal value for balancing the accuracy of the no-slip boundary and the computational efficiency. After determining :math:`N_s`, the fluid flow is driven by applying a pressure gradient of 1.0 in the z direction. This case can represent a porous medium with a volume fraction of 0.02. Three levels of the AMR grid is applied. The grid resolution on the finest level is :math:`d/h=16`. Since the multi-direct forcing immersed boundary method :cite:`kidanemariam2022open,yousefi2023role` and fictitious domain method :cite:`xia2020effects,fan2023three` require cube grid cells, the grid cell requirement is equals to case 1 in Table.
+80 particles of diameter :math:`D = 1` are randomly distributed in a channel of size :math:`L_x\times L_y \times L_z = 10\times 20 \times 10`. To choose an optimal interaction number :math:`N_s` in this complex configuration, the maximum error of the no-slip boundary condition among 80 particles is tested with a unit flow field :math:`u=(1,0,0)`.the maximum error of no-slip condition decreases as :math:`N_s` increases and it is strongly reduced for :math:`N_s=2`. According to the selection suggestions provided by Breugem :cite:`breugem2012second`. :math:`N_s=2` is the optimal value for balancing the accuracy of the no-slip boundary and the computational efficiency. After determining :math:`N_s`, the fluid flow is driven by applying a pressure gradient of 1.0 in the :math:`z` direction. This case can represent a porous medium with a volume fraction of 0.02. Three levels of the AMR grid is applied. The grid resolution on the finest level is :math:`d/h=16`. Since the multi-direct forcing immersed boundary method :cite:`kidanemariam2022open,yousefi2023role` and fictitious domain method :cite:`xia2020effects,fan2023three` require cube grid cells, the grid cell requirement is equals to case 1 in Table.
 
     +------+---------+---------+---------+-------------+
     | case | level 0 | level 1 | level 2 | Total cells |
@@ -162,16 +168,20 @@ We demonstrate the accuracy and efficacy of our codes for simulating clusters of
 
 Compared with them, our algorithm has a 72.5% grid reduction with :math:`d/h=16`. And it has a 62.5% Lagrangian markers reduction compared with the DLM method :cite:`sharma2022coupled,zeng2022subcycling` with :math:`d/h=16`.
 
-When the simulation reaches the steady state, the total pressure drop balances the IB force generated by all particles in the streamwise z direction. 
+When the simulation reaches the steady state, the total pressure drop balances the IB force generated by all particles in the streamwise :math:`z` direction.
 Following the equation in Akiki et al. :cite:`akiki2016immersed`, the theoretical drag force is given by
 
 .. math::
     F_{theory} = (\frac{\Delta p}{\Delta z}L_z)L_xL_y
 
-Fig. shows the time series of total IB force for all particles. The resistance gradually reaches a steady state after 40000 steps. In this case, the theoretical value of drag force given by :math:`F_{theory}` is 2000, while the present average values at steady state with :math:`N_s=2` and 4 are all converged around 2000. It indicates that :math:`N_s=2` is sufficient for this case. And the agreement between theory and present results validates the accuracy of our proposed framework in dealing with large amounts of particles in the fluid system.
+:numref:`figMPD` shows the time series of total IB force for all particles. The resistance gradually reaches a steady state after 40000 steps. In this case, the theoretical value of drag force given by :math:`F_{theory}` is 2000, while the present average values at steady state with :math:`N_s=2` and 4 are all converged around 2000. It indicates that :math:`N_s=2` is sufficient for this case. And the agreement between theory and present results validates the accuracy of our proposed framework in dealing with large amounts of particles in the fluid system.
+
+.. _figMPD:
 
 .. figure:: ./Results/MonodispersPDrop.png
     :align: center
     :width: 5.0in
 
     Comparison of total drag force between the theory and present results with different :math:`N_s=2`
+
+Refer to this `link <https://github.com/ruohai0925/IAMReX/blob/development/Tutorials/Monodisperse/inputs.random_particle>`_ for the input file of this case.

@@ -1,13 +1,13 @@
 Introduction
 ===================
 
-This IAMReX repo extends the capability of original `IAMR <https://amrex-fluids.github.io/IAMR/>`_ codes, aiming at simulating the 2D/3D multiphase incompressible flows and fluid structure interaction problems on both CPUs and GPUs with/without subcycling. The Navier-Stokes equations are solved on an adaptive semi-staggered grid using the projection method. The gas-liquid interface is captured using the level set (LS) method. The fluid-solid interface is resolved using the multidirect forcing immersed boundary method (IBM). 
-The particle-wall as well as the particle-particle collisions are also captured by the adaptive collision time model (ACTM). 
+This IAMReX repo extends the capability of original `IAMR <https://amrex-fluids.github.io/IAMR/>`_ codes, aiming at simulating the 2D/3D multiphase incompressible flows and fluid structure interaction problems on both CPUs and GPUs with/without subcycling. The Navier-Stokes equations are solved on an adaptive semi-staggered grid using the projection method. The gas-liquid interface is captured using the level set (LS) method. The fluid-solid interface is resolved using the multidirect forcing immersed boundary method (IBM).
+The particle-wall as well as the particle-particle collisions are also captured by the adaptive collision time model (ACTM).
 
-IAMReX is suitable for modeling multiphase flow problems and fluid-structure interaction problems. 
-Its Level Set-based interface capturing technique can be beneficial for researchers studying phenomena such as wind over waves, 
-breaking waves, and simulating the formation and disappearance of bubbles and droplets. 
-Additionally, the immersed boundary method along with the collision models can parallelly resolve large-scale particles and capture their motions. 
+IAMReX is suitable for modeling multiphase flow problems and fluid-structure interaction problems.
+Its Level Set-based interface capturing technique can be beneficial for researchers studying phenomena such as wind over waves,
+breaking waves, and simulating the formation and disappearance of bubbles and droplets.
+Additionally, the immersed boundary method along with the collision models can parallelly resolve large-scale particles and capture their motions.
 Researchers working on studies of biological particle aggregation, sandstorms, wind erosion of ground surfaces, and seawater erosion of riverbeds are also among the target audience for this software.
 
 Features
@@ -22,7 +22,7 @@ Key software and algorithmic features of IAMR include:
 * Particle Collision Algorithms with Discrete Element Method
 
 In addition to the above key features, IAMReX supports simulation of passive scalar, including temperature and species concentration.
-The material properties (e.g., density and viscosity) are independent of temperature at this stage. 
+The material properties (e.g., density and viscosity) are independent of temperature at this stage.
 One can easily extend the code to support temperature-dependent material properties by modifying the source code.
 The fluid is always assumed to be a Newtonian flow. Please refer to another AMReX-based library `incflo <https://amrex-fluids.github.io/incflo/>`_ if one wants to simulate non-Newtonian flows.
 
@@ -30,7 +30,7 @@ Sample Cases
 ------------------
 
 In the first case, we test the order of convergence for in a 2D reversed single vortex problem.
-A 2D circular drop with radius R=0.15 is placed at (0.5,0.75) in a unit computational domain [0, 1] x [0, 1].
+A 2D circular drop with radius :math:`R=0.15` is placed at (0.5,0.75) in a unit computational domain :math:`[0,1] \times [0,1]`.
 The velocity field is given by the stream function,
 
    .. math::
@@ -39,7 +39,7 @@ The velocity field is given by the stream function,
       \Psi(x, y, t)=\frac{1}{\pi} \sin ^{2}(\pi x) \sin ^{2}(\pi y) \cos \left(\frac{\pi t}{T}\right),
 
 in which the rotational period is :math:`T=4.0`. The velocities in the :math:`x` and :math:`y` directions are defined as :math:`u(x,y,t)=\partial \Psi / \partial y` and :math:`v(x,y,t)=-\partial \Psi / \partial x`, respectively.
-The periodic boundary condition is applied in both x and y directions. At t=T, the interfacial profile of the drop at the high resolution converges to its initial profile, which represents the exact solution.
+The periodic boundary condition is applied in both :math:`x` and :math:`y` directions. At :math:`t=T`, the interfacial profile of the drop at the high resolution converges to its initial profile, which represents the exact solution.
 On the other hand, the circular shape of the drop is distorted for the simulation with low resolution.
 Here is the case directory: `RSV <https://github.com/ruohai0925/IAMReX/tree/development/Tutorials/RSV>`_.
 
@@ -73,7 +73,7 @@ For more details of this case, one can check our previous work :cite:`zeng2022ap
 
     Comparison of the tip locations of the falling fluid and the rising fluid with the previous work :cite:`guermond2000projection, tryggvason1988numerical`.
 
-The third case refers to fluid-particle interactions with 80 randomly distributed particles in a channel. The following Figure represents the velocity contour of an interface in the x direction at the steady state.
+The third case refers to fluid-particle interactions with 80 randomly distributed particles in a channel. The following Figure represents the velocity contour of an interface in the :math:`x` direction at the steady state.
 The flow passes around the particles and generates the wakes behind.
 Here is the case directory: `Monodisperse <https://github.com/ruohai0925/IAMReX/tree/development/Tutorials/Monodisperse>`_.
 For more details of this case, one can check :ref:`sec:ClusterParticles`.
