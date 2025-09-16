@@ -36,7 +36,9 @@ where :math:`H` is the Heaviside function, defined by:
    1, & \phi > 0
    \end{cases}
 
-On the right-hand side of equation :math:`\alpha_{i,j,k}`, the value of :math:`\phi` for each cell corner depends on the location of the fluid-particle interface. When the shape of the particle surface is analytically given, the :math:`\phi` value can be determined by calculating the Euclidean distance from the corner point of the cell to the particle surface. The calculation of PVF is then transformed from an exact integral to a numerical integral. As shown in :numref:`figPvfCase`, the cell value of PVF varies from :math:`0` to :math:`1`, depending on the relative position between the cell center and the fluid-particle interface.
+On the right-hand side of equation :math:`\alpha_{i,j,k}`, the value of :math:`\phi` for each cell corner depends on the location of the fluid-particle interface. When the shape of the particle surface is analytically given, the :math:`\phi` value can be determined by calculating the Euclidean distance from the corner point of the cell to the particle surface. 
+The calculation of PVF is then transformed from an exact integral to a numerical integral. 
+As shown in :numref:`figPvfCase`, the cell value of PVF varies from :math:`0` to :math:`1`, depending on the relative position between the cell center and the fluid-particle interface.
 
 .. _figPvfCase:
 
@@ -61,7 +63,8 @@ where :math:`a`, :math:`b`, and :math:`c` are the semi-axes of the ellipsoid. Fo
 
    \phi_{i,j,k}= \sqrt{\frac{(x_{i,j,k}-x_{p})^2}{a^2} + \frac{(y_{i,j,k}-y_{p})^2}{b^2} + \frac{(z_{i,j,k}-z_{p})^2}{c^2}}-1,
 
-for any Eulerian cell :math:`(i,j,k)`. The computational domain is :math:`L_x \times L_y \times L_z = 2 \times 2 \times 2`, the sphere diameter is :math:`D = 0.8`, and the semi-axes of the ellipsoid are set to be :math:`a = 0.4`, :math:`b = 0.6`, :math:`c = 0.4`. The centers of both particles are :math:`(x_p, y_p, z_p)=(1,1,1)`. As shown in :numref:`figPvfAmr`, three levels of AMR grid are used during the PVF calculation, and the particles are enclosed by the finest level.
+for any Eulerian cell :math:`(i,j,k)`. The computational domain is :math:`L_x \times L_y \times L_z = 2 \times 2 \times 2`, the sphere diameter is :math:`D = 0.8`, and the semi-axes of the ellipsoid are set to be :math:`a = 0.4`, :math:`b = 0.6`, :math:`c = 0.4`. The centers of both particles are :math:`(x_p, y_p, z_p)=(1,1,1)`. 
+As shown in :numref:`figPvfAmr`, three levels of AMR grid are used during the PVF calculation, and the particles are enclosed by the finest level.
 
 .. _figPvfAmr:
 
@@ -125,9 +128,9 @@ We validate the accuracy and efficacy of our adaptive solver by simulating a sph
 
     The drag coefficient of the particle under uniform flows varies with Particle Reynolds number at different AMR levels.
 
-The influence of AMR on the simulation results is investigated by using the subcycling method with different levels. As shown in :numref:`figFPSR_ref`.
-
-Three different types of grid were selected: level 0 indicates the single-level grid containing no AMR, level 1 indicates the two-level grid, and level 2 indicates the three-level grid. For all three types of grid, the ratio of the diameter of the particles to the grid spacing on the finest level is 16. The drag force, including the contributions of Lagrangian force and the PVF function, is calculated by
+The influence of AMR on the simulation results is investigated by using the subcycling method with different levels. 
+As shown in :numref:`figFPSR_ref`, three different types of grid were selected: level 0 indicates the single-level grid containing no AMR, level 1 indicates the two-level grid, and level 2 indicates the three-level grid. 
+For all three types of grid, the ratio of the diameter of the particles to the grid spacing on the finest level is 16. The drag force, including the contributions of Lagrangian force and the PVF function, is calculated by
 
 .. math::
     \mathbf{F}_D=-\rho_f \sum_{l=1}^{N_L} \mathbf{F}_l^{n+1/2} \Delta V_l+\rho_f \frac{d}{d t}\left(\int_{V_p} \mathbf{u} d V\right),
@@ -146,7 +149,9 @@ Refer to this `link <https://github.com/ruohai0925/IAMReX/blob/development/Tutor
 Cluster of monodisperse particles
 ---------------------------------
 
-We demonstrate the accuracy and efficacy of our codes for simulating clusters of particles on the multi-level grid. As shown in :numref:`figMPAMR`.
+We demonstrate the accuracy and efficacy of our codes for simulating clusters of particles on the multi-level grid. 
+As shown in :numref:`figMPAMR`, 80 particles of diameter :math:`D = 1` are randomly distributed in a channel of size :math:`L_x\times L_y \times L_z = 10\times 20 \times 10`. To choose an optimal interaction number :math:`N_s` in this complex configuration, the maximum error of the no-slip boundary condition among 80 particles is tested with a unit flow field :math:`u=(1,0,0)`.the maximum error of no-slip condition decreases as :math:`N_s` increases and it is strongly reduced for :math:`N_s=2`. According to the selection suggestions provided by Breugem :cite:`breugem2012second`. :math:`N_s=2` is the optimal value for balancing the accuracy of the no-slip boundary and the computational efficiency. After determining :math:`N_s`, the fluid flow is driven by applying a pressure gradient of 1.0 in the :math:`z` direction. This case can represent a porous medium with a volume fraction of 0.02. Three levels of the AMR grid is applied. The grid resolution on the finest level is :math:`d/h=16`. 
+Since the multi-direct forcing immersed boundary method :cite:`kidanemariam2022open,yousefi2023role` and fictitious domain method :cite:`xia2020effects,fan2023three` require cube grid cells, the grid cell requirement is equals to case 1 in Table.
 
 .. _figMPAMR:
 
@@ -155,8 +160,6 @@ We demonstrate the accuracy and efficacy of our codes for simulating clusters of
     :width: 7.0in
 
     Monodisperse particles on a three-level AMR grid
-
-80 particles of diameter :math:`D = 1` are randomly distributed in a channel of size :math:`L_x\times L_y \times L_z = 10\times 20 \times 10`. To choose an optimal interaction number :math:`N_s` in this complex configuration, the maximum error of the no-slip boundary condition among 80 particles is tested with a unit flow field :math:`u=(1,0,0)`.the maximum error of no-slip condition decreases as :math:`N_s` increases and it is strongly reduced for :math:`N_s=2`. According to the selection suggestions provided by Breugem :cite:`breugem2012second`. :math:`N_s=2` is the optimal value for balancing the accuracy of the no-slip boundary and the computational efficiency. After determining :math:`N_s`, the fluid flow is driven by applying a pressure gradient of 1.0 in the :math:`z` direction. This case can represent a porous medium with a volume fraction of 0.02. Three levels of the AMR grid is applied. The grid resolution on the finest level is :math:`d/h=16`. Since the multi-direct forcing immersed boundary method :cite:`kidanemariam2022open,yousefi2023role` and fictitious domain method :cite:`xia2020effects,fan2023three` require cube grid cells, the grid cell requirement is equals to case 1 in Table.
 
     +------+---------+---------+---------+-------------+
     | case | level 0 | level 1 | level 2 | Total cells |
