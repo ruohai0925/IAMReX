@@ -8,7 +8,7 @@ Validation Cases
 Particle Volume Fraction (PVF)
 ------------------------------
 
-The particle volume fraction (PVF), which joins the calculation of free motion updates, is introduced and validated in this session. The PVF is approximated by the signed-distance level-set function :math:`\phi` of the fluid-particle interface. The level-set function :math:`\phi` is located at cell nodes and is calculated at the eight corners of each cell. The symbol of :math:`\phi` as well as the intersected interface is shown in :numref:`figPvfLevelSet`. Here, :math:`\phi` is negative inside the particle and positive outside the particle.
+The particle volume fraction (PVF) variable :math:`\alpha`, which joins the calculation of free motion updates, is introduced and validated in this session. The PVF is approximated by the signed-distance level-set function :math:`\phi` of the fluid-particle interface. The level-set function :math:`\phi` is located at cell nodes and is calculated at the eight corners of each cell. The symbol of :math:`\phi` as well as the intersected interface is shown in :numref:`figPvfLevelSet`. Here, :math:`\phi` is negative inside the particle and positive outside the particle.
 
 .. _figPvfLevelSet:
 
@@ -19,8 +19,8 @@ The particle volume fraction (PVF), which joins the calculation of free motion u
 
     Sketch of :math:`\phi` at each corner of a grid cell with interface.
 
-The PVF variable is defined as the volume fraction of the fluid in the cell, which can be calculated by the level-set function :math:`\phi`
-and the Heaviside function :math:`H`. Based on the level-set function :math:`\phi`, an approximation of PVF can be obtained by the following equation:
+The PVF variable :math:`\alpha` is defined as the volume fraction of the fluid in the cell, which can be calculated by the level-set function :math:`\phi`
+and the Heaviside function :math:`H`. Based on the level-set function :math:`\phi`, an approximation of PVF variable :math:`\alpha_{i,j,k}` can be obtained by the following equation:
 
 .. math::
 

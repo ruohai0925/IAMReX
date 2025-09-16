@@ -90,7 +90,7 @@
 <span id="chap-results"></span><h1>Validation Cases<a class="headerlink" href="#validation-cases" title="Link to this heading"></a></h1>
 <section id="particle-volume-fraction-pvf">
 <span id="r-pvf"></span><h2>Particle Volume Fraction (PVF)<a class="headerlink" href="#particle-volume-fraction-pvf" title="Link to this heading"></a></h2>
-<p>The particle volume fraction (PVF), which joins the calculation of free motion updates, is introduced and validated in this session. The PVF is approximated by the signed-distance level-set function <span class="math notranslate nohighlight">\(\phi\)</span> of the fluid-particle interface. The level-set function <span class="math notranslate nohighlight">\(\phi\)</span> is located at cell nodes and is calculated at the eight corners of each cell. The symbol of <span class="math notranslate nohighlight">\(\phi\)</span> as well as the intersected interface is shown in <a class="reference internal" href="#figpvflevelset"><span class="std std-numref">Figure 6</span></a>. Here, <span class="math notranslate nohighlight">\(\phi\)</span> is negative inside the particle and positive outside the particle.</p>
+<p>The particle volume fraction (PVF) variable <span class="math notranslate nohighlight">\(\alpha\)</span>, which joins the calculation of free motion updates, is introduced and validated in this session. The PVF is approximated by the signed-distance level-set function <span class="math notranslate nohighlight">\(\phi\)</span> of the fluid-particle interface. The level-set function <span class="math notranslate nohighlight">\(\phi\)</span> is located at cell nodes and is calculated at the eight corners of each cell. The symbol of <span class="math notranslate nohighlight">\(\phi\)</span> as well as the intersected interface is shown in <a class="reference internal" href="#figpvflevelset"><span class="std std-numref">Figure 6</span></a>. Here, <span class="math notranslate nohighlight">\(\phi\)</span> is negative inside the particle and positive outside the particle.</p>
 <figure class="align-center" id="id10">
 <span id="figpvflevelset"></span><a class="reference internal image-reference" href="_images/pvf_level_set_function.png"><img alt="Level-set function at grid cell corners" src="_images/pvf_level_set_function.png" style="width: 5.0in;" />
 </a>
@@ -98,8 +98,8 @@
 <p><span class="caption-number">Figure 6 </span><span class="caption-text">Sketch of <span class="math notranslate nohighlight">\(\phi\)</span> at each corner of a grid cell with interface.</span><a class="headerlink" href="#id10" title="Link to this image"></a></p>
 </figcaption>
 </figure>
-<p>The PVF variable is defined as the volume fraction of the fluid in the cell, which can be calculated by the level-set function <span class="math notranslate nohighlight">\(\phi\)</span>
-and the Heaviside function <span class="math notranslate nohighlight">\(H\)</span>. Based on the level-set function <span class="math notranslate nohighlight">\(\phi\)</span>, an approximation of PVF can be obtained by the following equation:</p>
+<p>The PVF variable <span class="math notranslate nohighlight">\(\alpha\)</span> is defined as the volume fraction of the fluid in the cell, which can be calculated by the level-set function <span class="math notranslate nohighlight">\(\phi\)</span>
+and the Heaviside function <span class="math notranslate nohighlight">\(H\)</span>. Based on the level-set function <span class="math notranslate nohighlight">\(\phi\)</span>, an approximation of PVF variable <span class="math notranslate nohighlight">\(\alpha_{i,j,k}\)</span> can be obtained by the following equation:</p>
 <div class="math notranslate nohighlight">
 \[\alpha_{i,j,k} = \frac{\sum_{m=1}^{8}-\phi_mH(-\phi_m)}{\sum_{m=1}^8|\phi_m|},\]</div>
 <p>where <span class="math notranslate nohighlight">\(H\)</span> is the Heaviside function, defined by:</p>
