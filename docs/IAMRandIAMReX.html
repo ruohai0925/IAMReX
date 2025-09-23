@@ -126,30 +126,30 @@
 <section id="comparison-with-base-iamr">
 <h2>Comparison with Base IAMR<a class="headerlink" href="#comparison-with-base-iamr" title="Link to this heading"></a></h2>
 <table class="docutils align-default" id="id1">
-<caption><span class="caption-number">Table 5 </span><span class="caption-text">Difference between IAMR and IAMReX</span><a class="headerlink" href="#id1" title="Link to this table"></a></caption>
+<caption><span class="caption-number">Table 5 </span><span class="caption-text">Differences between IAMR and IAMReX</span><a class="headerlink" href="#id1" title="Link to this table"></a></caption>
 <colgroup>
 <col style="width: 33.3%" />
 <col style="width: 33.3%" />
 <col style="width: 33.3%" />
 </colgroup>
 <thead>
-<tr class="row-odd"><th class="head"><p>Feature</p></th>
+<tr class="row-odd"><th class="head"><p>Features</p></th>
 <th class="head"><p>IAMR</p></th>
 <th class="head"><p>IAMReX</p></th>
 </tr>
 </thead>
 <tbody>
 <tr class="row-even"><td><p>State Variables</p></td>
-<td><p>4(velocity, density, tracers, temperature)</p></td>
-<td><p>5(adds level set)</p></td>
+<td><p>4 (velocity, density, tracers, temperature)</p></td>
+<td><p>5 (adds level set)</p></td>
 </tr>
 <tr class="row-odd"><td><p>Interface Methods</p></td>
-<td><p>None</p></td>
+<td><p>Varying densities</p></td>
 <td><p>Level set, immersed boundary, phase field (TBD)</p></td>
 </tr>
 <tr class="row-even"><td><p>Particle Support</p></td>
-<td><p>None</p></td>
-<td><p>Full 6-DOF dynamics with collisions</p></td>
+<td><p>Support particles as passive scalars only</p></td>
+<td><p>Support both passive scalars and 6-DOF fully-resolved particles with collisions</p></td>
 </tr>
 <tr class="row-odd"><td><p>Multi-Physics</p></td>
 <td><p>Single-phase only</p></td>
@@ -157,7 +157,7 @@
 </tr>
 <tr class="row-even"><td><p>Collision Detection</p></td>
 <td><p>None</p></td>
-<td><p>Spatial hashing with DKT model</p></td>
+<td><p>DKT model and adaptive collision time model (TBD)</p></td>
 </tr>
 <tr class="row-odd"><td><p>GPU Support</p></td>
 <td><p>Basic AMReX</p></td>

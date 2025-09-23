@@ -16,28 +16,28 @@ IAMReX (Extended)
 Comparison with Base IAMR
 -------------------------
 
-.. list-table:: Difference between IAMR and IAMReX
+.. list-table:: Differences between IAMR and IAMReX
     :widths: 50 50 50
     :header-rows: 1
 
-    * - Feature
+    * - Features
       - IAMR
       - IAMReX
     * - State Variables
-      - 4(velocity, density, tracers, temperature)
-      - 5(adds level set)
+      - 4 (velocity, density, tracers, temperature)
+      - 5 (adds level set)
     * - Interface Methods
-      - None
+      - Varying densities
       - Level set, immersed boundary, phase field (TBD)
     * - Particle Support
-      - None
-      - Full 6-DOF dynamics with collisions
+      - Support particles as passive scalars only
+      - Support both passive scalars and 6-DOF fully-resolved particles with collisions
     * - Multi-Physics
       - Single-phase only
       - Multi-phase, fluid-solid interaction
     * - Collision Detection
       - None
-      - Spatial hashing with DKT model
+      - DKT model and adaptive collision time model (TBD)
     * - GPU Support
       - Basic AMReX
       - Enhanced particle operations
