@@ -29,6 +29,9 @@ First, make sure that git is installed on your machine.
 
    This will create a folder called ``AMReX-Hydro/`` on your machine.
 
+.. note::
+   Note that we use forked versions of the AMReX repository and AMReX-Hydro. The main reason for this is that we do not want upstream features to influence our downstream application codes. Considering we do not have sufficient computational resources to run nightly regression tests every day, it is better for us to maintain our own control over the specific versions of AMReX and AMReX-Hydro that IAMReX depends on.
+
 #. Download the IAMReX repository by typing:
 
    .. code:: shell
