@@ -10,4 +10,5 @@ Algorithm of IAMReX
     FluidEquations
     LevelSet
     DiffusedIBM
+    ACTM
     IAMRandIAMReX

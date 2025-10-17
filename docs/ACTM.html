@@ -1,0 +1,251 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Adaptive Collision Time Model &mdash; IAMReX 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=01f34227"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script>window.MathJax = {"tex": {"tags": "ams", "tag_side": "right"}}</script>
+      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Key Differences Between IAMR and IAMeX" href="IAMRandIAMReX.html" />
+    <link rel="prev" title="Direct Forcing Immersed Boundary Method" href="DiffusedIBM.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            IAMReX
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Introduction_Chapter.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Getting_Started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Results.html">Validation Cases</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="Algorithm.html">Algorithm and Software Details</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="Algorithm_Chapter.html">Algorithm of IAMReX</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="FluidEquations.html">Fluid Variables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="FluidEquations.html#fluid-equations">Fluid Equations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="FluidEquations.html#time-step-godunov">Time Step - Godunov</a></li>
+<li class="toctree-l3"><a class="reference internal" href="LevelSet.html">Level Set Method</a></li>
+<li class="toctree-l3"><a class="reference internal" href="DiffusedIBM.html">Direct Forcing Immersed Boundary Method</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Adaptive Collision Time Model</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#introduction">Introduction</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#model-components">Model Components</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#adaptive-time-stepping">Adaptive Time Stepping</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#enduring-contact-handling">Enduring Contact Handling</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mathematical-formulation">Mathematical Formulation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#algorithm-implementation">Algorithm Implementation</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="IAMRandIAMReX.html">Key Differences Between IAMR and IAMeX</a></li>
+<li class="toctree-l3"><a class="reference internal" href="IAMRandIAMReX.html#software-architecture">Software Architecture</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Software_Chapter.html">Scholarly effort of IAMReX</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Acknowledgements.html">Acknowledgements</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">References:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="references.html">References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_chapter.html">API</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">IAMReX</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="Algorithm.html">Algorithm and Software Details</a></li>
+          <li class="breadcrumb-item"><a href="Algorithm_Chapter.html">Algorithm of IAMReX</a></li>
+      <li class="breadcrumb-item active">Adaptive Collision Time Model</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/ACTM.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="adaptive-collision-time-model">
+<span id="actm"></span><h1>Adaptive Collision Time Model<a class="headerlink" href="#adaptive-collision-time-model" title="Link to this heading"></a></h1>
+<p>The Adaptive Collision Time Model (ACTM) is a sophisticated collision model designed for grain-resolving simulations of flows over dense, mobile, polydisperse granular sediment beds. This model combines the immersed boundary method (IBM) to couple fluid and particle dynamics, providing accurate representation of particle-particle and particle-wall interactions in multiphase flow simulations.</p>
+<section id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Link to this heading"></a></h2>
+<p>The ACTM addresses the challenges of simulating dense granular systems where particles are in close proximity and frequently interact through collisions. Traditional collision models often struggle with maintaining numerical stability and physical accuracy in such scenarios, particularly when dealing with:</p>
+<ul class="simple">
+<li><p>Dense particle packing with frequent collisions</p></li>
+<li><p>Polydisperse particle size distributions</p></li>
+<li><p>Mobile granular sediment beds</p></li>
+<li><p>Complex fluid-particle interactions</p></li>
+</ul>
+<p>The ACTM employs an adaptive procedure to obtain the desired restitution coefficient and resolve collisions on the timescale of the fluid solver, ensuring accurate and stable simulations of particle-laden flows.</p>
+</section>
+<section id="model-components">
+<h2>Model Components<a class="headerlink" href="#model-components" title="Link to this heading"></a></h2>
+<p>The ACTM consists of three key components that work together to accurately model particle interactions:</p>
+<section id="lubrication-force">
+<h3>Lubrication Force<a class="headerlink" href="#lubrication-force" title="Link to this heading"></a></h3>
+<p>When particles approach each other or solid surfaces, the lubrication force accounts for the fluid dynamics in the narrow gap between surfaces. This force prevents direct particle contact and reduces energy dissipation:</p>
+<div class="math notranslate nohighlight" id="equation-eq-lubrication-force">
+<span class="eqno">(26)<a class="headerlink" href="#equation-eq-lubrication-force" title="Link to this equation"></a></span>\[\mathbf{F}_{lub} = -\frac{6\pi\mu R_{eff}^2}{h} \mathbf{v}_{rel}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\mu\)</span> is the fluid viscosity, <span class="math notranslate nohighlight">\(R_{eff}\)</span> is the effective radius, <span class="math notranslate nohighlight">\(h\)</span> is the gap distance, and <span class="math notranslate nohighlight">\(\mathbf{v}_{rel}\)</span> is the relative velocity between particles.</p>
+</section>
+<section id="normal-contact-force">
+<h3>Normal Contact Force<a class="headerlink" href="#normal-contact-force" title="Link to this heading"></a></h3>
+<p>The normal contact force prevents particle overlap and models the elastic and damping behavior during collisions using a spring-damper system:</p>
+<div class="math notranslate nohighlight" id="equation-eq-normal-contact-force">
+<span class="eqno">(27)<a class="headerlink" href="#equation-eq-normal-contact-force" title="Link to this equation"></a></span>\[\mathbf{F}_n = k_n \delta_n \mathbf{n} + c_n \mathbf{v}_n\]</div>
+<p>where <span class="math notranslate nohighlight">\(k_n\)</span> is the normal stiffness, <span class="math notranslate nohighlight">\(\delta_n\)</span> is the overlap distance, <span class="math notranslate nohighlight">\(\mathbf{n}\)</span> is the contact normal vector, <span class="math notranslate nohighlight">\(c_n\)</span> is the normal damping coefficient, and <span class="math notranslate nohighlight">\(\mathbf{v}_n\)</span> is the normal relative velocity.</p>
+</section>
+<section id="tangential-contact-force">
+<h3>Tangential Contact Force<a class="headerlink" href="#tangential-contact-force" title="Link to this heading"></a></h3>
+<p>The tangential contact force accounts for friction and describes the tangential interactions between particles, affecting their rotational and sliding behavior:</p>
+<div class="math notranslate nohighlight" id="equation-eq-tangential-contact-force">
+<span class="eqno">(28)<a class="headerlink" href="#equation-eq-tangential-contact-force" title="Link to this equation"></a></span>\[\mathbf{F}_t = \min(\mu_s |\mathbf{F}_n|, k_t \delta_t) \mathbf{t}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\mu_s\)</span> is the static friction coefficient, <span class="math notranslate nohighlight">\(k_t\)</span> is the tangential stiffness, <span class="math notranslate nohighlight">\(\delta_t\)</span> is the tangential displacement, and <span class="math notranslate nohighlight">\(\mathbf{t}\)</span> is the tangential unit vector.</p>
+</section>
+</section>
+<section id="adaptive-time-stepping">
+<h2>Adaptive Time Stepping<a class="headerlink" href="#adaptive-time-stepping" title="Link to this heading"></a></h2>
+<p>The ACTM employs an adaptive time stepping scheme to ensure numerical stability and physical accuracy. The collision time step is dynamically adjusted based on:</p>
+<ol class="arabic simple">
+<li><p><strong>Minimum collision time</strong>: The time until the next collision event</p></li>
+<li><p><strong>Fluid solver time step</strong>: The time step used by the fluid solver</p></li>
+<li><p><strong>Contact duration</strong>: The time required to resolve contact interactions</p></li>
+</ol>
+<p>The adaptive time step is calculated as:</p>
+<div class="math notranslate nohighlight" id="equation-eq-adaptive-timestep">
+<span class="eqno">(29)<a class="headerlink" href="#equation-eq-adaptive-timestep" title="Link to this equation"></a></span>\[\Delta t_{collision} = \min\left(\frac{t_c}{N_{substeps}}, \Delta t_{fluid}, \Delta t_{contact}\right)\]</div>
+<p>where <span class="math notranslate nohighlight">\(t_c\)</span> is the collision time, <span class="math notranslate nohighlight">\(N_{substeps}\)</span> is the number of substeps, and <span class="math notranslate nohighlight">\(\Delta t_{contact}\)</span> is the contact resolution time.</p>
+</section>
+<section id="enduring-contact-handling">
+<h2>Enduring Contact Handling<a class="headerlink" href="#enduring-contact-handling" title="Link to this heading"></a></h2>
+<p>One of the key innovations of the ACTM is its ability to handle enduring contacts, which are common in dense granular systems. The model introduces new criteria for persistent contact situations:</p>
+<ol class="arabic simple">
+<li><p><strong>Contact detection</strong>: Identifies when particles remain in contact for extended periods</p></li>
+<li><p><strong>Momentum conservation</strong>: Maintains complete momentum balance during enduring contacts</p></li>
+<li><p><strong>Parameter-free approach</strong>: Avoids the use of arbitrary parameter values</p></li>
+</ol>
+<p>The enduring contact force is calculated as:</p>
+<div class="math notranslate nohighlight" id="equation-eq-enduring-contact">
+<span class="eqno">(30)<a class="headerlink" href="#equation-eq-enduring-contact" title="Link to this equation"></a></span>\[\mathbf{F}_{enduring} = \mathbf{F}_{normal} + \mathbf{F}_{tangential} + \mathbf{F}_{lubrication}\]</div>
+<p>This approach ensures that the model remains physically consistent even in complex contact scenarios.</p>
+</section>
+<section id="mathematical-formulation">
+<h2>Mathematical Formulation<a class="headerlink" href="#mathematical-formulation" title="Link to this heading"></a></h2>
+<section id="collision-detection">
+<h3>Collision Detection<a class="headerlink" href="#collision-detection" title="Link to this heading"></a></h3>
+<p>The ACTM uses a spatial hashing approach to efficiently identify potential collision pairs. For each particle <span class="math notranslate nohighlight">\(i\)</span> with position <span class="math notranslate nohighlight">\(\mathbf{x}_i\)</span> and radius <span class="math notranslate nohighlight">\(r_i\)</span>, the algorithm identifies particles <span class="math notranslate nohighlight">\(j\)</span> within a search radius:</p>
+<div class="math notranslate nohighlight" id="equation-eq-collision-detection">
+<span class="eqno">(31)<a class="headerlink" href="#equation-eq-collision-detection" title="Link to this equation"></a></span>\[|\mathbf{x}_i - \mathbf{x}_j| \leq R_{search} = r_i + r_j + \delta\]</div>
+<p>where <span class="math notranslate nohighlight">\(\delta\)</span> is a safety margin for robust collision detection.</p>
+</section>
+<section id="collision-time-calculation">
+<h3>Collision Time Calculation<a class="headerlink" href="#collision-time-calculation" title="Link to this heading"></a></h3>
+<p>For each detected collision pair, the collision time <span class="math notranslate nohighlight">\(t_c\)</span> is calculated using the relative velocity approach:</p>
+<div class="math notranslate nohighlight" id="equation-eq-collision-time">
+<span class="eqno">(32)<a class="headerlink" href="#equation-eq-collision-time" title="Link to this equation"></a></span>\[t_c = \frac{|\mathbf{x}_i - \mathbf{x}_j| - (r_i + r_j)}{|\mathbf{v}_i - \mathbf{v}_j| \cdot \mathbf{n}_{ij}}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\mathbf{v}_i\)</span> and <span class="math notranslate nohighlight">\(\mathbf{v}_j\)</span> are the particle velocities, and <span class="math notranslate nohighlight">\(\mathbf{n}_{ij}\)</span> is the unit normal vector.</p>
+</section>
+<section id="restitution-coefficient">
+<h3>Restitution Coefficient<a class="headerlink" href="#restitution-coefficient" title="Link to this heading"></a></h3>
+<p>The restitution coefficient <span class="math notranslate nohighlight">\(e\)</span> is determined based on the material properties and collision conditions:</p>
+<div class="math notranslate nohighlight" id="equation-eq-restitution-coefficient">
+<span class="eqno">(33)<a class="headerlink" href="#equation-eq-restitution-coefficient" title="Link to this equation"></a></span>\[e = \exp\left(-\frac{\pi \zeta}{\sqrt{1-\zeta^2}}\right)\]</div>
+<p>where <span class="math notranslate nohighlight">\(\zeta\)</span> is the damping ratio:</p>
+<div class="math notranslate nohighlight" id="equation-eq-damping-ratio">
+<span class="eqno">(34)<a class="headerlink" href="#equation-eq-damping-ratio" title="Link to this equation"></a></span>\[\zeta = \frac{c_n}{2\sqrt{k_n m_{eff}}}\]</div>
+<p>Here, <span class="math notranslate nohighlight">\(m_{eff}\)</span> is the effective mass:</p>
+<div class="math notranslate nohighlight" id="equation-eq-effective-mass">
+<span class="eqno">(35)<a class="headerlink" href="#equation-eq-effective-mass" title="Link to this equation"></a></span>\[m_{eff} = \frac{m_i m_j}{m_i + m_j}\]</div>
+</section>
+</section>
+<section id="algorithm-implementation">
+<h2>Algorithm Implementation<a class="headerlink" href="#algorithm-implementation" title="Link to this heading"></a></h2>
+<p>The ACTM algorithm follows these key steps:</p>
+<ol class="arabic simple">
+<li><p><strong>Particle Insertion</strong>: Particles are inserted into the collision detection system with their current properties.</p></li>
+<li><p><strong>Spatial Hashing</strong>: A background mesh is generated for efficient collision pair identification.</p></li>
+<li><p><strong>Collision Pair Generation</strong>: Potential collision pairs are identified using spatial hashing.</p></li>
+<li><p><strong>Collision Time Calculation</strong>: Collision times are calculated for each pair using equation <a class="reference internal" href="#equation-eq-collision-time">(32)</a>.</p></li>
+<li><p><strong>Adaptive Time Stepping</strong>: The collision time step is adaptively adjusted using equation <a class="reference internal" href="#equation-eq-adaptive-timestep">(29)</a>.</p></li>
+<li><p><strong>Force Calculation</strong>: Contact forces are calculated using equations <a class="reference internal" href="#equation-eq-normal-contact-force">(27)</a> and <a class="reference internal" href="#equation-eq-tangential-contact-force">(28)</a>.</p></li>
+<li><p><strong>Enduring Contact Resolution</strong>: Persistent contacts are handled using equation <a class="reference internal" href="#equation-eq-enduring-contact">(30)</a>.</p></li>
+<li><p><strong>Integration with Fluid Solver</strong>: Collision forces are integrated with the fluid solver for consistent timescales.</p></li>
+</ol>
+<p>This integration ensures that particle collisions are resolved consistently with the fluid dynamics and interface evolution, providing a comprehensive simulation framework for multiphase flows with dense granular systems.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="DiffusedIBM.html" class="btn btn-neutral float-left" title="Direct Forcing Immersed Boundary Method" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="IAMRandIAMReX.html" class="btn btn-neutral float-right" title="Key Differences Between IAMR and IAMeX" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, IAMReX Team.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

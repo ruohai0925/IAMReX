@@ -19,6 +19,8 @@ This IAMReX repo extends the capability of original `IAMR <https://amrex-fluids.
    Acknowledgements
 
 .. toctree::
+   :maxdepth: 1
    :caption: References:
 
    references
+   api_chapter
