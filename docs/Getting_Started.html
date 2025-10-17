@@ -51,6 +51,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#running-the-code">Running the code</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#visualization">Visualization</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#key-parameters">Key parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#tests">Tests</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="Results.html">Validation Cases</a></li>
@@ -596,6 +597,36 @@ If particle positions are provided through an external file, other array-type pa
 </pre></div>
 </div>
 <p>If you want to know more about the parameters, you can check the <a class="reference external" href="https://amrex-codes.github.io/amrex/docs_html/">AMReX</a>.</p>
+</section>
+<section id="tests">
+<h2>Tests<a class="headerlink" href="#tests" title="Link to this heading"></a></h2>
+<p><a class="reference external" href="https://github.com/ruohai0925/IAMReX/tree/development/Test_IAMReX">Test_IAMReX</a> is a customized python script to evaluate
+the codebase’s structural completeness and to verify the accuracy of its computational results. A set of representative benchmark cases has been included,
+such as lid-driven cavity, RSV, Drafting–Kissing–Tumbling, flow past a cylinder, flow past a sphere, and Rayleigh–Taylor
+instability. These cases collectively assess a wide range of physical scenarios and computational modules.
+Furthermore, users may extend the testing framework by following the provided examples to construct additional test
+cases as needed.</p>
+<p>Meanwhile, a continuous integration pipeline has been established using GitHub Actions to automate
+the execution and validation of these tests. The GitHub action only support 2 CPU cores, and GPU is not supported.</p>
+<p>During the code development process, we have made every effort to ensure consistency between GPU and CPU results for each test case. For instance,
+in the <a class="reference external" href="https://github.com/ruohai0925/IAMReX/tree/development/Tutorials/FlowPastSphere">Flow Past Sphere</a> case,
+we conducted simulations at various Reynolds numbers to compare drag coefficients under both CPU and GPU execution modes,
+with and without adaptive mesh refinement (AMR). The corresponding results are presented below.</p>
+<figure class="align-center" id="id5">
+<a class="reference internal image-reference" href="_images/cpugpulv0.png"><img alt="CPU vs GPU drag coefficient comparison without AMR" src="_images/cpugpulv0.png" style="width: 6.00000in;" />
+</a>
+<figcaption>
+<p><span class="caption-number">Figure 6 </span><span class="caption-text">Drag coefficient comparison between CPU and GPU execution modes without adaptive mesh refinement (AMR).</span><a class="headerlink" href="#id5" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<figure class="align-center" id="id6">
+<a class="reference internal image-reference" href="_images/cpugpulv2.png"><img alt="CPU vs GPU drag coefficient comparison with AMR" src="_images/cpugpulv2.png" style="width: 6.00000in;" />
+</a>
+<figcaption>
+<p><span class="caption-number">Figure 7 </span><span class="caption-text">Drag coefficient comparison between CPU and GPU execution modes with adaptive mesh refinement (AMR).</span><a class="headerlink" href="#id6" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>If users encounter discrepancies between CPU and GPU results in any case, please contact us, for example by submitting an issue to the repository.</p>
 </section>
 </section>
 

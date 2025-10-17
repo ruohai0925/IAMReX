@@ -480,3 +480,37 @@ Example inputs file:
     particle_inputs.verbose = 1
 
 If you want to know more about the parameters, you can check the `AMReX <https://amrex-codes.github.io/amrex/docs_html/>`_.
+
+Tests
+---------------
+
+`Test_IAMReX <https://github.com/ruohai0925/IAMReX/tree/development/Test_IAMReX>`_ is a customized python script to evaluate 
+the codebase's structural completeness and to verify the accuracy of its computational results. A set of representative benchmark cases has been included, 
+such as lid-driven cavity, RSV, Drafting–Kissing–Tumbling, flow past a cylinder, flow past a sphere, and Rayleigh–Taylor 
+instability. These cases collectively assess a wide range of physical scenarios and computational modules. 
+Furthermore, users may extend the testing framework by following the provided examples to construct additional test 
+cases as needed. 
+
+Meanwhile, a continuous integration pipeline has been established using GitHub Actions to automate 
+the execution and validation of these tests. The GitHub action only support 2 CPU cores, and GPU is not supported.
+
+During the code development process, we have made every effort to ensure consistency between GPU and CPU results for each test case. For instance, 
+in the `Flow Past Sphere <https://github.com/ruohai0925/IAMReX/tree/development/Tutorials/FlowPastSphere>`_ case, 
+we conducted simulations at various Reynolds numbers to compare drag coefficients under both CPU and GPU execution modes, 
+with and without adaptive mesh refinement (AMR). The corresponding results are presented below.
+
+.. figure:: ./GettingStarted/cpugpulv0.png
+    :align: center
+    :alt: CPU vs GPU drag coefficient comparison without AMR
+    :width: 6.00000in
+
+    Drag coefficient comparison between CPU and GPU execution modes without adaptive mesh refinement (AMR).
+
+.. figure:: ./GettingStarted/cpugpulv2.png
+    :align: center
+    :alt: CPU vs GPU drag coefficient comparison with AMR
+    :width: 6.00000in
+
+    Drag coefficient comparison between CPU and GPU execution modes with adaptive mesh refinement (AMR).
+
+If users encounter discrepancies between CPU and GPU results in any case, please contact us, for example by submitting an issue to the repository.
