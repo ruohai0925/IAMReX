@@ -55,7 +55,58 @@
 <li class="toctree-l1 current"><a class="reference internal" href="api_chapter.html">API</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="api-dfibm.html">Direct forcing IBM</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-collision.html">Particle Collision</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Navier Stokes</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Navier Stokes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv412NavierStokes"><code class="docutils literal notranslate"><span class="pre">NavierStokes</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N12NavierStokes8initDataEv"><code class="docutils literal notranslate"><span class="pre">initData()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N12NavierStokes7advanceEN5amrex4RealEN5amrex4RealEii"><code class="docutils literal notranslate"><span class="pre">advance()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N12NavierStokes33advance_semistaggered_twophase_lsEN5amrex4RealEN5amrex4RealEii"><code class="docutils literal notranslate"><span class="pre">advance_semistaggered_twophase_ls()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N12NavierStokes41advance_semistaggered_twophase_phasefieldEN5amrex4RealEN5amrex4RealEii"><code class="docutils literal notranslate"><span class="pre">advance_semistaggered_twophase_phasefield()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N12NavierStokes16scalar_advectionEN5amrex4RealEii"><code class="docutils literal notranslate"><span class="pre">scalar_advection()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N12NavierStokes23scalar_diffusion_updateEN5amrex4RealEii"><code class="docutils literal notranslate"><span class="pre">scalar_diffusion_update()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv416NavierStokesBase"><code class="docutils literal notranslate"><span class="pre">NavierStokesBase</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N16NavierStokesBase16define_workspaceEv"><code class="docutils literal notranslate"><span class="pre">define_workspace()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N16NavierStokesBase10checkPointERKNSt6stringERNSt7ostreamEN5amrex5VisMF3HowEb"><code class="docutils literal notranslate"><span class="pre">checkPoint()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N16NavierStokesBase16computeInitialDtEiiRN5amrex6VectorIiEERKN5amrex6VectorIN5amrex7IntVectEEERN5amrex6VectorIN5amrex4RealEEEN5amrex4RealE"><code class="docutils literal notranslate"><span class="pre">computeInitialDt()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N16NavierStokesBase12computeNewDtEiiRN5amrex6VectorIiEERKN5amrex6VectorIN5amrex7IntVectEEERN5amrex6VectorIN5amrex4RealEEERN5amrex6VectorIN5amrex4RealEEEN5amrex4RealEi"><code class="docutils literal notranslate"><span class="pre">computeNewDt()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N16NavierStokesBase11steadyStateEv"><code class="docutils literal notranslate"><span class="pre">steadyState()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N16NavierStokesBase12computeGradPEN5amrex4RealE"><code class="docutils literal notranslate"><span class="pre">computeGradP()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N16NavierStokesBase11fill_allgtsERN5amrex8MultiFabEiiiN5amrex4RealE"><code class="docutils literal notranslate"><span class="pre">fill_allgts()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N16NavierStokesBase6reinitEv"><code class="docutils literal notranslate"><span class="pre">reinit()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N16NavierStokesBase24reinitialization_sussmanEN5amrex4RealEi"><code class="docutils literal notranslate"><span class="pre">reinitialization_sussman()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N16NavierStokesBase23reinitialization_conslsEN5amrex4RealEiN5amrex4RealEN5amrex4RealE"><code class="docutils literal notranslate"><span class="pre">reinitialization_consls()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N16NavierStokesBase11phi_to_sgn0ERN5amrex8MultiFabE"><code class="docutils literal notranslate"><span class="pre">phi_to_sgn0()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N16NavierStokesBase17get_phi_half_timeEv"><code class="docutils literal notranslate"><span class="pre">get_phi_half_time()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N16NavierStokesBase15rk_first_reinitERN5amrex8MultiFabERN5amrex8MultiFabERN5amrex8MultiFabERN5amrex8MultiFabERN5amrex8MultiFabEN5amrex4RealERN5amrex8MultiFabE"><code class="docutils literal notranslate"><span class="pre">rk_first_reinit()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N16NavierStokesBase16rk_second_reinitERN5amrex8MultiFabERN5amrex8MultiFabERN5amrex8MultiFabERN5amrex8MultiFabERN5amrex8MultiFabEN5amrex4RealERN5amrex8MultiFabE"><code class="docutils literal notranslate"><span class="pre">rk_second_reinit()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N16NavierStokesBase8mass_fixERN5amrex8MultiFabERN5amrex8MultiFabERN5amrex8MultiFabERN5amrex8MultiFabERN5amrex8MultiFabERN5amrex8MultiFabERN5amrex8MultiFabEN5amrex4RealEi"><code class="docutils literal notranslate"><span class="pre">mass_fix()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N16NavierStokesBase12calc_mut_LESEA14AMREX_SPACEDIM_PN5amrex8MultiFabEN5amrex4RealE"><code class="docutils literal notranslate"><span class="pre">calc_mut_LES()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N16NavierStokesBase12time_averageERN5amrex4RealERN5amrex4RealERN5amrex4RealERKN5amrex4RealE"><code class="docutils literal notranslate"><span class="pre">time_average()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N16NavierStokesBase15advance_cleanupEii"><code class="docutils literal notranslate"><span class="pre">advance_cleanup()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N16NavierStokesBase10incrRhoAvgEN5amrex4RealE"><code class="docutils literal notranslate"><span class="pre">incrRhoAvg()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N16NavierStokesBase10incrRhoAvgERKN5amrex8MultiFabEiN5amrex4RealE"><code class="docutils literal notranslate"><span class="pre">incrRhoAvg()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N16NavierStokesBase33initial_velocity_diffusion_updateEN5amrex4RealE"><code class="docutils literal notranslate"><span class="pre">initial_velocity_diffusion_update()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N16NavierStokesBase10level_syncEi"><code class="docutils literal notranslate"><span class="pre">level_sync()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N16NavierStokesBase18make_rho_prev_timeEv"><code class="docutils literal notranslate"><span class="pre">make_rho_prev_time()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N16NavierStokesBase18make_rho_curr_timeEv"><code class="docutils literal notranslate"><span class="pre">make_rho_curr_time()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N16NavierStokesBase15post_init_stateEv"><code class="docutils literal notranslate"><span class="pre">post_init_state()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N16NavierStokesBase10sync_setupERPN5amrex8MultiFabE"><code class="docutils literal notranslate"><span class="pre">sync_setup()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N16NavierStokesBase18velocity_advectionEN5amrex4RealE"><code class="docutils literal notranslate"><span class="pre">velocity_advection()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N16NavierStokesBase15velocity_updateEN5amrex4RealE"><code class="docutils literal notranslate"><span class="pre">velocity_update()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N16NavierStokesBase25velocity_advection_updateEN5amrex4RealE"><code class="docutils literal notranslate"><span class="pre">velocity_advection_update()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N16NavierStokesBase18avgDown_StatePressEv"><code class="docutils literal notranslate"><span class="pre">avgDown_StatePress()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N16NavierStokesBase11printMaxVelEb"><code class="docutils literal notranslate"><span class="pre">printMaxVel()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N16NavierStokesBase10printMaxGpEb"><code class="docutils literal notranslate"><span class="pre">printMaxGp()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N16NavierStokesBase14printMaxValuesEb"><code class="docutils literal notranslate"><span class="pre">printMaxValues()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N16NavierStokesBase12buildMetricsEv"><code class="docutils literal notranslate"><span class="pre">buildMetrics()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N16NavierStokesBase8incrPAvgEv"><code class="docutils literal notranslate"><span class="pre">incrPAvg()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N16NavierStokesBase14initOldFromNewEii"><code class="docutils literal notranslate"><span class="pre">initOldFromNew()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N16NavierStokesBase10initRhoAvgEN5amrex4RealE"><code class="docutils literal notranslate"><span class="pre">initRhoAvg()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -87,10 +138,578 @@
              
   <section id="navier-stokes">
 <span id="sc-ns-api"></span><h1>Navier Stokes<a class="headerlink" href="#navier-stokes" title="Link to this heading"></a></h1>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>doxygengroup: Cannot find file: /home/runner/work/IAMReX/IAMReX/Docs/IAMReX_documentation/doxygen/xml/index.xml</p>
+<dl>
+<dt class="sig sig-object cpp">
+<span class="target" id="group__NavierStokes"></span><em><span class="pre">group</span></em> <span class="sig-name descname"><span class="pre">fluid</span> <span class="pre">parameters</span> <span class="pre">and</span> <span class="pre">function</span></span></dt>
+<dd><p>introduction for Navier stokes </p>
+<dl class="cpp class">
+<dt class="sig sig-object cpp" id="_CPPv412NavierStokes">
+<span id="_CPPv312NavierStokes"></span><span id="_CPPv212NavierStokes"></span><span id="NavierStokes"></span><span class="target" id="classNavierStokes"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">NavierStokes</span></span></span><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="k"><span class="pre">public</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv416NavierStokesBase" title="NavierStokesBase"><span class="n"><span class="pre">NavierStokesBase</span></span></a><a class="headerlink" href="#_CPPv412NavierStokes" title="Link to this definition"></a><br /></dt>
+<dd><div class="docutils container">
+<em>#include &lt;NavierStokes.H&gt;</em></div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N12NavierStokes8initDataEv">
+<span id="_CPPv3N12NavierStokes8initDataEv"></span><span id="_CPPv2N12NavierStokes8initDataEv"></span><span id="NavierStokes::initData"></span><span class="target" id="classNavierStokes_1a6bdf92d9495bde82a5fbc3cb1d98a750"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">initData</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">override</span></span><a class="headerlink" href="#_CPPv4N12NavierStokes8initDataEv" title="Link to this definition"></a><br /></dt>
+<dd><p>Initialize grid data at problem start-up. </p>
+<p>This function sets up initial conditions for the Navier-Stokes equations including velocity, pressure, and scalar fields. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N12NavierStokes7advanceEN5amrex4RealEN5amrex4RealEii">
+<span id="_CPPv3N12NavierStokes7advanceEN5amrex4RealEN5amrex4RealEii"></span><span id="_CPPv2N12NavierStokes7advanceEN5amrex4RealEN5amrex4RealEii"></span><span id="NavierStokes::advance__amrex::Real.amrex::Real.i.i"></span><span class="target" id="classNavierStokes_1aebb895e4b4251ad3c3b98a0100142663"></span><span class="n"><span class="pre">amrex</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">Real</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">advance</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">amrex</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">Real</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">time</span></span>, <span class="n"><span class="pre">amrex</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">Real</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">dt</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">iteration</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">ncycle</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">override</span></span><a class="headerlink" href="#_CPPv4N12NavierStokes7advanceEN5amrex4RealEN5amrex4RealEii" title="Link to this definition"></a><br /></dt>
+<dd><p>Advance grids at this level in time using the Navier-Stokes solver. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>time</strong> – Current simulation time </p></li>
+<li><p><strong>dt</strong> – Time step size </p></li>
+<li><p><strong>iteration</strong> – Current iteration number </p></li>
+<li><p><strong>ncycle</strong> – Total number of cycles for this level </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Estimated optimal timestep for next iteration </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N12NavierStokes33advance_semistaggered_twophase_lsEN5amrex4RealEN5amrex4RealEii">
+<span id="_CPPv3N12NavierStokes33advance_semistaggered_twophase_lsEN5amrex4RealEN5amrex4RealEii"></span><span id="_CPPv2N12NavierStokes33advance_semistaggered_twophase_lsEN5amrex4RealEN5amrex4RealEii"></span><span id="NavierStokes::advance_semistaggered_twophase_ls__amrex::Real.amrex::Real.i.i"></span><span class="target" id="classNavierStokes_1aed9465e971236a19ff3f2161d99f1b92"></span><span class="n"><span class="pre">amrex</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">Real</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">advance_semistaggered_twophase_ls</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">amrex</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">Real</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">time</span></span>, <span class="n"><span class="pre">amrex</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">Real</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">dt</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">iteration</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">ncycle</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N12NavierStokes33advance_semistaggered_twophase_lsEN5amrex4RealEN5amrex4RealEii" title="Link to this definition"></a><br /></dt>
+<dd><p>Advance grids using semi-staggered two-phase level set method. </p>
+<p>This function implements the level set method for two-phase flow simulations. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>time</strong> – Current simulation time </p></li>
+<li><p><strong>dt</strong> – Time step size </p></li>
+<li><p><strong>iteration</strong> – Current iteration number </p></li>
+<li><p><strong>ncycle</strong> – Total number of cycles for this level </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Estimated optimal timestep for next iteration </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N12NavierStokes41advance_semistaggered_twophase_phasefieldEN5amrex4RealEN5amrex4RealEii">
+<span id="_CPPv3N12NavierStokes41advance_semistaggered_twophase_phasefieldEN5amrex4RealEN5amrex4RealEii"></span><span id="_CPPv2N12NavierStokes41advance_semistaggered_twophase_phasefieldEN5amrex4RealEN5amrex4RealEii"></span><span id="NavierStokes::advance_semistaggered_twophase_phasefield__amrex::Real.amrex::Real.i.i"></span><span class="target" id="classNavierStokes_1a25bd5640e1278f50c969a942bbd9904a"></span><span class="n"><span class="pre">amrex</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">Real</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">advance_semistaggered_twophase_phasefield</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">amrex</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">Real</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">time</span></span>, <span class="n"><span class="pre">amrex</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">Real</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">dt</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">iteration</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">ncycle</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N12NavierStokes41advance_semistaggered_twophase_phasefieldEN5amrex4RealEN5amrex4RealEii" title="Link to this definition"></a><br /></dt>
+<dd><p>Advance grids using semi-staggered two-phase phase field method. </p>
+<p>This function implements the phase field method for two-phase flow simulations. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>time</strong> – Current simulation time </p></li>
+<li><p><strong>dt</strong> – Time step size </p></li>
+<li><p><strong>iteration</strong> – Current iteration number </p></li>
+<li><p><strong>ncycle</strong> – Total number of cycles for this level </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Estimated optimal timestep for next iteration </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N12NavierStokes16scalar_advectionEN5amrex4RealEii">
+<span id="_CPPv3N12NavierStokes16scalar_advectionEN5amrex4RealEii"></span><span id="_CPPv2N12NavierStokes16scalar_advectionEN5amrex4RealEii"></span><span id="NavierStokes::scalar_advection__amrex::Real.i.i"></span><span class="target" id="classNavierStokes_1a13d7a6b3ac1e201d90ae28d5ee578477"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">scalar_advection</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">amrex</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">Real</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">dt</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">fscalar</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">lscalar</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N12NavierStokes16scalar_advectionEN5amrex4RealEii" title="Link to this definition"></a><br /></dt>
+<dd><p>Advect scalar quantities using the chosen advection scheme. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dt</strong> – Time step size </p></li>
+<li><p><strong>fscalar</strong> – First scalar component index </p></li>
+<li><p><strong>lscalar</strong> – Last scalar component index </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N12NavierStokes23scalar_diffusion_updateEN5amrex4RealEii">
+<span id="_CPPv3N12NavierStokes23scalar_diffusion_updateEN5amrex4RealEii"></span><span id="_CPPv2N12NavierStokes23scalar_diffusion_updateEN5amrex4RealEii"></span><span id="NavierStokes::scalar_diffusion_update__amrex::Real.i.i"></span><span class="target" id="classNavierStokes_1af6e17f77b93d796fb7cfdace56951d80"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">scalar_diffusion_update</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">amrex</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">Real</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">dt</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">first_scalar</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">last_scalar</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N12NavierStokes23scalar_diffusion_updateEN5amrex4RealEii" title="Link to this definition"></a><br /></dt>
+<dd><p>Update scalar quantities with diffusion terms. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dt</strong> – Time step size </p></li>
+<li><p><strong>first_scalar</strong> – First scalar component index </p></li>
+<li><p><strong>last_scalar</strong> – Last scalar component index </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
 </div>
+</dd></dl>
+
+<dl class="cpp class">
+<dt class="sig sig-object cpp" id="_CPPv416NavierStokesBase">
+<span id="_CPPv316NavierStokesBase"></span><span id="_CPPv216NavierStokesBase"></span><span id="NavierStokesBase"></span><span class="target" id="classNavierStokesBase"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">NavierStokesBase</span></span></span><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="k"><span class="pre">public</span></span><span class="w"> </span><span class="n"><span class="pre">AmrLevel</span></span><a class="headerlink" href="#_CPPv416NavierStokesBase" title="Link to this definition"></a><br /></dt>
+<dd><div class="docutils container">
+<em>#include &lt;NavierStokesBase.H&gt;</em></div>
+<p>Subclassed by <a class="reference internal" href="#classNavierStokes"><span class="std std-ref">NavierStokes</span></a></p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N16NavierStokesBase16define_workspaceEv">
+<span id="_CPPv3N16NavierStokesBase16define_workspaceEv"></span><span id="_CPPv2N16NavierStokesBase16define_workspaceEv"></span><span id="NavierStokesBase::define_workspace"></span><span class="target" id="classNavierStokesBase_1a903975f6e1d7796d8eae50c473f89e10"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">define_workspace</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N16NavierStokesBase16define_workspaceEv" title="Link to this definition"></a><br /></dt>
+<dd><p>Define workspace and initialize data structures required for computation. </p>
+<p>This function sets up grid geometry information, allocates memory space, and prepares necessary arrays for subsequent calculations. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N16NavierStokesBase10checkPointERKNSt6stringERNSt7ostreamEN5amrex5VisMF3HowEb">
+<span id="_CPPv3N16NavierStokesBase10checkPointERKNSt6stringERNSt7ostreamEN5amrex5VisMF3HowEb"></span><span id="_CPPv2N16NavierStokesBase10checkPointERKNSt6stringERNSt7ostreamEN5amrex5VisMF3HowEb"></span><span id="NavierStokesBase::checkPoint__ssCR.osR.amrex::VisMF::How.b"></span><span class="target" id="classNavierStokesBase_1aeba622fb58f5eb3c5dd4195b30a757d2"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">checkPoint</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">dir</span></span>, <span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">ostream</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">os</span></span>, <span class="n"><span class="pre">amrex</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">VisMF</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">How</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">how</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="n"><span class="pre">amrex</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">VisMF</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">OneFilePerCPU</span></span>, <span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">dump_old</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="k"><span class="pre">true</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">override</span></span><a class="headerlink" href="#_CPPv4N16NavierStokesBase10checkPointERKNSt6stringERNSt7ostreamEN5amrex5VisMF3HowEb" title="Link to this definition"></a><br /></dt>
+<dd><p>Save checkpoint data to specified directory. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dir</strong> – Directory path for saving checkpoint data </p></li>
+<li><p><strong>os</strong> – Output stream object for writing checkpoint information </p></li>
+<li><p><strong>how</strong> – File output method, defaults to one file per CPU </p></li>
+<li><p><strong>dump_old</strong> – Whether to save old timestep data, defaults to true </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N16NavierStokesBase16computeInitialDtEiiRN5amrex6VectorIiEERKN5amrex6VectorIN5amrex7IntVectEEERN5amrex6VectorIN5amrex4RealEEEN5amrex4RealE">
+<span id="_CPPv3N16NavierStokesBase16computeInitialDtEiiRN5amrex6VectorIiEERKN5amrex6VectorIN5amrex7IntVectEEERN5amrex6VectorIN5amrex4RealEEEN5amrex4RealE"></span><span id="_CPPv2N16NavierStokesBase16computeInitialDtEiiRN5amrex6VectorIiEERKN5amrex6VectorIN5amrex7IntVectEEERN5amrex6VectorIN5amrex4RealEEEN5amrex4RealE"></span><span id="NavierStokesBase::computeInitialDt__i.i.amrex::Vector:i:R.amrex::Vector:amrex::IntVect:CR.amrex::Vector:amrex::Real:R.amrex::Real"></span><span class="target" id="classNavierStokesBase_1adb3bf665962c92db4289083b8b9d6cd5"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">computeInitialDt</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">finest_level</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">sub_cycle</span></span>, <span class="n"><span class="pre">amrex</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">Vector</span></span><span class="p"><span class="pre">&lt;</span></span><span class="kt"><span class="pre">int</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">n_cycle</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">amrex</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">Vector</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">amrex</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">IntVect</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">ref_ratio</span></span>, <span class="n"><span class="pre">amrex</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">Vector</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">amrex</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">Real</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">dt_level</span></span>, <span class="n"><span class="pre">amrex</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">Real</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">stop_time</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">override</span></span><a class="headerlink" href="#_CPPv4N16NavierStokesBase16computeInitialDtEiiRN5amrex6VectorIiEERKN5amrex6VectorIN5amrex7IntVectEEERN5amrex6VectorIN5amrex4RealEEEN5amrex4RealE" title="Link to this definition"></a><br /></dt>
+<dd><p>Compute initial timestep for all levels in the AMR hierarchy. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>finest_level</strong> – Index of the finest level in the hierarchy </p></li>
+<li><p><strong>sub_cycle</strong> – Number of sub-cycles for fine levels </p></li>
+<li><p><strong>n_cycle</strong> – Vector storing number of cycles for each level </p></li>
+<li><p><strong>ref_ratio</strong> – Vector of refinement ratios between levels </p></li>
+<li><p><strong>dt_level</strong> – Vector storing timestep for each level </p></li>
+<li><p><strong>stop_time</strong> – Final simulation time </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N16NavierStokesBase12computeNewDtEiiRN5amrex6VectorIiEERKN5amrex6VectorIN5amrex7IntVectEEERN5amrex6VectorIN5amrex4RealEEERN5amrex6VectorIN5amrex4RealEEEN5amrex4RealEi">
+<span id="_CPPv3N16NavierStokesBase12computeNewDtEiiRN5amrex6VectorIiEERKN5amrex6VectorIN5amrex7IntVectEEERN5amrex6VectorIN5amrex4RealEEERN5amrex6VectorIN5amrex4RealEEEN5amrex4RealEi"></span><span id="_CPPv2N16NavierStokesBase12computeNewDtEiiRN5amrex6VectorIiEERKN5amrex6VectorIN5amrex7IntVectEEERN5amrex6VectorIN5amrex4RealEEERN5amrex6VectorIN5amrex4RealEEEN5amrex4RealEi"></span><span id="NavierStokesBase::computeNewDt__i.i.amrex::Vector:i:R.amrex::Vector:amrex::IntVect:CR.amrex::Vector:amrex::Real:R.amrex::Vector:amrex::Real:R.amrex::Real.i"></span><span class="target" id="classNavierStokesBase_1a9012a37e17c7ab5bb42f31a7305724c6"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">computeNewDt</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">finest_level</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">sub_cycle</span></span>, <span class="n"><span class="pre">amrex</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">Vector</span></span><span class="p"><span class="pre">&lt;</span></span><span class="kt"><span class="pre">int</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">n_cycle</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">amrex</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">Vector</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">amrex</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">IntVect</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">ref_ratio</span></span>, <span class="n"><span class="pre">amrex</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">Vector</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">amrex</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">Real</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">dt_min</span></span>, <span class="n"><span class="pre">amrex</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">Vector</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">amrex</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">Real</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">dt_level</span></span>, <span class="n"><span class="pre">amrex</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">Real</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">stop_time</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">post_regrid_flag</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">override</span></span><a class="headerlink" href="#_CPPv4N16NavierStokesBase12computeNewDtEiiRN5amrex6VectorIiEERKN5amrex6VectorIN5amrex7IntVectEEERN5amrex6VectorIN5amrex4RealEEERN5amrex6VectorIN5amrex4RealEEEN5amrex4RealEi" title="Link to this definition"></a><br /></dt>
+<dd><p>Compute new timestep for all levels after a timestep or regridding. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>finest_level</strong> – Index of the finest level in the hierarchy </p></li>
+<li><p><strong>sub_cycle</strong> – Number of sub-cycles for fine levels </p></li>
+<li><p><strong>n_cycle</strong> – Vector storing number of cycles for each level </p></li>
+<li><p><strong>ref_ratio</strong> – Vector of refinement ratios between levels </p></li>
+<li><p><strong>dt_min</strong> – Vector storing minimum allowed timestep for each level </p></li>
+<li><p><strong>dt_level</strong> – Vector storing computed timestep for each level </p></li>
+<li><p><strong>stop_time</strong> – Final simulation time </p></li>
+<li><p><strong>post_regrid_flag</strong> – Flag indicating if this is called after regridding </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N16NavierStokesBase11steadyStateEv">
+<span id="_CPPv3N16NavierStokesBase11steadyStateEv"></span><span id="_CPPv2N16NavierStokesBase11steadyStateEv"></span><span id="NavierStokesBase::steadyState"></span><span class="target" id="classNavierStokesBase_1a1298945825b78f29ddfa04d56d4406fb"></span><span class="k"><span class="pre">virtual</span></span><span class="w"> </span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">steadyState</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N16NavierStokesBase11steadyStateEv" title="Link to this definition"></a><br /></dt>
+<dd><p>Check whether simulation has reached steady state. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>1 if steady state is reached (change below threshold), 0 otherwise </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N16NavierStokesBase12computeGradPEN5amrex4RealE">
+<span id="_CPPv3N16NavierStokesBase12computeGradPEN5amrex4RealE"></span><span id="_CPPv2N16NavierStokesBase12computeGradPEN5amrex4RealE"></span><span id="NavierStokesBase::computeGradP__amrex::Real"></span><span class="target" id="classNavierStokesBase_1a086e74c43297be7277c64588b739f4e3"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">computeGradP</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">amrex</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">Real</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">time</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N16NavierStokesBase12computeGradPEN5amrex4RealE" title="Link to this definition"></a><br /></dt>
+<dd><p>Compute pressure gradient data and fill ghost cells. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>time</strong> – Current simulation time for which to compute pressure gradient </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N16NavierStokesBase11fill_allgtsERN5amrex8MultiFabEiiiN5amrex4RealE">
+<span id="_CPPv3N16NavierStokesBase11fill_allgtsERN5amrex8MultiFabEiiiN5amrex4RealE"></span><span id="_CPPv2N16NavierStokesBase11fill_allgtsERN5amrex8MultiFabEiiiN5amrex4RealE"></span><span id="NavierStokesBase::fill_allgts__amrex::MultiFabR.i.i.i.amrex::Real"></span><span class="target" id="classNavierStokesBase_1acfb746134812aba526e25de80cba499e"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">fill_allgts</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">amrex</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">MultiFab</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">mf</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">type</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">scomp</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">ncomp</span></span>, <span class="n"><span class="pre">amrex</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">Real</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">time</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N16NavierStokesBase11fill_allgtsERN5amrex8MultiFabEiiiN5amrex4RealE" title="Link to this definition"></a><br /></dt>
+<dd><p>Fill ghost cells for level set function with appropriate boundary conditions. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>mf</strong> – MultiFab containing the level set function </p></li>
+<li><p><strong>type</strong> – State type identifier </p></li>
+<li><p><strong>scomp</strong> – Starting component index </p></li>
+<li><p><strong>ncomp</strong> – Number of components to fill </p></li>
+<li><p><strong>time</strong> – Current simulation time </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N16NavierStokesBase6reinitEv">
+<span id="_CPPv3N16NavierStokesBase6reinitEv"></span><span id="_CPPv2N16NavierStokesBase6reinitEv"></span><span id="NavierStokesBase::reinit"></span><span class="target" id="classNavierStokesBase_1a8bf592c67d376edd20bf24a0028c9761"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">reinit</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N16NavierStokesBase6reinitEv" title="Link to this definition"></a><br /></dt>
+<dd><p>Perform level set reinitialization to maintain signed distance property. </p>
+<p>This function ensures the level set function remains a signed distance function by solving the reinitialization equation. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N16NavierStokesBase24reinitialization_sussmanEN5amrex4RealEi">
+<span id="_CPPv3N16NavierStokesBase24reinitialization_sussmanEN5amrex4RealEi"></span><span id="_CPPv2N16NavierStokesBase24reinitialization_sussmanEN5amrex4RealEi"></span><span id="NavierStokesBase::reinitialization_sussman__amrex::Real.i"></span><span class="target" id="classNavierStokesBase_1a00cfd4ceb6b0b4dbbe094e160d61c0dd"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">reinitialization_sussman</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">amrex</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">Real</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">dt</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">loop_iter</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N16NavierStokesBase24reinitialization_sussmanEN5amrex4RealEi" title="Link to this definition"></a><br /></dt>
+<dd><p>Perform Sussman reinitialization of level set function. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dt</strong> – Time step size for reinitialization </p></li>
+<li><p><strong>loop_iter</strong> – Number of reinitialization iterations </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N16NavierStokesBase23reinitialization_conslsEN5amrex4RealEiN5amrex4RealEN5amrex4RealE">
+<span id="_CPPv3N16NavierStokesBase23reinitialization_conslsEN5amrex4RealEiN5amrex4RealEN5amrex4RealE"></span><span id="_CPPv2N16NavierStokesBase23reinitialization_conslsEN5amrex4RealEiN5amrex4RealEN5amrex4RealE"></span><span id="NavierStokesBase::reinitialization_consls__amrex::Real.i.amrex::Real.amrex::Real"></span><span class="target" id="classNavierStokesBase_1a5adf0f2320194976aee49a8ef2e851f0"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">reinitialization_consls</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">amrex</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">Real</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">dt</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">loop_iter</span></span>, <span class="n"><span class="pre">amrex</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">Real</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">epsG</span></span>, <span class="n"><span class="pre">amrex</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">Real</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">epsG2</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N16NavierStokesBase23reinitialization_conslsEN5amrex4RealEiN5amrex4RealEN5amrex4RealE" title="Link to this definition"></a><br /></dt>
+<dd><p>Perform conservative level set reinitialization. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dt</strong> – Time step size for reinitialization </p></li>
+<li><p><strong>loop_iter</strong> – Number of reinitialization iterations </p></li>
+<li><p><strong>epsG</strong> – Epsilon parameter for conservative level set </p></li>
+<li><p><strong>epsG2</strong> – Second epsilon parameter for conservative level set </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N16NavierStokesBase11phi_to_sgn0ERN5amrex8MultiFabE">
+<span id="_CPPv3N16NavierStokesBase11phi_to_sgn0ERN5amrex8MultiFabE"></span><span id="_CPPv2N16NavierStokesBase11phi_to_sgn0ERN5amrex8MultiFabE"></span><span id="NavierStokesBase::phi_to_sgn0__amrex::MultiFabR"></span><span class="target" id="classNavierStokesBase_1a17c6c32b184d1e3f8bdb9a2569053cb6"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">phi_to_sgn0</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">amrex</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">MultiFab</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">phi</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N16NavierStokesBase11phi_to_sgn0ERN5amrex8MultiFabE" title="Link to this definition"></a><br /></dt>
+<dd><p>Convert level set function phi to sign function (sgn0). </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>phi</strong> – MultiFab containing the level set function </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N16NavierStokesBase17get_phi_half_timeEv">
+<span id="_CPPv3N16NavierStokesBase17get_phi_half_timeEv"></span><span id="_CPPv2N16NavierStokesBase17get_phi_half_timeEv"></span><span id="NavierStokesBase::get_phi_half_time"></span><span class="target" id="classNavierStokesBase_1a9dd299ab7093d50e6069fdee94246b0b"></span><span class="n"><span class="pre">amrex</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">MultiFab</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="sig-name descname"><span class="n"><span class="pre">get_phi_half_time</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N16NavierStokesBase17get_phi_half_timeEv" title="Link to this definition"></a><br /></dt>
+<dd><p>Get level set function at half time step. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Reference to MultiFab containing level set function at t+dt/2 </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N16NavierStokesBase15rk_first_reinitERN5amrex8MultiFabERN5amrex8MultiFabERN5amrex8MultiFabERN5amrex8MultiFabERN5amrex8MultiFabEN5amrex4RealERN5amrex8MultiFabE">
+<span id="_CPPv3N16NavierStokesBase15rk_first_reinitERN5amrex8MultiFabERN5amrex8MultiFabERN5amrex8MultiFabERN5amrex8MultiFabERN5amrex8MultiFabEN5amrex4RealERN5amrex8MultiFabE"></span><span id="_CPPv2N16NavierStokesBase15rk_first_reinitERN5amrex8MultiFabERN5amrex8MultiFabERN5amrex8MultiFabERN5amrex8MultiFabERN5amrex8MultiFabEN5amrex4RealERN5amrex8MultiFabE"></span><span id="NavierStokesBase::rk_first_reinit__amrex::MultiFabR.amrex::MultiFabR.amrex::MultiFabR.amrex::MultiFabR.amrex::MultiFabR.amrex::Real.amrex::MultiFabR"></span><span class="target" id="classNavierStokesBase_1aa4a6f83c4b6731f5b625c40834d136b9"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">rk_first_reinit</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">amrex</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">MultiFab</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">phi_ctime</span></span>, <span class="n"><span class="pre">amrex</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">MultiFab</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">phi2</span></span>, <span class="n"><span class="pre">amrex</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">MultiFab</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">phi3</span></span>, <span class="n"><span class="pre">amrex</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">MultiFab</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">sgn0</span></span>, <span class="n"><span class="pre">amrex</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">MultiFab</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">G0</span></span>, <span class="n"><span class="pre">amrex</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">Real</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">dt</span></span>, <span class="n"><span class="pre">amrex</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">MultiFab</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">phi_ori</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N16NavierStokesBase15rk_first_reinitERN5amrex8MultiFabERN5amrex8MultiFabERN5amrex8MultiFabERN5amrex8MultiFabERN5amrex8MultiFabEN5amrex4RealERN5amrex8MultiFabE" title="Link to this definition"></a><br /></dt>
+<dd><p>First stage of Runge-Kutta reinitialization scheme. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>phi_ctime</strong> – Current time level set function </p></li>
+<li><p><strong>phi2</strong> – Second stage level set function </p></li>
+<li><p><strong>phi3</strong> – Third stage level set function </p></li>
+<li><p><strong>sgn0</strong> – Sign function </p></li>
+<li><p><strong>G0</strong> – Gradient magnitude function </p></li>
+<li><p><strong>dt</strong> – Time step size </p></li>
+<li><p><strong>phi_ori</strong> – Original level set function </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N16NavierStokesBase16rk_second_reinitERN5amrex8MultiFabERN5amrex8MultiFabERN5amrex8MultiFabERN5amrex8MultiFabERN5amrex8MultiFabEN5amrex4RealERN5amrex8MultiFabE">
+<span id="_CPPv3N16NavierStokesBase16rk_second_reinitERN5amrex8MultiFabERN5amrex8MultiFabERN5amrex8MultiFabERN5amrex8MultiFabERN5amrex8MultiFabEN5amrex4RealERN5amrex8MultiFabE"></span><span id="_CPPv2N16NavierStokesBase16rk_second_reinitERN5amrex8MultiFabERN5amrex8MultiFabERN5amrex8MultiFabERN5amrex8MultiFabERN5amrex8MultiFabEN5amrex4RealERN5amrex8MultiFabE"></span><span id="NavierStokesBase::rk_second_reinit__amrex::MultiFabR.amrex::MultiFabR.amrex::MultiFabR.amrex::MultiFabR.amrex::MultiFabR.amrex::Real.amrex::MultiFabR"></span><span class="target" id="classNavierStokesBase_1a28160d3b0b1060b5bbb3452db6973d15"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">rk_second_reinit</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">amrex</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">MultiFab</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">phi_ctime</span></span>, <span class="n"><span class="pre">amrex</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">MultiFab</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">phi2</span></span>, <span class="n"><span class="pre">amrex</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">MultiFab</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">phi3</span></span>, <span class="n"><span class="pre">amrex</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">MultiFab</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">sgn0</span></span>, <span class="n"><span class="pre">amrex</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">MultiFab</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">G0</span></span>, <span class="n"><span class="pre">amrex</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">Real</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">dt</span></span>, <span class="n"><span class="pre">amrex</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">MultiFab</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">phi_ori</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N16NavierStokesBase16rk_second_reinitERN5amrex8MultiFabERN5amrex8MultiFabERN5amrex8MultiFabERN5amrex8MultiFabERN5amrex8MultiFabEN5amrex4RealERN5amrex8MultiFabE" title="Link to this definition"></a><br /></dt>
+<dd><p>Second stage of Runge-Kutta reinitialization scheme. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>phi_ctime</strong> – Current time level set function </p></li>
+<li><p><strong>phi2</strong> – Second stage level set function </p></li>
+<li><p><strong>phi3</strong> – Third stage level set function </p></li>
+<li><p><strong>sgn0</strong> – Sign function </p></li>
+<li><p><strong>G0</strong> – Gradient magnitude function </p></li>
+<li><p><strong>dt</strong> – Time step size </p></li>
+<li><p><strong>phi_ori</strong> – Original level set function </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N16NavierStokesBase8mass_fixERN5amrex8MultiFabERN5amrex8MultiFabERN5amrex8MultiFabERN5amrex8MultiFabERN5amrex8MultiFabERN5amrex8MultiFabERN5amrex8MultiFabEN5amrex4RealEi">
+<span id="_CPPv3N16NavierStokesBase8mass_fixERN5amrex8MultiFabERN5amrex8MultiFabERN5amrex8MultiFabERN5amrex8MultiFabERN5amrex8MultiFabERN5amrex8MultiFabERN5amrex8MultiFabEN5amrex4RealEi"></span><span id="_CPPv2N16NavierStokesBase8mass_fixERN5amrex8MultiFabERN5amrex8MultiFabERN5amrex8MultiFabERN5amrex8MultiFabERN5amrex8MultiFabERN5amrex8MultiFabERN5amrex8MultiFabEN5amrex4RealEi"></span><span id="NavierStokesBase::mass_fix__amrex::MultiFabR.amrex::MultiFabR.amrex::MultiFabR.amrex::MultiFabR.amrex::MultiFabR.amrex::MultiFabR.amrex::MultiFabR.amrex::Real.i"></span><span class="target" id="classNavierStokesBase_1a96bbb4fd70f7e2c52aa08c388827c90b"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">mass_fix</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">amrex</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">MultiFab</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">phi_ctime</span></span>, <span class="n"><span class="pre">amrex</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">MultiFab</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">phi_original</span></span>, <span class="n"><span class="pre">amrex</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">MultiFab</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">phi2</span></span>, <span class="n"><span class="pre">amrex</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">MultiFab</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">phi3</span></span>, <span class="n"><span class="pre">amrex</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">MultiFab</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">ld</span></span>, <span class="n"><span class="pre">amrex</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">MultiFab</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">lambdad</span></span>, <span class="n"><span class="pre">amrex</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">MultiFab</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">deltafunc_alias</span></span>, <span class="n"><span class="pre">amrex</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">Real</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">delta_t</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">loop_iter</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N16NavierStokesBase8mass_fixERN5amrex8MultiFabERN5amrex8MultiFabERN5amrex8MultiFabERN5amrex8MultiFabERN5amrex8MultiFabERN5amrex8MultiFabERN5amrex8MultiFabEN5amrex4RealEi" title="Link to this definition"></a><br /></dt>
+<dd><p>Apply mass conservation fix for level set reinitialization. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>phi_ctime</strong> – Current time level set function </p></li>
+<li><p><strong>phi_original</strong> – Original level set function </p></li>
+<li><p><strong>phi2</strong> – Second stage level set function </p></li>
+<li><p><strong>phi3</strong> – Third stage level set function </p></li>
+<li><p><strong>ld</strong> – Lagrange multiplier for mass conservation </p></li>
+<li><p><strong>lambdad</strong> – Lagrange multiplier derivative </p></li>
+<li><p><strong>deltafunc_alias</strong> – Delta function alias </p></li>
+<li><p><strong>delta_t</strong> – Time step size </p></li>
+<li><p><strong>loop_iter</strong> – Current iteration number </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N16NavierStokesBase12calc_mut_LESEA14AMREX_SPACEDIM_PN5amrex8MultiFabEN5amrex4RealE">
+<span id="_CPPv3N16NavierStokesBase12calc_mut_LESEA14AMREX_SPACEDIM_PN5amrex8MultiFabEN5amrex4RealE"></span><span id="_CPPv2N16NavierStokesBase12calc_mut_LESEAAMREX_SPACEDIM_PN5amrex8MultiFabEN5amrex4RealE"></span><span id="NavierStokesBase::calc_mut_LES__amrex::MultiFabPA.amrex::Real"></span><span class="target" id="classNavierStokesBase_1a435aed962a4e3a1d418eb93f5ac9dd56"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">calc_mut_LES</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">amrex</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">MultiFab</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">mu_LES</span></span><span class="p"><span class="pre">[</span></span><span class="n"><span class="pre">AMREX_SPACEDIM</span></span><span class="p"><span class="pre">]</span></span>, <span class="n"><span class="pre">amrex</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">Real</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">time</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N16NavierStokesBase12calc_mut_LESEA14AMREX_SPACEDIM_PN5amrex8MultiFabEN5amrex4RealE" title="Link to this definition"></a><br /></dt>
+<dd><p>Calculate turbulent viscosity for Large Eddy Simulation (LES). </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>mu_LES</strong> – Array of MultiFab pointers for turbulent viscosity in each direction </p></li>
+<li><p><strong>time</strong> – Current simulation time </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N16NavierStokesBase12time_averageERN5amrex4RealERN5amrex4RealERN5amrex4RealERKN5amrex4RealE">
+<span id="_CPPv3N16NavierStokesBase12time_averageERN5amrex4RealERN5amrex4RealERN5amrex4RealERKN5amrex4RealE"></span><span id="_CPPv2N16NavierStokesBase12time_averageERN5amrex4RealERN5amrex4RealERN5amrex4RealERKN5amrex4RealE"></span><span id="NavierStokesBase::time_average__amrex::RealR.amrex::RealR.amrex::RealR.amrex::RealCR"></span><span class="target" id="classNavierStokesBase_1a8c4dc595fc1002f360b475f53e6ada80"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">time_average</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">amrex</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">Real</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">time_avg</span></span>, <span class="n"><span class="pre">amrex</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">Real</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">time_avg_fluct</span></span>, <span class="n"><span class="pre">amrex</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">Real</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">dt_avg</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">amrex</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">Real</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">dt_level</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N16NavierStokesBase12time_averageERN5amrex4RealERN5amrex4RealERN5amrex4RealERKN5amrex4RealE" title="Link to this definition"></a><br /></dt>
+<dd><p>Compute time-averaged quantities for statistics. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>time_avg</strong> – Time-averaged value (output) </p></li>
+<li><p><strong>time_avg_fluct</strong> – Time-averaged fluctuation (output) </p></li>
+<li><p><strong>dt_avg</strong> – Time-averaged time step (output) </p></li>
+<li><p><strong>dt_level</strong> – Current time step size </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N16NavierStokesBase15advance_cleanupEii">
+<span id="_CPPv3N16NavierStokesBase15advance_cleanupEii"></span><span id="_CPPv2N16NavierStokesBase15advance_cleanupEii"></span><span id="NavierStokesBase::advance_cleanup__i.i"></span><span class="target" id="classNavierStokesBase_1a92cc250ceda478bb4a7b8b0077ad45bb"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">advance_cleanup</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">iteration</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">ncycle</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N16NavierStokesBase15advance_cleanupEii" title="Link to this definition"></a><br /></dt>
+<dd><p>Clean up after advance step completion. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>iteration</strong> – Current iteration number </p></li>
+<li><p><strong>ncycle</strong> – Total number of cycles </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N16NavierStokesBase10incrRhoAvgEN5amrex4RealE">
+<span id="_CPPv3N16NavierStokesBase10incrRhoAvgEN5amrex4RealE"></span><span id="_CPPv2N16NavierStokesBase10incrRhoAvgEN5amrex4RealE"></span><span id="NavierStokesBase::incrRhoAvg__amrex::Real"></span><span class="target" id="classNavierStokesBase_1a12bbf2bffe8c4c6780495620b18cba3e"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">incrRhoAvg</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">amrex</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">Real</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">alpha</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N16NavierStokesBase10incrRhoAvgEN5amrex4RealE" title="Link to this definition"></a><br /></dt>
+<dd><p>Increment density average with given weight. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>alpha</strong> – Weight factor for averaging </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N16NavierStokesBase10incrRhoAvgERKN5amrex8MultiFabEiN5amrex4RealE">
+<span id="_CPPv3N16NavierStokesBase10incrRhoAvgERKN5amrex8MultiFabEiN5amrex4RealE"></span><span id="_CPPv2N16NavierStokesBase10incrRhoAvgERKN5amrex8MultiFabEiN5amrex4RealE"></span><span id="NavierStokesBase::incrRhoAvg__amrex::MultiFabCR.i.amrex::Real"></span><span class="target" id="classNavierStokesBase_1af4f4ae0720f10541ceb8a9724a3d6ac6"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">incrRhoAvg</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">amrex</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">MultiFab</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">rho_incr</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">sComp</span></span>, <span class="n"><span class="pre">amrex</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">Real</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">alpha</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N16NavierStokesBase10incrRhoAvgERKN5amrex8MultiFabEiN5amrex4RealE" title="Link to this definition"></a><br /></dt>
+<dd><p>Increment density average with MultiFab input. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>rho_incr</strong> – MultiFab containing density increment </p></li>
+<li><p><strong>sComp</strong> – Starting component index </p></li>
+<li><p><strong>alpha</strong> – Weight factor for averaging </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N16NavierStokesBase33initial_velocity_diffusion_updateEN5amrex4RealE">
+<span id="_CPPv3N16NavierStokesBase33initial_velocity_diffusion_updateEN5amrex4RealE"></span><span id="_CPPv2N16NavierStokesBase33initial_velocity_diffusion_updateEN5amrex4RealE"></span><span id="NavierStokesBase::initial_velocity_diffusion_update__amrex::Real"></span><span class="target" id="classNavierStokesBase_1a55808adb2df0acb2c615de20c3f2c393"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">initial_velocity_diffusion_update</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">amrex</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">Real</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">dt</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N16NavierStokesBase33initial_velocity_diffusion_updateEN5amrex4RealE" title="Link to this definition"></a><br /></dt>
+<dd><p>Update initial velocity with diffusion terms. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>dt</strong> – Time step size </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N16NavierStokesBase10level_syncEi">
+<span id="_CPPv3N16NavierStokesBase10level_syncEi"></span><span id="_CPPv2N16NavierStokesBase10level_syncEi"></span><span id="NavierStokesBase::level_sync__i"></span><span class="target" id="classNavierStokesBase_1a5f05f8cc4784677c39d95fa9fdbed7f4"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">level_sync</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">crse_iteration</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N16NavierStokesBase10level_syncEi" title="Link to this definition"></a><br /></dt>
+<dd><p>Compute level synchronization correction. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>crse_iteration</strong> – Coarse level iteration number </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N16NavierStokesBase18make_rho_prev_timeEv">
+<span id="_CPPv3N16NavierStokesBase18make_rho_prev_timeEv"></span><span id="_CPPv2N16NavierStokesBase18make_rho_prev_timeEv"></span><span id="NavierStokesBase::make_rho_prev_time"></span><span class="target" id="classNavierStokesBase_1a5845e82220be71cccf9cbe7b661e9e46"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">make_rho_prev_time</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N16NavierStokesBase18make_rho_prev_timeEv" title="Link to this definition"></a><br /></dt>
+<dd><p>Make density at previous time step. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N16NavierStokesBase18make_rho_curr_timeEv">
+<span id="_CPPv3N16NavierStokesBase18make_rho_curr_timeEv"></span><span id="_CPPv2N16NavierStokesBase18make_rho_curr_timeEv"></span><span id="NavierStokesBase::make_rho_curr_time"></span><span class="target" id="classNavierStokesBase_1a7564aa45039a2c188c9268155e369144"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">make_rho_curr_time</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N16NavierStokesBase18make_rho_curr_timeEv" title="Link to this definition"></a><br /></dt>
+<dd><p>Make density at current time step. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N16NavierStokesBase15post_init_stateEv">
+<span id="_CPPv3N16NavierStokesBase15post_init_stateEv"></span><span id="_CPPv2N16NavierStokesBase15post_init_stateEv"></span><span id="NavierStokesBase::post_init_state"></span><span class="target" id="classNavierStokesBase_1a6e6dfe47589f76d1ae53372643a2a851"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">post_init_state</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N16NavierStokesBase15post_init_stateEv" title="Link to this definition"></a><br /></dt>
+<dd><p>Ensure state is consistent after initialization. </p>
+<p>This function makes sure velocity field is non-divergent, coarse level data are averages of fine level data, and pressure is zero. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N16NavierStokesBase10sync_setupERPN5amrex8MultiFabE">
+<span id="_CPPv3N16NavierStokesBase10sync_setupERPN5amrex8MultiFabE"></span><span id="_CPPv2N16NavierStokesBase10sync_setupERPN5amrex8MultiFabE"></span><span id="NavierStokesBase::sync_setup__amrex::MultiFabPR"></span><span class="target" id="classNavierStokesBase_1a38d342b1c46176f5faff426d8bafa99e"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">sync_setup</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">amrex</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">MultiFab</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">DeltaSsync</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N16NavierStokesBase10sync_setupERPN5amrex8MultiFabE" title="Link to this definition"></a><br /></dt>
+<dd><p>Set up synchronization data structures. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>DeltaSsync</strong> – Pointer to MultiFab for sync correction (output) </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N16NavierStokesBase18velocity_advectionEN5amrex4RealE">
+<span id="_CPPv3N16NavierStokesBase18velocity_advectionEN5amrex4RealE"></span><span id="_CPPv2N16NavierStokesBase18velocity_advectionEN5amrex4RealE"></span><span id="NavierStokesBase::velocity_advection__amrex::Real"></span><span class="target" id="classNavierStokesBase_1a3e357f5242ba72e0bd1038e79d740199"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">velocity_advection</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">amrex</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">Real</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">dt</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N16NavierStokesBase18velocity_advectionEN5amrex4RealE" title="Link to this definition"></a><br /></dt>
+<dd><p>Advect velocities using the chosen advection scheme. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>dt</strong> – Time step size </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N16NavierStokesBase15velocity_updateEN5amrex4RealE">
+<span id="_CPPv3N16NavierStokesBase15velocity_updateEN5amrex4RealE"></span><span id="_CPPv2N16NavierStokesBase15velocity_updateEN5amrex4RealE"></span><span id="NavierStokesBase::velocity_update__amrex::Real"></span><span class="target" id="classNavierStokesBase_1a4893e403c29d606d9bcce07a2bad0835"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">velocity_update</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">amrex</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">Real</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">dt</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N16NavierStokesBase15velocity_updateEN5amrex4RealE" title="Link to this definition"></a><br /></dt>
+<dd><p>Update velocities with advection and diffusion terms. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>dt</strong> – Time step size </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N16NavierStokesBase25velocity_advection_updateEN5amrex4RealE">
+<span id="_CPPv3N16NavierStokesBase25velocity_advection_updateEN5amrex4RealE"></span><span id="_CPPv2N16NavierStokesBase25velocity_advection_updateEN5amrex4RealE"></span><span id="NavierStokesBase::velocity_advection_update__amrex::Real"></span><span class="target" id="classNavierStokesBase_1ab9c29cbd2565b4a46d359431fd7b38bb"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">velocity_advection_update</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">amrex</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">Real</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">dt</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N16NavierStokesBase25velocity_advection_updateEN5amrex4RealE" title="Link to this definition"></a><br /></dt>
+<dd><p>Update velocities with advection terms only. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>dt</strong> – Time step size </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N16NavierStokesBase18avgDown_StatePressEv">
+<span id="_CPPv3N16NavierStokesBase18avgDown_StatePressEv"></span><span id="_CPPv2N16NavierStokesBase18avgDown_StatePressEv"></span><span id="NavierStokesBase::avgDown_StatePress"></span><span class="target" id="classNavierStokesBase_1a1c65914bb4ddfdb9fde91189277ff3cf"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">avgDown_StatePress</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N16NavierStokesBase18avgDown_StatePressEv" title="Link to this definition"></a><br /></dt>
+<dd><p>Average down State_Type and Press_Type data from fine to coarse level. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N16NavierStokesBase11printMaxVelEb">
+<span id="_CPPv3N16NavierStokesBase11printMaxVelEb"></span><span id="_CPPv2N16NavierStokesBase11printMaxVelEb"></span><span id="NavierStokesBase::printMaxVel__b"></span><span class="target" id="classNavierStokesBase_1a76ed8a57dcc0e7efe6206e9f7f037f05"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">printMaxVel</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">new_data</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="k"><span class="pre">true</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N16NavierStokesBase11printMaxVelEb" title="Link to this definition"></a><br /></dt>
+<dd><p>Print maximum velocity values for diagnostics. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>new_data</strong> – Whether to use new time data (true) or old time data (false) </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N16NavierStokesBase10printMaxGpEb">
+<span id="_CPPv3N16NavierStokesBase10printMaxGpEb"></span><span id="_CPPv2N16NavierStokesBase10printMaxGpEb"></span><span id="NavierStokesBase::printMaxGp__b"></span><span class="target" id="classNavierStokesBase_1add834868d436f050d47289f125db6f3c"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">printMaxGp</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">new_data</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="k"><span class="pre">true</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N16NavierStokesBase10printMaxGpEb" title="Link to this definition"></a><br /></dt>
+<dd><p>Print maximum pressure gradient values for diagnostics. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>new_data</strong> – Whether to use new time data (true) or old time data (false) </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N16NavierStokesBase14printMaxValuesEb">
+<span id="_CPPv3N16NavierStokesBase14printMaxValuesEb"></span><span id="_CPPv2N16NavierStokesBase14printMaxValuesEb"></span><span id="NavierStokesBase::printMaxValues__b"></span><span class="target" id="classNavierStokesBase_1af2d04ace1f57c6f53cec769228112b54"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">printMaxValues</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">new_data</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="k"><span class="pre">true</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N16NavierStokesBase14printMaxValuesEb" title="Link to this definition"></a><br /></dt>
+<dd><p>Print maximum values of all state variables for diagnostics. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>new_data</strong> – Whether to use new time data (true) or old time data (false) </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N16NavierStokesBase12buildMetricsEv">
+<span id="_CPPv3N16NavierStokesBase12buildMetricsEv"></span><span id="_CPPv2N16NavierStokesBase12buildMetricsEv"></span><span id="NavierStokesBase::buildMetrics"></span><span class="target" id="classNavierStokesBase_1a3c4be2ac9ab2a3c216d0c6a93570f691"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">buildMetrics</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N16NavierStokesBase12buildMetricsEv" title="Link to this definition"></a><br /></dt>
+<dd><p>Build 1-D metric arrays for RZ (radial-axial) geometry. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N16NavierStokesBase8incrPAvgEv">
+<span id="_CPPv3N16NavierStokesBase8incrPAvgEv"></span><span id="_CPPv2N16NavierStokesBase8incrPAvgEv"></span><span id="NavierStokesBase::incrPAvg"></span><span class="target" id="classNavierStokesBase_1a30722bf53739d56f4f69e8b6691d1a3c"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">incrPAvg</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N16NavierStokesBase8incrPAvgEv" title="Link to this definition"></a><br /></dt>
+<dd><p>Increment pressure average for time-averaged statistics. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N16NavierStokesBase14initOldFromNewEii">
+<span id="_CPPv3N16NavierStokesBase14initOldFromNewEii"></span><span id="_CPPv2N16NavierStokesBase14initOldFromNewEii"></span><span id="NavierStokesBase::initOldFromNew__i.i"></span><span class="target" id="classNavierStokesBase_1a808b034dab0e32f52f5665724f3079a8"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">initOldFromNew</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">type</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">lev</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="o"><span class="pre">-</span></span><span class="m"><span class="pre">1</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N16NavierStokesBase14initOldFromNewEii" title="Link to this definition"></a><br /></dt>
+<dd><p>Initialize old time data with new time data. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>type</strong> – State type to initialize </p></li>
+<li><p><strong>lev</strong> – Level index (-1 for current level) </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N16NavierStokesBase10initRhoAvgEN5amrex4RealE">
+<span id="_CPPv3N16NavierStokesBase10initRhoAvgEN5amrex4RealE"></span><span id="_CPPv2N16NavierStokesBase10initRhoAvgEN5amrex4RealE"></span><span id="NavierStokesBase::initRhoAvg__amrex::Real"></span><span class="target" id="classNavierStokesBase_1ab2f7da112b8a09d9c5ecaea07a7482e9"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">initRhoAvg</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">amrex</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">Real</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">alpha</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N16NavierStokesBase10initRhoAvgEN5amrex4RealE" title="Link to this definition"></a><br /></dt>
+<dd><p>Initialize density average with given weight. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>alpha</strong> – Weight factor for averaging </p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+</dd></dl>
+
 </section>
 
 

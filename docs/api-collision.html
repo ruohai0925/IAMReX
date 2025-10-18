@@ -55,7 +55,19 @@
 <li class="toctree-l1"><a class="reference internal" href="references.html">References</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="api_chapter.html">API</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="api-dfibm.html">Direct forcing IBM</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Particle Collision</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Particle Collision</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv417ParticleCollision"><code class="docutils literal notranslate"><span class="pre">ParticleCollision</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N17ParticleCollision9takeModelEi"><code class="docutils literal notranslate"><span class="pre">takeModel()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N17ParticleCollision8DKTModelEv"><code class="docutils literal notranslate"><span class="pre">DKTModel()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N17ParticleCollision11SetGeometryE8RealVect8RealVect4Real4Real"><code class="docutils literal notranslate"><span class="pre">SetGeometry()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N17ParticleCollision14InsertParticleE8RealVect8RealVect4Real4Real"><code class="docutils literal notranslate"><span class="pre">InsertParticle()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N17ParticleCollision15InsertCollisionEP17CollisionParticleP17CollisionParticle"><code class="docutils literal notranslate"><span class="pre">InsertCollision()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N17ParticleCollision22GenerateCollisionPairsEv"><code class="docutils literal notranslate"><span class="pre">GenerateCollisionPairs()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N17ParticleCollision21ResolveCollisionPairsEv"><code class="docutils literal notranslate"><span class="pre">ResolveCollisionPairs()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="api-ns.html">Navier Stokes</a></li>
 </ul>
 </li>
@@ -88,10 +100,100 @@
              
   <section id="particle-collision">
 <span id="sc-collision-api"></span><h1>Particle Collision<a class="headerlink" href="#particle-collision" title="Link to this heading"></a></h1>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>doxygengroup: Cannot find file: /home/runner/work/IAMReX/IAMReX/Docs/IAMReX_documentation/doxygen/xml/index.xml</p>
+<dl>
+<dt class="sig sig-object cpp">
+<span class="target" id="group__collision"></span><em><span class="pre">group</span></em> <span class="sig-name descname"><span class="pre">Particle</span> <span class="pre">collision</span> <span class="pre">manager</span> <span class="pre">for</span> <span class="pre">DEM</span> <span class="pre">system</span></span></dt>
+<dd><p>Particle collision class. </p>
+<dl class="cpp class">
+<dt class="sig sig-object cpp" id="_CPPv417ParticleCollision">
+<span id="_CPPv317ParticleCollision"></span><span id="_CPPv217ParticleCollision"></span><span id="ParticleCollision"></span><span class="target" id="classParticleCollision"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">ParticleCollision</span></span></span><a class="headerlink" href="#_CPPv417ParticleCollision" title="Link to this definition"></a><br /></dt>
+<dd><div class="docutils container">
+<em>#include &lt;Collision.H&gt;</em></div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N17ParticleCollision9takeModelEi">
+<span id="_CPPv3N17ParticleCollision9takeModelEi"></span><span id="_CPPv2N17ParticleCollision9takeModelEi"></span><span id="ParticleCollision::takeModel__i"></span><span class="target" id="classParticleCollision_1ac5b08fc42e202d4f615240ab8744253b"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">takeModel</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">model</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N17ParticleCollision9takeModelEi" title="Link to this definition"></a><br /></dt>
+<dd><p>Set the collision model to be used for particle interactions. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>model</strong> – Integer identifier for the collision model </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N17ParticleCollision8DKTModelEv">
+<span id="_CPPv3N17ParticleCollision8DKTModelEv"></span><span id="_CPPv2N17ParticleCollision8DKTModelEv"></span><span id="ParticleCollision::DKTModel"></span><span class="target" id="classParticleCollision_1a7bbb9c1d29dd0312646df9e49f951931"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">DKTModel</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N17ParticleCollision8DKTModelEv" title="Link to this definition"></a><br /></dt>
+<dd><p>Apply the Discrete Element Method (DEM) collision model. </p>
+<p>This function implements the DEM approach for particle-particle collisions. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N17ParticleCollision11SetGeometryE8RealVect8RealVect4Real4Real">
+<span id="_CPPv3N17ParticleCollision11SetGeometryE8RealVect8RealVect4Real4Real"></span><span id="_CPPv2N17ParticleCollision11SetGeometryE8RealVect8RealVect4Real4Real"></span><span id="ParticleCollision::SetGeometry__RealVect.RealVect.Real.Real"></span><span class="target" id="classParticleCollision_1a46f1d26f232faf98ccf8bf393c2717a9"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">SetGeometry</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">RealVect</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">gm_lo</span></span>, <span class="n"><span class="pre">RealVect</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">gm_hi</span></span>, <span class="n"><span class="pre">Real</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">size</span></span>, <span class="n"><span class="pre">Real</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">l</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N17ParticleCollision11SetGeometryE8RealVect8RealVect4Real4Real" title="Link to this definition"></a><br /></dt>
+<dd><p>Generate background mesh for collision detection. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>gm_lo</strong> – Lower bounds of the computational domain </p></li>
+<li><p><strong>gm_hi</strong> – Upper bounds of the computational domain </p></li>
+<li><p><strong>size</strong> – Particle size parameter </p></li>
+<li><p><strong>l</strong> – Grid spacing for collision mesh </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N17ParticleCollision14InsertParticleE8RealVect8RealVect4Real4Real">
+<span id="_CPPv3N17ParticleCollision14InsertParticleE8RealVect8RealVect4Real4Real"></span><span id="_CPPv2N17ParticleCollision14InsertParticleE8RealVect8RealVect4Real4Real"></span><span id="ParticleCollision::InsertParticle__RealVect.RealVect.Real.Real"></span><span class="target" id="classParticleCollision_1a2c347b3d3a9185e53a1ae490330ddceb"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">InsertParticle</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">RealVect</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">location</span></span>, <span class="n"><span class="pre">RealVect</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">velocity</span></span>, <span class="n"><span class="pre">Real</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">radius</span></span>, <span class="n"><span class="pre">Real</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">rho</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N17ParticleCollision14InsertParticleE8RealVect8RealVect4Real4Real" title="Link to this definition"></a><br /></dt>
+<dd><p>Insert a particle into the collision detection system. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>location</strong> – Position of the particle </p></li>
+<li><p><strong>velocity</strong> – Velocity of the particle </p></li>
+<li><p><strong>radius</strong> – Radius of the particle </p></li>
+<li><p><strong>rho</strong> – Density of the particle </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N17ParticleCollision15InsertCollisionEP17CollisionParticleP17CollisionParticle">
+<span id="_CPPv3N17ParticleCollision15InsertCollisionEP17CollisionParticleP17CollisionParticle"></span><span id="_CPPv2N17ParticleCollision15InsertCollisionEP17CollisionParticleP17CollisionParticle"></span><span id="ParticleCollision::InsertCollision__CollisionParticleP.CollisionParticleP"></span><span class="target" id="classParticleCollision_1a2d16a3bb20e37faf12fbb4a0dad2e888"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">InsertCollision</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">CollisionParticle</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">p1</span></span>, <span class="n"><span class="pre">CollisionParticle</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">p2</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N17ParticleCollision15InsertCollisionEP17CollisionParticleP17CollisionParticle" title="Link to this definition"></a><br /></dt>
+<dd><p>Insert a collision pair into the collision collector. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>p1</strong> – Pointer to first particle in collision pair </p></li>
+<li><p><strong>p2</strong> – Pointer to second particle in collision pair </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N17ParticleCollision22GenerateCollisionPairsEv">
+<span id="_CPPv3N17ParticleCollision22GenerateCollisionPairsEv"></span><span id="_CPPv2N17ParticleCollision22GenerateCollisionPairsEv"></span><span id="ParticleCollision::GenerateCollisionPairs"></span><span class="target" id="classParticleCollision_1aa34c34aa9cb4b6160f58f8a47c57d6cd"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">GenerateCollisionPairs</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N17ParticleCollision22GenerateCollisionPairsEv" title="Link to this definition"></a><br /></dt>
+<dd><p>Generate all possible collision pairs between particles. </p>
+<p>This function identifies which particles are in close proximity and may collide during the current timestep. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N17ParticleCollision21ResolveCollisionPairsEv">
+<span id="_CPPv3N17ParticleCollision21ResolveCollisionPairsEv"></span><span id="_CPPv2N17ParticleCollision21ResolveCollisionPairsEv"></span><span id="ParticleCollision::ResolveCollisionPairs"></span><span class="target" id="classParticleCollision_1aa2369e9b897ef7a04ccc0bd1ed16b4e1"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">ResolveCollisionPairs</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N17ParticleCollision21ResolveCollisionPairsEv" title="Link to this definition"></a><br /></dt>
+<dd><p>Resolve all collision pairs using the selected collision model. </p>
+<p>This function applies collision forces and updates particle states based on the detected collisions. </p>
+</dd></dl>
+
 </div>
+</dd></dl>
+
+</dd></dl>
+
 </section>
 
 

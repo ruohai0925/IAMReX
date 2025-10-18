@@ -54,7 +54,31 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="references.html">References</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="api_chapter.html">API</a><ul class="current">
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Direct forcing IBM</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Direct forcing IBM</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv418nodal_phi_to_heavi4Real"><code class="docutils literal notranslate"><span class="pre">nodal_phi_to_heavi()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv416nodal_phi_to_pvfR8MultiFabRK8MultiFab"><code class="docutils literal notranslate"><span class="pre">nodal_phi_to_pvf()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv413deltaFunction4Real4Real4RealR4Real"><code class="docutils literal notranslate"><span class="pre">deltaFunction()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv49mParticle"><code class="docutils literal notranslate"><span class="pre">mParticle</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N9mParticle13InitParticlesERK6VectorI4RealERK6VectorI4RealERK6VectorI4RealERK6VectorI4RealERK6VectorI4RealERK6VectorI4RealERK6VectorI4RealERK6VectorI4RealERK6VectorI4RealERK6VectorI4RealERK6VectorIiERK6VectorIiERK6VectorIiERK6VectorIiERK6VectorIiERK6VectorIiERK6VectorI4RealE4Real4Reali"><code class="docutils literal notranslate"><span class="pre">InitParticles()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N9mParticle17InteractWithEulerER8MultiFabR8MultiFab4Real"><code class="docutils literal notranslate"><span class="pre">InteractWithEuler()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N9mParticle17WriteParticleFileEi"><code class="docutils literal notranslate"><span class="pre">WriteParticleFile()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N9mParticle22UpdateLagrangianMarkerEv"><code class="docutils literal notranslate"><span class="pre">UpdateLagrangianMarker()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N9mParticle21VelocityInterpolationERN5amrex8MultiFabEi"><code class="docutils literal notranslate"><span class="pre">VelocityInterpolation()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N9mParticle22ComputeLagrangianForceE4Real"><code class="docutils literal notranslate"><span class="pre">ComputeLagrangianForce()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N9mParticle14ForceSpreadingERN5amrex8MultiFabEi"><code class="docutils literal notranslate"><span class="pre">ForceSpreading()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4NK9mParticle18VelocityCorrectionERN5amrex8MultiFabERN5amrex8MultiFabE4Real"><code class="docutils literal notranslate"><span class="pre">VelocityCorrection()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N9mParticle15UpdateParticlesEi4RealRK8MultiFabRK8MultiFabR8MultiFabR8MultiFab4Real"><code class="docutils literal notranslate"><span class="pre">UpdateParticles()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N9mParticle19DoParticleCollisionEi"><code class="docutils literal notranslate"><span class="pre">DoParticleCollision()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N9mParticle14RecordOldValueER6kernel"><code class="docutils literal notranslate"><span class="pre">RecordOldValue()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N9mParticle23ResolveLagrangianMarkerENSt6stringE"><code class="docutils literal notranslate"><span class="pre">ResolveLagrangianMarker()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N9mParticle15ResolveWithRPKMENSt6stringE"><code class="docutils literal notranslate"><span class="pre">ResolveWithRPKM()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N9mParticle23StartOfLagrangianMarkerE6size_t"><code class="docutils literal notranslate"><span class="pre">StartOfLagrangianMarker()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N9mParticle21NumOfLagrangianMarkerE6size_t"><code class="docutils literal notranslate"><span class="pre">NumOfLagrangianMarker()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N9mParticle19GetPositionOfMarkerE6size_t"><code class="docutils literal notranslate"><span class="pre">GetPositionOfMarker()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="api-collision.html">Particle Collision</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-ns.html">Navier Stokes</a></li>
 </ul>
@@ -88,10 +112,293 @@
              
   <section id="direct-forcing-ibm">
 <span id="sc-dfibm-api"></span><h1>Direct forcing IBM<a class="headerlink" href="#direct-forcing-ibm" title="Link to this heading"></a></h1>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>doxygengroup: Cannot find file: /home/runner/work/IAMReX/IAMReX/Docs/IAMReX_documentation/doxygen/xml/index.xml</p>
+<dl>
+<dt class="sig sig-object cpp">
+<span class="target" id="group__DFIBM"></span><em><span class="pre">group</span></em> <span class="sig-name descname"><span class="pre">direct</span> <span class="pre">forcing</span> <span class="pre">immersed</span> <span class="pre">boundary</span> <span class="pre">method</span></span></dt>
+<dd><p>IBM class. </p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-useful-function">useful function</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv418nodal_phi_to_heavi4Real">
+<span id="_CPPv318nodal_phi_to_heavi4Real"></span><span id="_CPPv218nodal_phi_to_heavi4Real"></span><span id="nodal_phi_to_heavi__Real"></span><span class="target" id="group__DFIBM_1gac0e12a5654dd76eb3a62b60cbf0bb2a2"></span><span class="n"><span class="pre">Real</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">nodal_phi_to_heavi</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">Real</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">phi</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv418nodal_phi_to_heavi4Real" title="Link to this definition"></a><br /></dt>
+<dd><p>Convert nodal level set function value to Heaviside function value. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>phi</strong> – Level set function value at node </p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Heaviside function value (0.0 if phi &lt;= 0, 1.0 if phi &gt; 0) </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv416nodal_phi_to_pvfR8MultiFabRK8MultiFab">
+<span id="_CPPv316nodal_phi_to_pvfR8MultiFabRK8MultiFab"></span><span id="_CPPv216nodal_phi_to_pvfR8MultiFabRK8MultiFab"></span><span id="nodal_phi_to_pvf__MultiFabR.MultiFabCR"></span><span class="target" id="group__DFIBM_1gade43a19f7554d957ceef5202700a8e46"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">nodal_phi_to_pvf</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">MultiFab</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">pvf</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">MultiFab</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">phi_nodal</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv416nodal_phi_to_pvfR8MultiFabRK8MultiFab" title="Link to this definition"></a><br /></dt>
+<dd><p>Convert nodal level set function to particle volume fraction (PVF). </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>pvf</strong> – Output MultiFab containing particle volume fraction </p></li>
+<li><p><strong>phi_nodal</strong> – Input MultiFab containing nodal level set function </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv413deltaFunction4Real4Real4RealR4Real">
+<span id="_CPPv313deltaFunction4Real4Real4RealR4Real"></span><span id="_CPPv213deltaFunction4Real4Real4RealR4Real"></span><span id="deltaFunction__Real.Real.Real.RealR"></span><span class="target" id="group__DFIBM_1ga8e19c2640c531fed11122e8628afbbfb"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">deltaFunction</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">Real</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">xf</span></span>, <span class="n"><span class="pre">Real</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">xp</span></span>, <span class="n"><span class="pre">Real</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">h</span></span>, <span class="n"><span class="pre">Real</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">value</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv413deltaFunction4Real4Real4RealR4Real" title="Link to this definition"></a><br /></dt>
+<dd><p>Compute delta function value for immersed boundary method. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>xf</strong> – Eulerian grid point coordinate </p></li>
+<li><p><strong>xp</strong> – Lagrangian marker coordinate </p></li>
+<li><p><strong>h</strong> – Grid spacing </p></li>
+<li><p><strong>value</strong> – Output delta function value </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
 </div>
+<dl class="cpp class">
+<dt class="sig sig-object cpp" id="_CPPv49mParticle">
+<span id="_CPPv39mParticle"></span><span id="_CPPv29mParticle"></span><span id="mParticle"></span><span class="target" id="classmParticle"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">mParticle</span></span></span><a class="headerlink" href="#_CPPv49mParticle" title="Link to this definition"></a><br /></dt>
+<dd><div class="docutils container">
+<em>#include &lt;DiffusedIB_Parallel.h&gt;</em></div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N9mParticle13InitParticlesERK6VectorI4RealERK6VectorI4RealERK6VectorI4RealERK6VectorI4RealERK6VectorI4RealERK6VectorI4RealERK6VectorI4RealERK6VectorI4RealERK6VectorI4RealERK6VectorI4RealERK6VectorIiERK6VectorIiERK6VectorIiERK6VectorIiERK6VectorIiERK6VectorIiERK6VectorI4RealE4Real4Reali">
+<span id="_CPPv3N9mParticle13InitParticlesERK6VectorI4RealERK6VectorI4RealERK6VectorI4RealERK6VectorI4RealERK6VectorI4RealERK6VectorI4RealERK6VectorI4RealERK6VectorI4RealERK6VectorI4RealERK6VectorI4RealERK6VectorIiERK6VectorIiERK6VectorIiERK6VectorIiERK6VectorIiERK6VectorIiERK6VectorI4RealE4Real4Reali"></span><span id="_CPPv2N9mParticle13InitParticlesERK6VectorI4RealERK6VectorI4RealERK6VectorI4RealERK6VectorI4RealERK6VectorI4RealERK6VectorI4RealERK6VectorI4RealERK6VectorI4RealERK6VectorI4RealERK6VectorI4RealERK6VectorIiERK6VectorIiERK6VectorIiERK6VectorIiERK6VectorIiERK6VectorIiERK6VectorI4RealE4Real4Reali"></span><span id="mParticle::InitParticles__Vector:Real:CR.Vector:Real:CR.Vector:Real:CR.Vector:Real:CR.Vector:Real:CR.Vector:Real:CR.Vector:Real:CR.Vector:Real:CR.Vector:Real:CR.Vector:Real:CR.Vector:i:CR.Vector:i:CR.Vector:i:CR.Vector:i:CR.Vector:i:CR.Vector:i:CR.Vector:Real:CR.Real.Real.i"></span><span class="target" id="classmParticle_1a8e09b1181c025133804740f3d08f1395"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">InitParticles</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">Vector</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">Real</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">x</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">Vector</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">Real</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">y</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">Vector</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">Real</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">z</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">Vector</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">Real</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">rho_s</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">Vector</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">Real</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">Vx</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">Vector</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">Real</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">Vy</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">Vector</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">Real</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">Vz</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">Vector</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">Real</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">Ox</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">Vector</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">Real</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">Oy</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">Vector</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">Real</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">Oz</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">Vector</span></span><span class="p"><span class="pre">&lt;</span></span><span class="kt"><span class="pre">int</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">TLX</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">Vector</span></span><span class="p"><span class="pre">&lt;</span></span><span class="kt"><span class="pre">int</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">TLY</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">Vector</span></span><span class="p"><span class="pre">&lt;</span></span><span class="kt"><span class="pre">int</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">TLZ</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">Vector</span></span><span class="p"><span class="pre">&lt;</span></span><span class="kt"><span class="pre">int</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">RLX</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">Vector</span></span><span class="p"><span class="pre">&lt;</span></span><span class="kt"><span class="pre">int</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">RLY</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">Vector</span></span><span class="p"><span class="pre">&lt;</span></span><span class="kt"><span class="pre">int</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">RLZ</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">Vector</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">Real</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">radius</span></span>, <span class="n"><span class="pre">Real</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">h</span></span>, <span class="n"><span class="pre">Real</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">gravity</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">verbose</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="m"><span class="pre">0</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N9mParticle13InitParticlesERK6VectorI4RealERK6VectorI4RealERK6VectorI4RealERK6VectorI4RealERK6VectorI4RealERK6VectorI4RealERK6VectorI4RealERK6VectorI4RealERK6VectorI4RealERK6VectorI4RealERK6VectorIiERK6VectorIiERK6VectorIiERK6VectorIiERK6VectorIiERK6VectorIiERK6VectorI4RealE4Real4Reali" title="Link to this definition"></a><br /></dt>
+<dd><p>Initialize particles with given properties and parameters. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> – Vector of x-coordinates for particle centers </p></li>
+<li><p><strong>y</strong> – Vector of y-coordinates for particle centers </p></li>
+<li><p><strong>z</strong> – Vector of z-coordinates for particle centers </p></li>
+<li><p><strong>rho_s</strong> – Vector of solid particle densities </p></li>
+<li><p><strong>Vx</strong> – Vector of initial x-velocities </p></li>
+<li><p><strong>Vy</strong> – Vector of initial y-velocities </p></li>
+<li><p><strong>Vz</strong> – Vector of initial z-velocities </p></li>
+<li><p><strong>Ox</strong> – Vector of initial x-angular velocities </p></li>
+<li><p><strong>Oy</strong> – Vector of initial y-angular velocities </p></li>
+<li><p><strong>Oz</strong> – Vector of initial z-angular velocities </p></li>
+<li><p><strong>TLX</strong> – Vector of translational constraint flags in x-direction </p></li>
+<li><p><strong>TLY</strong> – Vector of translational constraint flags in y-direction </p></li>
+<li><p><strong>TLZ</strong> – Vector of translational constraint flags in z-direction </p></li>
+<li><p><strong>RLX</strong> – Vector of rotational constraint flags in x-direction </p></li>
+<li><p><strong>RLY</strong> – Vector of rotational constraint flags in y-direction </p></li>
+<li><p><strong>RLZ</strong> – Vector of rotational constraint flags in z-direction </p></li>
+<li><p><strong>radius</strong> – Vector of particle radii </p></li>
+<li><p><strong>h</strong> – Grid spacing </p></li>
+<li><p><strong>gravity</strong> – Gravitational acceleration </p></li>
+<li><p><strong>verbose</strong> – Verbosity level for output </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N9mParticle17InteractWithEulerER8MultiFabR8MultiFab4Real">
+<span id="_CPPv3N9mParticle17InteractWithEulerER8MultiFabR8MultiFab4Real"></span><span id="_CPPv2N9mParticle17InteractWithEulerER8MultiFabR8MultiFab4Real"></span><span id="mParticle::InteractWithEuler__MultiFabR.MultiFabR.Real"></span><span class="target" id="classmParticle_1ac9d6832bd1f281a952082c13de93881c"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">InteractWithEuler</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">MultiFab</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">EulerVel</span></span>, <span class="n"><span class="pre">MultiFab</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">EulerForce</span></span>, <span class="n"><span class="pre">Real</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">dt</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="m"><span class="pre">0.1</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N9mParticle17InteractWithEulerER8MultiFabR8MultiFab4Real" title="Link to this definition"></a><br /></dt>
+<dd><p>Perform interaction between Lagrangian particles and Eulerian fluid. </p>
+<p>This function handles the immersed boundary method coupling between solid particles and the surrounding fluid. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>EulerVel</strong> – Eulerian velocity field </p></li>
+<li><p><strong>EulerForce</strong> – Eulerian force field (output) </p></li>
+<li><p><strong>dt</strong> – Time step size </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N9mParticle17WriteParticleFileEi">
+<span id="_CPPv3N9mParticle17WriteParticleFileEi"></span><span id="_CPPv2N9mParticle17WriteParticleFileEi"></span><span id="mParticle::WriteParticleFile__i"></span><span class="target" id="classmParticle_1a7a203d2e2613edaa23fbd148d88d5980"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">WriteParticleFile</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">index</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N9mParticle17WriteParticleFileEi" title="Link to this definition"></a><br /></dt>
+<dd><p>Write particle data to file for visualization or restart. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>index</strong> – File index for output </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N9mParticle22UpdateLagrangianMarkerEv">
+<span id="_CPPv3N9mParticle22UpdateLagrangianMarkerEv"></span><span id="_CPPv2N9mParticle22UpdateLagrangianMarkerEv"></span><span id="mParticle::UpdateLagrangianMarker"></span><span class="target" id="classmParticle_1aee9d34c72debf0832336664110d474c9"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">UpdateLagrangianMarker</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N9mParticle22UpdateLagrangianMarkerEv" title="Link to this definition"></a><br /></dt>
+<dd><p>Update Lagrangian marker positions and properties. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N9mParticle21VelocityInterpolationERN5amrex8MultiFabEi">
+<span id="_CPPv3N9mParticle21VelocityInterpolationERN5amrex8MultiFabEi"></span><span id="_CPPv2N9mParticle21VelocityInterpolationERN5amrex8MultiFabEi"></span><span id="mParticle::VelocityInterpolation__amrex::MultiFabR.i"></span><span class="target" id="classmParticle_1a07c35ddc4bec2cb8117a9bfe6e2ffc26"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">VelocityInterpolation</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">amrex</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">MultiFab</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">Euler</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">type</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N9mParticle21VelocityInterpolationERN5amrex8MultiFabEi" title="Link to this definition"></a><br /></dt>
+<dd><p>Interpolate Eulerian velocity to Lagrangian markers. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>Euler</strong> – Eulerian velocity field </p></li>
+<li><p><strong>type</strong> – Velocity component type (0=x, 1=y, 2=z) </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N9mParticle22ComputeLagrangianForceE4Real">
+<span id="_CPPv3N9mParticle22ComputeLagrangianForceE4Real"></span><span id="_CPPv2N9mParticle22ComputeLagrangianForceE4Real"></span><span id="mParticle::ComputeLagrangianForce__Real"></span><span class="target" id="classmParticle_1a54ffc185b06dea4cde9e19998d465a71"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">ComputeLagrangianForce</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">Real</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">dt</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N9mParticle22ComputeLagrangianForceE4Real" title="Link to this definition"></a><br /></dt>
+<dd><p>Compute Lagrangian forces on immersed boundary markers. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>dt</strong> – Time step size </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N9mParticle14ForceSpreadingERN5amrex8MultiFabEi">
+<span id="_CPPv3N9mParticle14ForceSpreadingERN5amrex8MultiFabEi"></span><span id="_CPPv2N9mParticle14ForceSpreadingERN5amrex8MultiFabEi"></span><span id="mParticle::ForceSpreading__amrex::MultiFabR.i"></span><span class="target" id="classmParticle_1abea9c4f9fe5f98f22b722bd6a52f31cd"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">ForceSpreading</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">amrex</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">MultiFab</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">Euler</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">type</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N9mParticle14ForceSpreadingERN5amrex8MultiFabEi" title="Link to this definition"></a><br /></dt>
+<dd><p>Spread Lagrangian forces to Eulerian grid. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>Euler</strong> – Eulerian field for force spreading </p></li>
+<li><p><strong>type</strong> – Force component type (0=x, 1=y, 2=z) </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK9mParticle18VelocityCorrectionERN5amrex8MultiFabERN5amrex8MultiFabE4Real">
+<span id="_CPPv3NK9mParticle18VelocityCorrectionERN5amrex8MultiFabERN5amrex8MultiFabE4Real"></span><span id="_CPPv2NK9mParticle18VelocityCorrectionERN5amrex8MultiFabERN5amrex8MultiFabE4Real"></span><span id="mParticle::VelocityCorrection__amrex::MultiFabR.amrex::MultiFabR.RealC"></span><span class="target" id="classmParticle_1a6669e65d9ab66874fb722ffddb8f8aa7"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">VelocityCorrection</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">amrex</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">MultiFab</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">Euler</span></span>, <span class="n"><span class="pre">amrex</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">MultiFab</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">EulerForce</span></span>, <span class="n"><span class="pre">Real</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">dt</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK9mParticle18VelocityCorrectionERN5amrex8MultiFabERN5amrex8MultiFabE4Real" title="Link to this definition"></a><br /></dt>
+<dd><p>Apply velocity correction for immersed boundary method. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>Euler</strong> – Eulerian velocity field </p></li>
+<li><p><strong>EulerForce</strong> – Eulerian force field </p></li>
+<li><p><strong>dt</strong> – Time step size </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N9mParticle15UpdateParticlesEi4RealRK8MultiFabRK8MultiFabR8MultiFabR8MultiFab4Real">
+<span id="_CPPv3N9mParticle15UpdateParticlesEi4RealRK8MultiFabRK8MultiFabR8MultiFabR8MultiFab4Real"></span><span id="_CPPv2N9mParticle15UpdateParticlesEi4RealRK8MultiFabRK8MultiFabR8MultiFabR8MultiFab4Real"></span><span id="mParticle::UpdateParticles__i.Real.MultiFabCR.MultiFabCR.MultiFabR.MultiFabR.Real"></span><span class="target" id="classmParticle_1a9f201a26c9813045ff6cdab749e41ba2"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">UpdateParticles</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">iStep</span></span>, <span class="n"><span class="pre">Real</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">time</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">MultiFab</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">Euler_old</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">MultiFab</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">Euler</span></span>, <span class="n"><span class="pre">MultiFab</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">phi_nodal</span></span>, <span class="n"><span class="pre">MultiFab</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">pvf</span></span>, <span class="n"><span class="pre">Real</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">dt</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N9mParticle15UpdateParticlesEi4RealRK8MultiFabRK8MultiFabR8MultiFabR8MultiFab4Real" title="Link to this definition"></a><br /></dt>
+<dd><p>Update particle positions and properties based on fluid flow. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>iStep</strong> – Current time step index </p></li>
+<li><p><strong>time</strong> – Current simulation time </p></li>
+<li><p><strong>Euler_old</strong> – Eulerian velocity field at previous time </p></li>
+<li><p><strong>Euler</strong> – Eulerian velocity field at current time </p></li>
+<li><p><strong>phi_nodal</strong> – Nodal level set function </p></li>
+<li><p><strong>pvf</strong> – Particle volume fraction </p></li>
+<li><p><strong>dt</strong> – Time step size </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N9mParticle19DoParticleCollisionEi">
+<span id="_CPPv3N9mParticle19DoParticleCollisionEi"></span><span id="_CPPv2N9mParticle19DoParticleCollisionEi"></span><span id="mParticle::DoParticleCollision__i"></span><span class="target" id="classmParticle_1a42f1f396227aff191b1720e94a622fcc"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">DoParticleCollision</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">model</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N9mParticle19DoParticleCollisionEi" title="Link to this definition"></a><br /></dt>
+<dd><p>Handle particle-particle collision interactions. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>model</strong> – Collision model identifier </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N9mParticle14RecordOldValueER6kernel">
+<span id="_CPPv3N9mParticle14RecordOldValueER6kernel"></span><span id="_CPPv2N9mParticle14RecordOldValueER6kernel"></span><span id="mParticle::RecordOldValue__kernelR"></span><span class="target" id="classmParticle_1a342004e15eba87b5cfbe9743eab54e25"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">RecordOldValue</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N9mParticle14RecordOldValueER6kernel" title="mParticle::RecordOldValue::kernel"><span class="n"><span class="pre">kernel</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">kernel</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N9mParticle14RecordOldValueER6kernel" title="Link to this definition"></a><br /></dt>
+<dd><p>Record old values for time integration. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>kernel</strong> – Kernel object containing particle data </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N9mParticle23ResolveLagrangianMarkerENSt6stringE">
+<span id="_CPPv3N9mParticle23ResolveLagrangianMarkerENSt6stringE"></span><span id="_CPPv2N9mParticle23ResolveLagrangianMarkerENSt6stringE"></span><span id="mParticle::ResolveLagrangianMarker__ss"></span><span class="target" id="classmParticle_1abcb8fa38cfef881453e75d4edaf30fa0"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">ResolveLagrangianMarker</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">marker_file</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N9mParticle23ResolveLagrangianMarkerENSt6stringE" title="Link to this definition"></a><br /></dt>
+<dd><p>Resolve Lagrangian markers from file. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>marker_file</strong> – File containing marker data </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N9mParticle15ResolveWithRPKMENSt6stringE">
+<span id="_CPPv3N9mParticle15ResolveWithRPKMENSt6stringE"></span><span id="_CPPv2N9mParticle15ResolveWithRPKMENSt6stringE"></span><span id="mParticle::ResolveWithRPKM__ss"></span><span class="target" id="classmParticle_1ad048452e0b80bf17443e0f7ed62eea6d"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">ResolveWithRPKM</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">RKPM_file</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N9mParticle15ResolveWithRPKMENSt6stringE" title="Link to this definition"></a><br /></dt>
+<dd><p>Resolve particle data using RKPM (Reproducing Kernel Particle Method). </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>RKPM_file</strong> – File containing RKPM data </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N9mParticle23StartOfLagrangianMarkerE6size_t">
+<span id="_CPPv3N9mParticle23StartOfLagrangianMarkerE6size_t"></span><span id="_CPPv2N9mParticle23StartOfLagrangianMarkerE6size_t"></span><span id="mParticle::StartOfLagrangianMarker__s"></span><span class="target" id="classmParticle_1a372c1f3981b32a1809e28c3a0325b6ac"></span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">StartOfLagrangianMarker</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">index</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N9mParticle23StartOfLagrangianMarkerE6size_t" title="Link to this definition"></a><br /></dt>
+<dd><p>Get starting index of Lagrangian markers for a particle. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>index</strong> – Particle index </p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Starting index of Lagrangian markers </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N9mParticle21NumOfLagrangianMarkerE6size_t">
+<span id="_CPPv3N9mParticle21NumOfLagrangianMarkerE6size_t"></span><span id="_CPPv2N9mParticle21NumOfLagrangianMarkerE6size_t"></span><span id="mParticle::NumOfLagrangianMarker__s"></span><span class="target" id="classmParticle_1a224e29ab1ef93939cffd46956229dfe0"></span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">NumOfLagrangianMarker</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">index</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N9mParticle21NumOfLagrangianMarkerE6size_t" title="Link to this definition"></a><br /></dt>
+<dd><p>Get number of Lagrangian markers for a particle. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>index</strong> – Particle index </p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Number of Lagrangian markers </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N9mParticle19GetPositionOfMarkerE6size_t">
+<span id="_CPPv3N9mParticle19GetPositionOfMarkerE6size_t"></span><span id="_CPPv2N9mParticle19GetPositionOfMarkerE6size_t"></span><span id="mParticle::GetPositionOfMarker__s"></span><span class="target" id="classmParticle_1a9513198c92933fe3ee350b486ce0afbf"></span><span class="n"><span class="pre">RealVect</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">GetPositionOfMarker</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">index</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N9mParticle19GetPositionOfMarkerE6size_t" title="Link to this definition"></a><br /></dt>
+<dd><p>Get position of a specific Lagrangian marker. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>index</strong> – Marker index </p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Position vector of the marker </p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+</dd></dl>
+
 </section>
 
 
