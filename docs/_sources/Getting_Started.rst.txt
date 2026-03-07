@@ -274,10 +274,10 @@ Example inputs file:
 
     # Maximum number of coarse grid timesteps to be taken, if stop_time is
     #  not reached first.
-    max_step 		= 2
+    max_step         = 2
 
     # Time at which calculation stops, if max_step is not reached first.
-    stop_time 		= 100.0
+    stop_time         = 100.0
 
     ns.fixed_dt     = 0.01
     ns.cfl = 0.3
@@ -289,7 +289,7 @@ Example inputs file:
     # Refinement criterion, use vorticity and presence of tracer
     amr.refinement_indicators = tracer
 
-    amr.max_level		= 0 # maximum number of levels of refinement
+    amr.max_level        = 0 # maximum number of levels of refinement
     # amr.tracer.value_greater = 0.1
     # amr.tracer.value_less = 1.1
     amr.tracer.field_name = tracer
@@ -301,21 +301,21 @@ Example inputs file:
     #*******************************************************************************
 
     # Number of cells in each coordinate direction at the coarsest level
-    # amr.n_cell 		= 16 8 8
-    amr.n_cell 		= 256 128 128
-    # amr.n_cell 		= 288 128 128
-    amr.max_grid_size	= 16
-    # amr.max_grid_size	= 32
+    # amr.n_cell         = 16 8 8
+    amr.n_cell         = 256 128 128
+    # amr.n_cell         = 288 128 128
+    amr.max_grid_size    = 16
+    # amr.max_grid_size    = 32
 
     #*******************************************************************************
 
     # Interval (in number of level l timesteps) between regridding
-    amr.regrid_int		= 1 # regrid_int
+    amr.regrid_int        = 1 # regrid_int
 
     #*******************************************************************************
 
     # Refinement ratio as a function of level
-    amr.ref_ratio		= 2 2 2 2
+    amr.ref_ratio        = 2 2 2 2
 
     #*******************************************************************************
 
@@ -336,14 +336,14 @@ Example inputs file:
 
     # Interval (in number of coarse timesteps) between checkpoint(restart) files
 
-    amr.check_int		= 4000
+    amr.check_int        = 4000
 
     #amr.restart             = chk01400
 
     #*******************************************************************************
 
     # Interval (in number of coarse timesteps) between plot files
-    amr.plot_int		= 1
+    amr.plot_int        = 1
 
 
     #*******************************************************************************
@@ -483,19 +483,19 @@ If you want to know more about the parameters, you can check the `AMReX <https:/
 Tests
 ---------------
 
-`Test_IAMReX <https://github.com/ruohai0925/IAMReX/tree/development/Test_IAMReX>`_ is a customized python script to evaluate 
-the codebase's structural completeness and to verify the accuracy of its computational results. A set of representative benchmark cases has been included, 
-such as lid-driven cavity, RSV, Drafting–Kissing–Tumbling, flow past a cylinder, flow past a sphere, and Rayleigh–Taylor 
-instability. These cases collectively assess a wide range of physical scenarios and computational modules. 
-Furthermore, users may extend the testing framework by following the provided examples to construct additional test 
-cases as needed. 
+`Test_IAMReX <https://github.com/ruohai0925/IAMReX/tree/development/Test_IAMReX>`_ is a customized python script to evaluate
+the codebase's structural completeness and to verify the accuracy of its computational results. A set of representative benchmark cases has been included,
+such as lid-driven cavity, RSV, Drafting–Kissing–Tumbling, flow past a cylinder, flow past a sphere, and Rayleigh–Taylor
+instability. These cases collectively assess a wide range of physical scenarios and computational modules.
+Furthermore, users may extend the testing framework by following the provided examples to construct additional test
+cases as needed.
 
-Meanwhile, a continuous integration pipeline has been established using GitHub Actions to automate 
+Meanwhile, a continuous integration pipeline has been established using GitHub Actions to automate
 the execution and validation of these tests. The GitHub action only support 2 CPU cores, and GPU is not supported.
 
-During the code development process, we have made every effort to ensure consistency between GPU and CPU results for each test case. For instance, 
-in the `Flow Past Sphere <https://github.com/ruohai0925/IAMReX/tree/development/Tutorials/FlowPastSphere>`_ case, 
-we conducted simulations at various Reynolds numbers to compare drag coefficients under both CPU and GPU execution modes, 
+During the code development process, we have made every effort to ensure consistency between GPU and CPU results for each test case. For instance,
+in the `Flow Past Sphere <https://github.com/ruohai0925/IAMReX/tree/development/Tutorials/FlowPastSphere>`_ case,
+we conducted simulations at various Reynolds numbers to compare drag coefficients under both CPU and GPU execution modes,
 with and without adaptive mesh refinement (AMR). The corresponding results are presented below.
 
 .. figure:: ./GettingStarted/cpugpulv0.png

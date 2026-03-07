@@ -23,7 +23,7 @@ The fluid variables are defined as follows.
    | :math:`\mathbf{F}_p`  | Eulerian force                                   |
    +-----------------------+--------------------------------------------------+
 
-Compared with `IAMR <https://amrex-fluids.github.io/IAMR/>`_, IAMReX adds a level set field :math:`\phi` for the two-phase flow, and 
+Compared with `IAMR <https://amrex-fluids.github.io/IAMR/>`_, IAMReX adds a level set field :math:`\phi` for the two-phase flow, and
 the particle volume fraction :math:`\alpha_p`, and the Eulerian force :math:`\mathbf{F}_p` for the particle-fluid interaction.
 
 .. _FluidEquationsPart:
