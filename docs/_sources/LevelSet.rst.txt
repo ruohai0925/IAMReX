@@ -57,9 +57,9 @@ At the beginning of each time advancement of level :math:`l`, the velocity :math
       :label: eq:viscsolve
 
       \begin{aligned}
-      &\boldsymbol{u^{*,n+1}}-\frac{\Delta t}{2\rho(\phi^{n+1/2})Re}{\nabla} \cdot {\mu(\phi^{n+1})}{\nabla}\boldsymbol{u^{*,n+1}} =
+      &\boldsymbol{u^{*,n+1}}-\frac{\Delta t}{2\rho(\phi^{n+1/2})Re}{\nabla} \cdot {\mu(\phi^{n+1/2})}{\nabla}\boldsymbol{u^{*,n+1}} =
       \boldsymbol{u^n}-\Delta t \left[\nabla \cdot (\boldsymbol{uu})\right]^{n+1/2} + \\ &\frac{\Delta t}{\rho(\phi^{n+1/2})}\bigg[-\nabla p^{n-1/2}+
-      \frac{1}{2Re}{\nabla}\cdot{\mu(\phi^{n})}{\nabla}\boldsymbol{u^n} + \rho(\phi^{n+1/2}) \frac{z}{Fr^2} -  \frac{1}{We}\kappa(\phi^{n+1/2})\delta(x^{n+1/2})\boldsymbol{n}\bigg].
+      \frac{1}{2Re}{\nabla}\cdot{\mu(\phi^{n+1/2})}{\nabla}\boldsymbol{u^n} + \rho(\phi^{n+1/2}) \frac{z}{Fr^2} -  \frac{1}{We}\kappa(\phi^{n+1/2})\delta(x^{n+1/2})\boldsymbol{n}\bigg].
       \end{aligned}
 
    In equation :eq:`eq:viscsolve`, the detailed discretization of the advection term :math:`\nabla \cdot (\boldsymbol{uu})`, viscous term :math:`{\nabla}\cdot({\mu(\phi)}{\nabla}\boldsymbol{u})`, and surface tension term :math:`\kappa(\phi)\delta(x)\boldsymbol{n}/We` are implemented using standard finite difference schemes. The LS function at :math:`t^{n+1/2}` is calculated by
@@ -69,7 +69,7 @@ At the beginning of each time advancement of level :math:`l`, the velocity :math
 
       \phi^{n+1/2} = \frac{1}{2}(\phi^{n}+\phi^{n+1})
 
-   where :math:`\phi^{n+1}` is obtained from step 1 (equation :eq:`eq:s0phin1`). The :math:`\rho(\phi^{n+1/2})`, :math:`\mu(\phi^{n})`, and :math:`\mu(\phi^{n+1})` are then obtained from equations :eq:`eq:rho` and :eq:`eq:mu`.
+   where :math:`\phi^{n+1}` is obtained from step 1 (equation :eq:`eq:s0phin1`). Both :math:`\rho(\phi^{n+1/2})` and :math:`\mu(\phi^{n+1/2})` are then obtained from equations :eq:`eq:rho` and :eq:`eq:mu`; as in Sussman et al. (1999), the same mid-time viscosity multiplies both the explicit and the implicit halves of the Crank--Nicolson viscous term (this is what the code does: ``viscn_cc`` and ``viscnp1_cc`` are both filled from :math:`\phi^{n+1/2}`).
 
 3. **Apply the projection method** to obtain the pressure and a solenoidal velocity field. To conduct the level projection, a temporary variable :math:`\boldsymbol{V}` is defined as
 
