@@ -103,6 +103,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#_CPPv4N16NavierStokesBase8incrPAvgEv"><code class="docutils literal notranslate"><span class="pre">incrPAvg()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#_CPPv4N16NavierStokesBase14initOldFromNewEii"><code class="docutils literal notranslate"><span class="pre">initOldFromNew()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#_CPPv4N16NavierStokesBase10initRhoAvgEN5amrex4RealE"><code class="docutils literal notranslate"><span class="pre">initRhoAvg()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N16NavierStokesBase15epsilon_massfixE"><code class="docutils literal notranslate"><span class="pre">epsilon_massfix</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -703,6 +704,16 @@
 <dd class="field-odd"><p><strong>alpha</strong> – Weight factor for averaging </p>
 </dd>
 </dl>
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-static-attributes">Public Static Attributes</p>
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N16NavierStokesBase15epsilon_massfixE">
+<span id="_CPPv3N16NavierStokesBase15epsilon_massfixE"></span><span id="_CPPv2N16NavierStokesBase15epsilon_massfixE"></span><span id="NavierStokesBase::epsilon_massfix__amrex::Real"></span><span class="target" id="classNavierStokesBase_1afc58a8e1f73e7265f37c884c373ff0f1"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="n"><span class="pre">amrex</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">Real</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">epsilon_massfix</span></span></span><a class="headerlink" href="#_CPPv4N16NavierStokesBase15epsilon_massfixE" title="Link to this definition"></a><br /></dt>
+<dd><p>Band half-width (in units of dx) of the smoothed delta function used by the Sussman-Fatemi volume constraint in <a class="reference internal" href="#classNavierStokesBase_1a96bbb4fd70f7e2c52aa08c388827c90b"><span class="std std-ref">mass_fix()</span></a>. </p>
+<p>Defaults to ns.epsilon; a narrower band (ns.epsilon_massfix = 1) conserves the sharp phase area much better on under-resolved filaments (see Tutorials/RSV). </p>
 </dd></dl>
 
 </div>

@@ -177,6 +177,17 @@ For more details, please refer to the manufactured test with prescribed velocity
 <li><p>Apply the projection method to update the pressure and velocity field following equations <a class="reference internal" href="#equation-eq-ns-lp-ls1">(12)</a>–<a class="reference internal" href="#equation-eq-ns-lp-ls3">(14)</a></p></li>
 <li><p>Re-initialize the LS function on the single level using equations <a class="reference internal" href="#equation-eq-ns-reinit1">(15)</a>–<a class="reference internal" href="#equation-eq-ns-reinit3">(17)</a></p></li>
 </ol>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The band half-width of <span class="math notranslate nohighlight">\(H'_\varepsilon\)</span> used in the volume constraint of the
+reinitialization step is controlled by <code class="docutils literal notranslate"><span class="pre">ns.epsilon_massfix</span></code> (in units of <span class="math notranslate nohighlight">\(\Delta x\)</span>;
+default: the same value as <code class="docutils literal notranslate"><span class="pre">ns.epsilon</span></code>). The constraint conserves the
+<span class="math notranslate nohighlight">\(\varepsilon\)</span>-smoothed volume, which differs from the sharp volume where the interface is
+thinner than <span class="math notranslate nohighlight">\(2\varepsilon\)</span>; a narrower band (<code class="docutils literal notranslate"><span class="pre">ns.epsilon_massfix</span> <span class="pre">=</span> <span class="pre">1</span></code>) keeps the sharp
+phase volume much better in stretching flows (e.g. <code class="docutils literal notranslate"><span class="pre">Tutorials/RSV</span></code>). When <code class="docutils literal notranslate"><span class="pre">ns.do_phi</span> <span class="pre">=</span> <span class="pre">1</span></code> the
+integrated-quantity output (<code class="docutils literal notranslate"><span class="pre">ns.sum_interval</span></code>, file <code class="docutils literal notranslate"><span class="pre">mass.txt</span></code>) also reports the volume of the
+<span class="math notranslate nohighlight">\(\phi &gt; 0\)</span> phase, smoothed and sharp.</p>
+</div>
 </section>
 </section>
 

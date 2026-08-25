@@ -127,3 +127,12 @@ At last, we give a summary of the single-level advancement algorithm as follows 
 3. Apply the projection method to update the pressure and velocity field following equations :eq:`eq:ns_lp_ls1`--:eq:`eq:ns_lp_ls3`
 4. Re-initialize the LS function on the single level using equations :eq:`eq:ns_reinit1`--:eq:`eq:ns_reinit3`
 
+.. note::
+   The band half-width of :math:`H'_\varepsilon` used in the volume constraint of the
+   reinitialization step is controlled by ``ns.epsilon_massfix`` (in units of :math:`\Delta x`;
+   default: the same value as ``ns.epsilon``). The constraint conserves the
+   :math:`\varepsilon`-smoothed volume, which differs from the sharp volume where the interface is
+   thinner than :math:`2\varepsilon`; a narrower band (``ns.epsilon_massfix = 1``) keeps the sharp
+   phase volume much better in stretching flows (e.g. ``Tutorials/RSV``). When ``ns.do_phi = 1`` the
+   integrated-quantity output (``ns.sum_interval``, file ``mass.txt``) also reports the volume of the
+   :math:`\phi > 0` phase, smoothed and sharp.
