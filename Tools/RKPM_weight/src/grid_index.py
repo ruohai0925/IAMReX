@@ -57,3 +57,23 @@ def containing_cell_indices(positions, prob_lo, dx) -> np.ndarray:
         normalized,
     )
     return np.floor(snapped).astype(np.int64)
+
+# inputs :
+# positions (N, 3) : all markers' position in world frame
+# prob_lo, dx
+# outputs : 27 stencil ijk of each marker (N, 27, 3)
+def build_stencil_indices(positions, prob_lo, dx):
+    indices_ijk = containing_cell_indices(positions, prob_lo, dx)  # cell where markers locate
+    if (indices_ijk.ndim != 2):
+        raise ValueError("invalid indices_ijk dimension")
+    offset_grid = np.stack(
+            np.meshgrid(
+                np.arange(-1, 2),
+                np.arange(-1, 2),
+                np.arange(-1, 2),
+                indexing="ij",
+            ),
+            axis=-1,
+        ).reshape(-1, 3)
+    support_indices = indices_ijk[:, None, :] + offset_grid[None, :, :]
+    return support_indices

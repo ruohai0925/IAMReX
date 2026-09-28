@@ -320,10 +320,17 @@ class RKPMSolver:
         self._lagrangian_volumes = tuple(lagrangian_volumes)
         return packed
 
-    def _solve_rows(self, positions, lag_map):
+    def _solve_rows(self, positions, lag_map, stencil_indices=None):
         packed = self.prepare(lag_map)
         marker_ids = packed.marker_ids
         marker_positions = positions_as_array(positions, marker_ids)
+        if stencil_indices is not None:
+            if (len(packed.groups) != 1):
+                raise ValueError("unsupported multiple packed groups")
+            if (stencil_indices.shape != (len(marker_ids), 27, 3)):
+                raise ValueError("invalid stencil indices dimension")
+            if (packed.groups[0].cell_indices.shape[1] != 27):
+                raise ValueError("lag_map should have 27 stencils")
 
         # The .lag file stores eps = V_lag / Delta_V. Recover the physical cell
         # volume from the finest-grid spacing and then recover V_lag per marker.
@@ -347,9 +354,16 @@ class RKPMSolver:
         ):
             for start, stop in _batch_ranges(len(group.marker_ids), self.batch_size):
                 global_indices = group.marker_indices[start:stop]
-                centers = self.grid.prob_lo + (
-                    group.cell_indices[start:stop] + 0.5
-                ) * self.grid.dx
+                if stencil_indices is None:
+                    indices = group.cell_indices
+                    centers = self.grid.prob_lo + (
+                        indices[start:stop] + 0.5
+                    ) * self.grid.dx
+                else:
+                    indices = stencil_indices
+                    centers = self.grid.prob_lo + (
+                                indices[global_indices] + 0.5
+                            ) * self.grid.dx
                 support_domains = np.empty(
                     (stop - start, centers.shape[1], 4), dtype=float
                 )
@@ -371,9 +385,9 @@ class RKPMSolver:
 
         return marker_ids, solved_by_marker
 
-    def solve_array(self, positions, lag_map):
+    def solve_array(self, positions, lag_map, stencil_indices=None):
         """Return ID-ordered weights directly as a rectangular NumPy array."""
-        marker_ids, solved_by_marker = self._solve_rows(positions, lag_map)
+        marker_ids, solved_by_marker = self._solve_rows(positions, lag_map, stencil_indices)
         if not isinstance(solved_by_marker, np.ndarray):
             raise ValueError(
                 "Array output requires equal stencil sizes for all markers"
@@ -462,9 +476,13 @@ class MLWeightSolver:
             self._cached_lag_map = lag_map
         return self._packed
 
-    def solve_array(self, positions, lag_map):
+    def solve_array(self, positions, lag_map, stencil_indices=None):
         """Return ID-ordered Transolver weights as one NumPy array."""
         packed = self.prepare(lag_map)
+        if stencil_indices is not None:
+            nb_marker = len(positions)
+            if (stencil_indices.shape != (nb_marker,27,3)):
+                raise ValueError("invalid stencil indices dimension")
         marker_ids = packed.marker_ids
         marker_positions = positions_as_array(positions, marker_ids)
         group = packed.groups[0]
@@ -472,8 +490,12 @@ class MLWeightSolver:
 
         with self.torch.inference_mode():
             for start, stop in _batch_ranges(len(marker_ids), self.batch_size):
+                if stencil_indices is None:
+                    indices = group.cell_indices
+                else:
+                    indices = stencil_indices
                 centers = self.grid.prob_lo + (
-                    group.cell_indices[start:stop] + 0.5
+                    indices[start:stop] + 0.5
                 ) * self.grid.dx
                 relative = np.asarray(
                     (centers - marker_positions[start:stop, None, :])

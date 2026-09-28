@@ -13,8 +13,11 @@ from .weight_solver import (
     fixed_stencil_center_indices,
     positions_as_array,
     stencil_centers,
-    validate_fixed_stencils,
     validate_stencils,
+)
+
+from .grid_index import (
+    build_stencil_indices
 )
 from .validation import compute_weight_moment_errors, weights_as_array
 
@@ -22,6 +25,7 @@ from .validation import compute_weight_moment_errors, weights_as_array
 TAG_MARKER_COUNT = 200
 TAG_POSITIONS = 201
 TAG_WEIGHTS = 202
+STENCIL_INDICES = 203
 RKPM_STENCIL_SIZE = 27
 
 
@@ -85,7 +89,7 @@ def serve_mpmd(
             cell_indices = prepared.groups[0].cell_indices
             centers = grid.prob_lo + (cell_indices + 0.5) * grid.dx
         expected_markers = len(marker_ids)
-        expected_center_indices = fixed_stencil_center_indices(
+        fixed_stencil_center_indices(
             lag_map, marker_ids, cell_indices=cell_indices
         )
         cfd_root = 0
@@ -120,18 +124,12 @@ def serve_mpmd(
                 position_buffer.reshape(marker_count, 3), marker_ids
             )
             received = time.perf_counter()
+            stencil_indices = build_stencil_indices(positions, grid.prob_lo, grid.dx)
+            centers = grid.prob_lo + (stencil_indices + 0.5) * grid.dx
 
-            # C++ side does not return i/j/k, so the fixed stencil must remain valid.
-            validate_fixed_stencils(
-                positions,
-                lag_map,
-                grid,
-                marker_ids,
-                expected_centers=expected_center_indices,
-            )
-            stencil_validated = time.perf_counter()
+            stencil_ready_at = time.perf_counter()
             if hasattr(solver, "solve_array"):
-                solved_ids, weight_array = solver.solve_array(positions, lag_map)
+                solved_ids, weight_array = solver.solve_array(positions, lag_map, stencil_indices)
                 if tuple(solved_ids) != tuple(marker_ids):
                     raise ValueError("Solver output marker IDs changed during MPMD")
             else:
@@ -180,12 +178,15 @@ def serve_mpmd(
             world.Send(
                 [flat_weights, MPI.FLOAT], dest=cfd_root, tag=TAG_WEIGHTS
             )
+            world.Send(
+                [stencil_indices.astype(np.int32), MPI.INT], dest=cfd_root, tag=STENCIL_INDICES
+            )
             sent = time.perf_counter()
             print(
                 f"[rkpm-server] {marker_count} markers: "
                 f"receive={received-start:.4f}s, "
-                f"stencil={stencil_validated-received:.4f}s, "
-                f"{solver.name}={solved-stencil_validated:.4f}s, "
+                f"stencil={stencil_ready_at-received:.4f}s, "
+                f"{solver.name}={solved-stencil_ready_at:.4f}s, "
                 f"pack={packed-solved:.4f}s, send={sent-ready_to_send:.4f}s, "
                 f"sum={float(flat_weights.sum()):.6f}"
                 f"{check_text}",

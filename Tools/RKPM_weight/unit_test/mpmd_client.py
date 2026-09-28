@@ -10,10 +10,13 @@ from mpi4py import MPI
 
 from common import build_small_fixture
 
+from src.grid_index import build_stencil_indices
+
 
 TAG_MARKER_COUNT = 200
 TAG_POSITIONS = 201
 TAG_WEIGHTS = 202
+STENCIL_INDICES = 203
 
 
 def expected_weights(positions, exchange):
@@ -42,7 +45,7 @@ if __name__ == "__main__":
         # double-precision protocol plus snap-to-grid-line indexing must keep it
         # on the high-index side of that face.
         positions[0, 0] = grid.prob_lo[0] + 4 * grid.dx[0]
-        positions[:, 0] += exchange * 0.01 * grid.dx[0]
+        positions[:, 0] += exchange * 1.01 * grid.dx[0]
         positions = positions.astype(np.float64)
         marker_count = np.asarray([len(positions)], dtype=np.int32)
 
@@ -55,9 +58,17 @@ if __name__ == "__main__":
             tag=TAG_POSITIONS,
         )
         received = np.empty(len(positions) * 27, dtype=np.float32)
+        stencil_indices = np.empty(len(positions) * 27 * 3, dtype=np.int32)
         world.Recv(
             [received, MPI.FLOAT], source=server_rank, tag=TAG_WEIGHTS
         )
+        world.Recv(
+            [stencil_indices, MPI.INT], source=server_rank, tag=STENCIL_INDICES
+        )
+        expected_indices = build_stencil_indices(positions, grid.prob_lo, grid.dx)
+        stencil_indices = stencil_indices.reshape(len(positions), 27, 3)
+        if not np.array_equal(stencil_indices, expected_indices):
+            raise ValueError("stencil_indices is not what expected")
 
         expected = expected_weights(positions, exchange).reshape(-1)
         if not np.array_equal(received, expected):
