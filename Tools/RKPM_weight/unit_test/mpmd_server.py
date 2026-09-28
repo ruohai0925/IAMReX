@@ -20,7 +20,7 @@ class DeterministicSolver:
     def __init__(self):
         self.exchange = 0
 
-    def solve_array(self, positions, lag_map):
+    def solve_array(self, positions, lag_map, stencil_indices=None):
         exchange = self.exchange
         self.exchange += 1
         marker_ids = tuple(sorted(lag_map))

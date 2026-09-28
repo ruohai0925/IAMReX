@@ -521,6 +521,8 @@ void mParticle::InteractWithEuler(MultiFab &EulerVel,
 
     // Sync kernel data to device memory for GPU ParallelFor
     syncKernelsToDevice();
+    // update marker position (support only one particle for now)
+    UpdateRKPMMarkerPositions();
     RefreshRKPMWeights();
 
     BL_ASSERT(loop > 0);
@@ -554,6 +556,7 @@ void mParticle::RefreshRKPMWeights()
     const int nw = Nm * RKPM_STENCIL_SIZE;
 
     Vector<float> h_w(nw);
+    Vector<int> h_stencil_indices(3*nw);
     if (ParallelDescriptor::MyProc() == ParallelDescriptor::IOProcessorNumber()) {
         const Real t0 = ParallelDescriptor::second();
         // send number of markers
@@ -568,6 +571,8 @@ void mParticle::RefreshRKPMWeights()
         MPI_Send(h_pos.data(), Nm*3, MPI_DOUBLE, server_root, 201, MPI_COMM_WORLD);
         // receive weights
         MPI_Recv(h_w.data(), nw, MPI_FLOAT, server_root, 202, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+        // receive stencil indices
+        MPI_Recv(h_stencil_indices.data(), 3*nw, MPI_INT, server_root, 203, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
         const Real t1 = ParallelDescriptor::second();
         double s = 0.0;
         for (int i = 0; i < nw; ++i) s += h_w[i];
@@ -577,11 +582,19 @@ void mParticle::RefreshRKPMWeights()
 
     // broadcast weights to all procs
     ParallelDescriptor::Bcast(h_w.data(), nw, ParallelDescriptor::IOProcessorNumber());
+    // broadcast stencil indices to all procs
+    ParallelDescriptor::Bcast(h_stencil_indices.data(), 3*nw, ParallelDescriptor::IOProcessorNumber());
 
     // copy to device weight
     AMREX_ALWAYS_ASSERT(h_rkpm_flat.size() == static_cast<size_t>(nw));
     for (int i = 0; i < nw; ++i) {
         h_rkpm_flat[i].weight = static_cast<Real>(h_w[i]);
+        h_rkpm_flat[i].index[0] = static_cast<int>(h_stencil_indices[3*i]);
+        h_rkpm_flat[i].index[1] = static_cast<int>(h_stencil_indices[3*i+1]);
+        h_rkpm_flat[i].index[2] = static_cast<int>(h_stencil_indices[3*i+2]);
+    }
+    if (ParallelDescriptor::MyProc() == ParallelDescriptor::IOProcessorNumber()) {
+        Print() << "[particle-center] " << (h_rkpm_flat[1*RKPM_STENCIL_SIZE+13].index) << "\n";
     }
     Gpu::copyAsync(Gpu::hostToDevice, h_rkpm_flat.begin(), h_rkpm_flat.end(), d_rkpm_flat.begin());
     Gpu::streamSynchronize();
@@ -796,6 +809,17 @@ void mParticle::InitParticles(const Vector<Real>& x,
 
         particle_kernels.emplace_back(mKernel);
     }
+    if (do_RKPM) {    // one particle version 
+        AMREX_ALWAYS_ASSERT_WITH_MESSAGE(!LargrangianMarker.empty(), "Empty LargrangianMarker");
+        AMREX_ALWAYS_ASSERT_WITH_MESSAGE(particle_kernels.size() == 1, "RKPM translation currently supports exactly one particle.");
+        AMREX_ALWAYS_ASSERT_WITH_MESSAGE(LargrangianMarker.size() == particle_kernels[0].ml, "inconsistent marker number");
+        RealVect center = particle_kernels[0].location;
+        rkpm_reference_offsets.resize(LargrangianMarker.size());
+        for (int i=0; i<LargrangianMarker.size(); i++) {
+            RealVect marker_position = LargrangianMarker[i];
+            rkpm_reference_offsets[i] = {marker_position[0] - center[0], marker_position[1] - center[1], marker_position[2] - center[2]};
+        }
+    }
     // Keep the original collision setup for rigid bodies. Prescribed fins are
     // open surfaces and do not participate in the rigid-body collision model.
     const auto rigid = std::find_if(particle_kernels.begin(), particle_kernels.end(),
@@ -805,6 +829,20 @@ void mParticle::InitParticles(const Vector<Real>& x,
                                 RealVect(ParticleProperties::GHI),
                                 rigid->radius, h);
     }
+}
+
+void mParticle::UpdateRKPMMarkerPositions()
+{
+    if (!do_RKPM) return;
+    AMREX_ALWAYS_ASSERT_WITH_MESSAGE(particle_kernels.size() == 1, "RKPM translation currently supports exactly one particle.");
+    AMREX_ALWAYS_ASSERT_WITH_MESSAGE(LargrangianMarker.size() == rkpm_reference_offsets.size(), "Marker position vector length should be equal to offset vector");
+    RealVect center = particle_kernels[0].location;
+    for (int i=0; i<LargrangianMarker.size(); i++)
+    {
+        LargrangianMarker[i] = {center[0]+rkpm_reference_offsets[i][0], center[1]+rkpm_reference_offsets[i][1], center[2]+rkpm_reference_offsets[i][2]};
+    }
+    d_rkpm_marker_positions.resize(LargrangianMarker.size());
+    Gpu::copy(Gpu::hostToDevice, LargrangianMarker.begin(), LargrangianMarker.end(), d_rkpm_marker_positions.begin());
 }
 
 void mParticle::syncKernelsToDevice ()
@@ -862,6 +900,7 @@ void mParticle::UpdateLagrangianMarker() {
 
         const auto *const ps = d_kernels.data();
         const bool do_RKPM_l = do_RKPM;
+        const auto *const marker_ps = d_rkpm_marker_positions.data();
 
         ParallelFor(np,
             [=] AMREX_GPU_DEVICE (const int i) noexcept {
@@ -887,7 +926,13 @@ void mParticle::UpdateLagrangianMarker() {
                         particles[i].pos(2) = location[2] + radius * std::cos(thetaK[ia]);
                     }
                 }
-                // RKPM forbi
+                else {
+                    const auto m_id = particles[i].id();
+                    const auto g = m_id - 1;    // global index of the marker
+                    particles[i].pos(0) = marker_ps[g][0];
+                    particles[i].pos(1) = marker_ps[g][1];
+                    particles[i].pos(2) = marker_ps[g][2];
+                }
                 vUP_ptr[i] = 0.0;
                 vVP_ptr[i] = 0.0;
                 vWP_ptr[i] = 0.0;

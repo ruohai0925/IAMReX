@@ -395,7 +395,17 @@ public:
      * @return Position vector of the marker
      */
     RealVect GetPositionOfMarker(size_t index);
+    
+    /*
+     * Reload RKPM weights from Python.
+    */
     void RefreshRKPMWeights();
+    
+    /*
+     * Update markers' positions
+    */
+    void UpdateRKPMMarkerPositions();
+
     Vector<kernel> particle_kernels;
 
     /// GPU-accessible copy of kernel data for use in device lambdas.
@@ -424,6 +434,10 @@ public:
     ParticleCollision m_Collision;
 
     Vector<RealVect> LargrangianMarker;
+
+    Vector<RealVect> rkpm_reference_offsets;
+
+    Gpu::DeviceVector<RealVect> d_rkpm_marker_positions;
 
     Vector<size_t> StartOfMarker;
 
