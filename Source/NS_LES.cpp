@@ -45,6 +45,12 @@ NavierStokesBase::calc_mut_LES(MultiFab* mu_LES[AMREX_SPACEDIM], const Real time
   FillPatchIterator fpi(*this,Sstate,nGrow,time,State_Type,Xvel,AMREX_SPACEDIM);
   MultiFab& Uvel=fpi.get_mf();
 
+  // The diffusion operator expects dynamic viscosity.  Fill density at the
+  // same time as velocity, including physical and coarse-fine ghost cells,
+  // so the kinematic SGS viscosity can be converted at each face below.
+  FillPatchIterator rho_fpi(*this,Sstate,nGrow,time,State_Type,Density,1);
+  const MultiFab& rho_cc = rho_fpi.get_mf();
+
   //
   // Creating the TensorOp object to compute gradients of velocity at each face
   //
@@ -114,6 +120,10 @@ NavierStokesBase::calc_mut_LES(MultiFab* mu_LES[AMREX_SPACEDIM], const Real time
       const Box& nbx = mfi.nodaltilebox(idim);
       Array4<Real      > dst = mu_LES[idim]->array(mfi);
       Array4<Real      > src = grad_Uvel[idim]->array(mfi);
+      const auto rho = rho_cc.const_array(mfi);
+      const int di = (idim == 0);
+      const int dj = (idim == 1);
+      const int dk = (idim == 2);
 
       Real Cs_cst = LES_model == "Smagorinsky" ? smago_Cs_cst : sigma_Cs_cst;
 
@@ -129,10 +139,16 @@ NavierStokesBase::calc_mut_LES(MultiFab* mu_LES[AMREX_SPACEDIM], const Real time
             Real smag = 0;
             for (int i_symij = 0; i_symij < dim_fluxes; ++i_symij)
             {
-              Real symij = src(i,j,k,i_symij) + src(i,j,k,i_symij);
+              // compVelGrad stores component (velocity + dim*derivative).
+              // Pair G_ij with G_ji, in both two and three dimensions.
+              const int transpose = (i_symij % AMREX_SPACEDIM)
+                                  * AMREX_SPACEDIM
+                                  + i_symij / AMREX_SPACEDIM;
+              Real symij = src(i,j,k,i_symij) + src(i,j,k,transpose);
               smag += symij * symij;
             }
 
+            // |S|^2 = 2 S:S = 0.5 * sum_ij (G_ij + G_ji)^2.
             smag = 0.5 * smag;
 
             dst(i,j,k,n) = pow(Cs_cst * dx[idim],2) * sqrt(smag);
@@ -220,6 +236,18 @@ NavierStokesBase::calc_mut_LES(MultiFab* mu_LES[AMREX_SPACEDIM], const Real time
     amrex::Abort("\n DEBUG DONT KNOW THIS LES MODEL \n\n");
 
       }
+
+      // Both model branches above produce nu_sgs [length^2/time].
+      // Their gradients are evaluated at face centers; use the density at
+      // that same location to return mu_sgs = rho_face * nu_sgs.  Keeping
+      // this conversion common also covers the Sigma model without changing
+      // the dynamic-viscosity contract of getViscosity or the diffusion code.
+      AMREX_HOST_DEVICE_PARALLEL_FOR_4D (nbx, 1, i, j, k, n,
+      {
+          const Real rho_face = 0.5 * (rho(i,j,k)
+                                    + rho(i-di,j-dj,k-dk));
+          dst(i,j,k,n) *= rho_face;
+      });
 
     }
 
