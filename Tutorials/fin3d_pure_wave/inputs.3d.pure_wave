@@ -1,0 +1,133 @@
+# Two three-dimensional prescribed pure-wave fins in uniform water flow.
+# SI units are used throughout.
+
+max_step = -1
+stop_time = 10.0
+
+# The base mesh is 15.0833 mm and the finest mesh is 3.77083 mm.
+# With Auto subcycling the corresponding time steps are 6/3/1.5 ms.
+# The fine-step CFL based on U + A*omega is approximately 0.50.
+ns.fixed_dt = 6.0e-3
+ns.init_dt = 6.0e-3
+ns.cfl = 0.5
+ns.init_iter = 0
+
+particle.input = pure_fin_inputs
+
+# L=0.362 m.  Domain: (-L,-0.5L,-L) to (4L,0.5L,L).
+geometry.coord_sys = 0
+geometry.prob_lo = -0.362 -0.181 -0.362
+geometry.prob_hi =  1.448  0.181  0.362
+geometry.is_periodic = 0 0 0
+
+# Isotropic Level-0 cells: dx=dy=dz=L/24=0.0150833333 m.
+# Two 2:1 local refinements give a 3.770833 mm finest mesh.
+amr.max_level = 2
+amr.ref_ratio = 2 2
+amr.n_cell = 120 24 48
+
+# Level 2 follows the supplied Fluent refinement zone:
+# (-0.8L,-0.4L,-0.8L) to (2.8L+Delta_x,0.4L,0.8L), Delta_x=L.
+# Level 1 is slightly larger to provide an 8 mm transition around it.
+amr.refinement_indicators = fin_outer fin_core
+
+amr.fin_outer.in_box_lo = -0.3200 -0.1600 -0.3200
+amr.fin_outer.in_box_hi =  1.4200  0.1600  0.3200
+amr.fin_outer.max_level = 1
+
+amr.fin_core.in_box_lo = -0.2896 -0.1448 -0.2896
+amr.fin_core.in_box_hi =  1.3756  0.1448  0.2896
+amr.fin_core.max_level = 2
+
+amr.n_error_buf = 2
+amr.max_grid_size = 32
+amr.blocking_factor = 4 4 4
+amr.regrid_int = -1
+amr.subcycling_mode = Auto
+
+# About ten flow snapshots per oscillation period (T=0.5 s).
+amr.plot_int = 8
+amr.check_int = 167
+amr.plot_files_output = 1
+amr.derive_plot_vars = mag_vort avg_pressure
+
+ns.v = 1
+amr.v = 1
+nodal_proj.verbose = 0
+mac_proj.verbose = 0
+
+# Water: rho=1000 kg/m^3, nu=1e-6 m^2/s, mu=1e-3 Pa s.
+ns.fluid_rho = 1000.0
+ns.vel_visc_coef = 1.0e-3
+ns.scal_diff_coefs = 0.0
+ns.gravity = 0.0
+
+ns.do_LES = 1
+ns.LES_model = Smagorinsky
+ns.smago_Cs_cst = 0.12
+
+ns.skip_level_projector = 0
+ns.isolver = 1
+ns.do_diffused_ib = 1
+
+# Uniform x-directed inflow and matching initial field, U=0.5 m/s.
+ns.lo_bc = 1 4 4
+ns.hi_bc = 2 4 4
+xlo.velocity = 0.5 0.0 0.0
+prob.probtype = 4
+prob.velocity_ic = 0.5 0.0 0.0
+
+particles.do_nspc_particles = 0
+
+nodal_proj.proj_tol = 1.e-8
+nodal_proj.proj_abs_tol = 1.e-9
+nodal_proj.maxiter = 200
+nodal_proj.bottom_maxiter = 200
+mac_proj.mac_tol = 1.e-8
+mac_proj.mac_abs_tol = 1.e-9
+
+# Fin 1 leading edge: x=0.  Fin 2 leading edge: x=L+Delta_x=2L=0.724 m.
+# Both centre planes are y=0 and z=0.
+pure_fin_inputs.x = 0.0 0.724
+pure_fin_inputs.y = 0.0 0.0
+pure_fin_inputs.z = 0.0 0.0
+pure_fin_inputs.rho = 1000.0 1000.0
+
+# Radius is retained only for compatibility with the legacy parser.
+pure_fin_inputs.radius = 0.025 0.025
+pure_fin_inputs.geometry_type = 4 4
+
+pure_fin_inputs.velocity_x = 0.0 0.0
+pure_fin_inputs.velocity_y = 0.0 0.0
+pure_fin_inputs.velocity_z = 0.0 0.0
+pure_fin_inputs.omega_x = 0.0 0.0
+pure_fin_inputs.omega_y = 0.0 0.0
+pure_fin_inputs.omega_z = 0.0 0.0
+
+pure_fin_inputs.TLX = 0 0
+pure_fin_inputs.TLY = 0 0
+pure_fin_inputs.TLZ = 0 0
+pure_fin_inputs.RLX = 0 0
+pure_fin_inputs.RLY = 0 0
+pure_fin_inputs.RLZ = 0 0
+
+# y_i(s,z,t) = A*sin(2*pi*n*s/L - 2*pi*f*t + phi_i)
+# x_i=x_leading_i+s, z in [-w/2,w/2].
+pure_fin_inputs.fin_length = 0.362
+pure_fin_inputs.fin_span = 0.05
+pure_fin_inputs.fin_wave_amplitude = 0.06
+pure_fin_inputs.fin_wave_number = 1.0
+pure_fin_inputs.fin_frequency = 2.0
+pure_fin_inputs.fin_wave_phase_deg = 0.0 0.0
+
+# The sine deformation stretches chordwise marker spacing by as much as
+# sqrt(1+(A*2*pi*n/L)^2)=1.44.  141 points keep the maximum physical
+# chordwise spacing below the 3.7708 mm finest Eulerian spacing.
+pure_fin_inputs.fin_n_chord = 141
+pure_fin_inputs.fin_n_span = 14
+
+pure_fin_inputs.LOOP_NS = 2
+pure_fin_inputs.LOOP_SOLID = 1
+pure_fin_inputs.RD = 0.0
+pure_fin_inputs.write_freq = 5
+pure_fin_inputs.verbose = 1

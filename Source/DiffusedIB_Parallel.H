@@ -102,7 +102,9 @@ struct kernel{
     Real radius{0.0};
     Real radius2{0.0};
     Real radius3{0.0};
-    int geometry_type{1};  // 1 = sphere, 2 = ellipsoid; any other value aborts
+    // 1 = sphere, 2 = ellipsoid, 3 = twisting traveling-wave fin,
+    // 4 = transverse traveling-wave fin.
+    int geometry_type{1};
     Real rho{0.0};
     int ml{0};
     int start_id{0};
@@ -123,6 +125,17 @@ struct kernel{
     Gpu::DeviceVector<Real> thetaK;
 
     IntVect TL{0, 0, 0}, RL{0, 0, 0};
+
+    Real fin_length{0.0};
+    Real fin_span{0.0};
+    Real fin_amplitude{0.0};
+    Real fin_frequency{0.0};
+    Real fin_wavelength{0.0};
+    Real fin_phase{0.0};
+    Real fin_wave_amplitude{0.0};
+    Real fin_wave_number{1.0};
+    int fin_n_chord{0};
+    int fin_n_span{0};
 };
 
 /// Lightweight POD subset of kernel data, safe for GPU device code.
@@ -136,6 +149,18 @@ struct kernel_gpu {
     Real const* phiK;     ///< device pointer into kernel::phiK
     Real const* thetaK;   ///< device pointer into kernel::thetaK
     int start_id;
+    int geometry_type;
+    Real fin_length;
+    Real fin_span;
+    Real fin_amplitude;
+    Real fin_frequency;
+    Real fin_wavelength;
+    Real fin_phase;
+    Real fin_wave_amplitude;
+    Real fin_wave_number;
+    int fin_n_chord;
+    int fin_n_span;
+    Real boundary_time;
 };
 
 using CusParIter = ParIter<0, 0, num_Real, num_Int>;
@@ -239,7 +264,8 @@ public:
      * @param EulerForce Eulerian force field (output)
      * @param dt Time step size
      */
-    void InteractWithEuler(MultiFab &EulerVel, MultiFab &EulerForce, Real dt = 0.1);
+    void InteractWithEuler(MultiFab &EulerVel, MultiFab &EulerForce,
+                           Real dt = 0.1);
 
     /**
      * Write particle data to file for visualization or restart.
@@ -317,8 +343,8 @@ public:
     void BroadcastKernelState();
 
     /**
-     * Whether the marker container must be redistributed: true if any particle
-     * centre moved since the previous redistribute (or none happened yet).
+     * Whether the marker container must be redistributed: true for prescribed
+     * fins, moved particle centres, or markers not yet redistributed.
      * Updates the remembered centres when it returns true.
      */
     bool MarkersNeedRedistribute();
@@ -419,6 +445,7 @@ public:
     int verbose = 0;
 
     Real spend_time;
+    Real ib_time{0.0};
     // read write
     bool do_RKPM{false};
     bool m_mpmd_exchange_done{false};

@@ -1,0 +1,123 @@
+# Three-dimensional prescribed traveling-wave fin in initially quiescent water.
+# SI units are used throughout: m, kg, s, and Pa.
+
+# Time-step and physical-time controls.
+max_step = -1
+stop_time = 10.0
+
+ns.fixed_dt = 8.80256437073704e-3
+ns.init_dt = 8.80256437073704e-3
+ns.cfl = 0.5
+ns.init_iter = 0
+
+# AMR hierarchy and immersed-boundary input prefix.
+particle.input = fin_inputs
+
+amr.max_level = 2
+amr.ref_ratio = 2 2
+amr.n_cell = 250 100 100
+
+amr.refinement_indicators = fin_level1 fin_level2
+
+amr.fin_level1.in_box_lo = 0.35 0.25 0.25
+amr.fin_level1.in_box_hi = 3.65 1.35 1.35
+amr.fin_level1.max_level = 1
+
+amr.fin_level2.in_box_lo = 0.65 0.45 0.45
+amr.fin_level2.in_box_hi = 3.35 1.15 1.15
+amr.fin_level2.max_level = 2
+
+amr.n_error_buf = 2
+amr.max_grid_size = 64
+amr.blocking_factor = 2 4 4
+amr.regrid_int = -1
+amr.subcycling_mode = Auto
+
+# Output controls.
+amr.plot_int = -1
+amr.check_int = 114
+
+amr.derive_plot_vars = mag_vort
+
+ns.v = 1
+amr.v = 1
+nodal_proj.verbose = 0
+mac_proj.verbose = 0
+
+# Fluid properties and LES model.
+ns.fluid_rho = 1000.0
+ns.vel_visc_coef = 1.0e-3
+ns.scal_diff_coefs = 0.0
+ns.gravity = 0.0
+
+ns.do_LES = 1
+ns.LES_model = Smagorinsky
+ns.smago_Cs_cst = 0.12
+
+ns.skip_level_projector = 0
+ns.isolver = 1
+ns.do_diffused_ib = 1
+
+# Domain and boundary conditions.
+geometry.coord_sys = 0
+geometry.prob_lo = 0.0 0.0 0.0
+geometry.prob_hi = 4.0 1.6 1.6
+geometry.is_periodic = 0 0 0
+
+ns.lo_bc = 1 4 4
+ns.hi_bc = 2 4 4
+xlo.velocity = 0.0 0.0 0.0
+
+prob.probtype = 1
+particles.do_nspc_particles = 0
+
+# Projection solver controls.
+nodal_proj.proj_tol = 1.e-8
+nodal_proj.proj_abs_tol = 1.e-9
+nodal_proj.maxiter = 200
+nodal_proj.bottom_maxiter = 200
+mac_proj.mac_tol = 1.e-8
+mac_proj.mac_abs_tol = 1.e-9
+
+# DIBM body and prescribed-fin kinematics.
+fin_inputs.x = 0.8
+fin_inputs.y = 0.8
+fin_inputs.z = 0.8
+fin_inputs.rho = 1000.0
+
+fin_inputs.radius = 0.026
+fin_inputs.geometry_type = 3
+
+fin_inputs.velocity_x = 0.0
+fin_inputs.velocity_y = 0.0
+fin_inputs.velocity_z = 0.0
+fin_inputs.omega_x = 0.0
+fin_inputs.omega_y = 0.0
+fin_inputs.omega_z = 0.0
+
+fin_inputs.TLX = 0
+fin_inputs.TLY = 0
+fin_inputs.TLZ = 0
+fin_inputs.RLX = 0
+fin_inputs.RLY = 0
+fin_inputs.RLZ = 0
+
+# X(s,r,t) = origin + (s, r*cos(theta), r*sin(theta))
+# theta(s,t) = A*sin(2*pi*f*t - 2*pi*s/lambda + phase)
+fin_inputs.fin_length = 0.8
+fin_inputs.fin_span = 0.052
+fin_inputs.fin_amplitude_deg = 85.0
+fin_inputs.fin_frequency = 1.0
+fin_inputs.fin_wavelength = 0.4
+fin_inputs.fin_phase = 0.0
+
+fin_inputs.fin_n_chord = 201
+fin_inputs.fin_n_span = 14
+
+# Direct-forcing iterations and output frequency.
+fin_inputs.LOOP_NS = 2
+fin_inputs.LOOP_SOLID = 1
+fin_inputs.RD = 0.0
+
+fin_inputs.write_freq = 10
+fin_inputs.verbose = 0

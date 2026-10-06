@@ -17,6 +17,7 @@
 #include "DiffusedIB_Parallel.H"
 #include <AMReX_MPMD.H>
 
+#include <algorithm>
 #include <filesystem>
 #include <sstream>
 namespace fs = std::filesystem;
@@ -61,9 +62,87 @@ namespace ParticleProperties{
     int write_freq{1};
     bool init_particle_from_file{false};
 
+    Real fin_length{0.0};
+    Real fin_span{0.0};
+    Real fin_amplitude_deg{0.0};
+    Real fin_frequency{0.0};
+    Real fin_wavelength{0.0};
+    Real fin_phase{0.0};
+    Real fin_wave_amplitude{0.0};
+    Real fin_wave_number{1.0};
+    Vector<Real> fin_wave_phase_deg;
+    int fin_n_chord{0};
+    int fin_n_span{0};
+
     GpuArray<Real, 3> plo{0.0,0.0,0.0}, phi{0.0,0.0,0.0}, dx{0.0, 0.0, 0.0};
 
     int RKPM{0};
+}
+
+AMREX_GPU_HOST_DEVICE AMREX_FORCE_INLINE
+bool is_prescribed_fin(int geometry_type) noexcept
+{
+    return geometry_type == 3 || geometry_type == 4;
+}
+
+struct fin_marker_state {
+    Real x;
+    Real y;
+    Real z;
+    Real u;
+    Real v;
+    Real w;
+    Real quadrature_scale;
+};
+
+AMREX_GPU_HOST_DEVICE AMREX_FORCE_INLINE
+fin_marker_state evaluate_fin_marker(const kernel_gpu& body, Long marker_id)
+{
+    const int local_id = static_cast<int>(marker_id - body.start_id - 1);
+    const int chord_id = local_id / body.fin_n_span;
+    const int span_id = local_id - chord_id * body.fin_n_span;
+    const Real s = body.fin_length * chord_id / Real(body.fin_n_chord - 1);
+
+    fin_marker_state state{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0};
+    state.x = body.location[0] + s;
+    if (chord_id == 0 || chord_id == body.fin_n_chord - 1) {
+        state.quadrature_scale *= 0.5;
+    }
+    if (span_id == 0 || span_id == body.fin_n_span - 1) {
+        state.quadrature_scale *= 0.5;
+    }
+
+    if (body.geometry_type == 3) {
+        const Real r = body.fin_span * span_id / Real(body.fin_n_span - 1);
+        const Real argument = 2.0 * Math::pi<Real>()
+                            * body.fin_frequency * body.boundary_time
+                            - 2.0 * Math::pi<Real>() * s / body.fin_wavelength
+                            + body.fin_phase;
+        const Real theta = body.fin_amplitude * std::sin(argument);
+        const Real theta_dot = 2.0 * Math::pi<Real>() * body.fin_frequency
+                             * body.fin_amplitude * std::cos(argument);
+        state.y = body.location[1] + r * std::cos(theta);
+        state.z = body.location[2] + r * std::sin(theta);
+        state.v = -r * std::sin(theta) * theta_dot;
+        state.w = r * std::cos(theta) * theta_dot;
+    } else {
+        const Real r = -0.5 * body.fin_span
+                     + body.fin_span * span_id / Real(body.fin_n_span - 1);
+        const Real argument = 2.0 * Math::pi<Real>() * body.fin_wave_number
+                            * s / body.fin_length
+                            - 2.0 * Math::pi<Real>() * body.fin_frequency
+                            * body.boundary_time + body.fin_phase;
+        const Real slope = body.fin_wave_amplitude * 2.0 * Math::pi<Real>()
+                         * body.fin_wave_number / body.fin_length
+                         * std::cos(argument);
+        state.y = body.location[1]
+                + body.fin_wave_amplitude * std::sin(argument);
+        state.z = body.location[2] + r;
+        state.v = -2.0 * Math::pi<Real>() * body.fin_frequency
+                * body.fin_wave_amplitude * std::cos(argument);
+        state.quadrature_scale *= std::sqrt(1.0 + slope * slope);
+    }
+    return state;
 }
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
@@ -424,6 +503,10 @@ void mParticle::InteractWithEuler(MultiFab &EulerVel,
     // clear time , start record
     spend_time = 0;
     const auto InteractWithEulerStart = ParallelDescriptor::second();
+    // The parallel IBM interface does not receive the simulation time. Advance
+    // the prescribed boundary to the same new-time level as EulerVel. The
+    // value is re-synchronised from UpdateParticles after every fluid step.
+    ib_time += dt;
 
     //clean preStep's IB_properties
     for(auto& kernel : particle_kernels) {
@@ -541,6 +624,13 @@ void mParticle::InitParticles(const Vector<Real>& x,
         return;
     }
 
+    const bool has_prescribed_fin = std::any_of(
+        geometry_type.begin(), geometry_type.end(),
+        [](int type) { return is_prescribed_fin(type); });
+    AMREX_ALWAYS_ASSERT_WITH_MESSAGE(
+        !(has_prescribed_fin && ParticleProperties::RKPM != 0),
+        "Prescribed fins do not support RKPM markers");
+
     if (ParticleProperties::RKPM != 0) {
         // RKPM only one particle
         do_RKPM = true;
@@ -603,6 +693,59 @@ void mParticle::InitParticles(const Vector<Real>& x,
         } else {
             mKernel.radius3 = radius[real_index];  // default to radius if not provided
         }
+        if (is_prescribed_fin(mKernel.geometry_type)) {
+            AMREX_ALWAYS_ASSERT_WITH_MESSAGE(ParticleProperties::RKPM == 0,
+                "Prescribed fins do not support RKPM markers");
+            AMREX_ALWAYS_ASSERT_WITH_MESSAGE(ParticleProperties::fin_length > 0.0,
+                "A prescribed fin requires fin_length > 0");
+            AMREX_ALWAYS_ASSERT_WITH_MESSAGE(ParticleProperties::fin_span > 0.0,
+                "A prescribed fin requires fin_span > 0");
+            AMREX_ALWAYS_ASSERT_WITH_MESSAGE(
+                ParticleProperties::fin_n_chord >= 2
+                && ParticleProperties::fin_n_span >= 2,
+                "A prescribed fin requires fin_n_chord and fin_n_span >= 2");
+
+            mKernel.fin_length = ParticleProperties::fin_length;
+            mKernel.fin_span = ParticleProperties::fin_span;
+            mKernel.fin_frequency = ParticleProperties::fin_frequency;
+            mKernel.fin_n_chord = ParticleProperties::fin_n_chord;
+            mKernel.fin_n_span = ParticleProperties::fin_n_span;
+
+            if (mKernel.geometry_type == 3) {
+                AMREX_ALWAYS_ASSERT_WITH_MESSAGE(ParticleProperties::fin_wavelength > 0.0,
+                    "A twisting fin requires fin_wavelength > 0");
+                mKernel.fin_amplitude = ParticleProperties::fin_amplitude_deg
+                                      * Math::pi<Real>() / 180.0;
+                mKernel.fin_wavelength = ParticleProperties::fin_wavelength;
+                mKernel.fin_phase = ParticleProperties::fin_phase;
+            } else {
+                AMREX_ALWAYS_ASSERT_WITH_MESSAGE(
+                    ParticleProperties::fin_wave_amplitude >= 0.0,
+                    "A transverse-wave fin requires fin_wave_amplitude >= 0");
+                AMREX_ALWAYS_ASSERT_WITH_MESSAGE(ParticleProperties::fin_wave_number > 0.0,
+                    "A transverse-wave fin requires fin_wave_number > 0");
+                AMREX_ALWAYS_ASSERT_WITH_MESSAGE(
+                    ParticleProperties::fin_wave_phase_deg.empty()
+                    || real_index < static_cast<int>(ParticleProperties::fin_wave_phase_deg.size()),
+                    "fin_wave_phase_deg must provide one value per fin");
+                mKernel.fin_wave_amplitude = ParticleProperties::fin_wave_amplitude;
+                mKernel.fin_wave_number = ParticleProperties::fin_wave_number;
+                mKernel.fin_phase = ParticleProperties::fin_wave_phase_deg.empty()
+                                  ? ParticleProperties::fin_phase
+                                  : ParticleProperties::fin_wave_phase_deg[real_index]
+                                    * Math::pi<Real>() / 180.0;
+            }
+
+            mKernel.ml = mKernel.fin_n_chord * mKernel.fin_n_span;
+            mKernel.dv = h
+                       * mKernel.fin_length / Real(mKernel.fin_n_chord - 1)
+                       * mKernel.fin_span / Real(mKernel.fin_n_span - 1);
+            mKernel.Vp = 0.0;
+            max_largrangian_num = std::max(max_largrangian_num, mKernel.ml);
+            particle_kernels.emplace_back(mKernel);
+            continue;
+        }
+
         mKernel.Vp = Math::pi<Real>() * 4 / 3 * Math::powi<3>(radius[real_index]);
 
         if (ParticleProperties::RKPM == 0) {
@@ -647,8 +790,15 @@ void mParticle::InitParticles(const Vector<Real>& x,
 
         particle_kernels.emplace_back(mKernel);
     }
-    //collision box generate
-    m_Collision.SetGeometry(RealVect(ParticleProperties::GLO), RealVect(ParticleProperties::GHI),particle_kernels[0].radius, h);
+    // Keep the original collision setup for rigid bodies. Prescribed fins are
+    // open surfaces and do not participate in the rigid-body collision model.
+    const auto rigid = std::find_if(particle_kernels.begin(), particle_kernels.end(),
+        [](const kernel& body) { return !is_prescribed_fin(body.geometry_type); });
+    if (rigid != particle_kernels.end()) {
+        m_Collision.SetGeometry(RealVect(ParticleProperties::GLO),
+                                RealVect(ParticleProperties::GHI),
+                                rigid->radius, h);
+    }
 }
 
 void mParticle::syncKernelsToDevice ()
@@ -665,6 +815,18 @@ void mParticle::syncKernelsToDevice ()
         h_kg[i].phiK      = pk.phiK.data();
         h_kg[i].thetaK    = pk.thetaK.data();
         h_kg[i].start_id  = pk.start_id;
+        h_kg[i].geometry_type = pk.geometry_type;
+        h_kg[i].fin_length = pk.fin_length;
+        h_kg[i].fin_span = pk.fin_span;
+        h_kg[i].fin_amplitude = pk.fin_amplitude;
+        h_kg[i].fin_frequency = pk.fin_frequency;
+        h_kg[i].fin_wavelength = pk.fin_wavelength;
+        h_kg[i].fin_phase = pk.fin_phase;
+        h_kg[i].fin_wave_amplitude = pk.fin_wave_amplitude;
+        h_kg[i].fin_wave_number = pk.fin_wave_number;
+        h_kg[i].fin_n_chord = pk.fin_n_chord;
+        h_kg[i].fin_n_span = pk.fin_n_span;
+        h_kg[i].boundary_time = ib_time;
     }
     d_kernels.resize(nk);
     Gpu::copyAsync(Gpu::hostToDevice, h_kg.begin(), h_kg.end(), d_kernels.begin());
@@ -705,11 +867,19 @@ void mParticle::UpdateLagrangianMarker() {
                     const auto *const phiK = ps[id].phiK;
                     const auto *const thetaK = ps[id].thetaK;
                     const auto start_id = ps[id].start_id;
+                    const auto geometry_type = ps[id].geometry_type;
 
-                    const auto ia = m_id - start_id - 1;
-                    particles[i].pos(0) = location[0] + radius * std::sin(thetaK[ia]) * std::cos(phiK[ia]);
-                    particles[i].pos(1) = location[1] + radius * std::sin(thetaK[ia]) * std::sin(phiK[ia]);
-                    particles[i].pos(2) = location[2] + radius * std::cos(thetaK[ia]);
+                    if (is_prescribed_fin(geometry_type)) {
+                        const auto state = evaluate_fin_marker(ps[id], m_id);
+                        particles[i].pos(0) = state.x;
+                        particles[i].pos(1) = state.y;
+                        particles[i].pos(2) = state.z;
+                    } else {
+                        const auto ia = m_id - start_id - 1;
+                        particles[i].pos(0) = location[0] + radius * std::sin(thetaK[ia]) * std::cos(phiK[ia]);
+                        particles[i].pos(1) = location[1] + radius * std::sin(thetaK[ia]) * std::sin(phiK[ia]);
+                        particles[i].pos(2) = location[2] + radius * std::cos(thetaK[ia]);
+                    }
                 }
                 // RKPM forbi
                 vUP_ptr[i] = 0.0;
@@ -725,9 +895,8 @@ void mParticle::UpdateLagrangianMarker() {
         );
     }
     // https://amrex-codes.github.io/amrex/docs_html/Particle.html#redistribute
-    // Marker positions are a pure function of the particle centres, so the
-    // redistribute (MPI handshake + pack/unpack + sort, twice per step) is only
-    // needed when at least one centre moved since the last one.
+    // Rigid markers need redistribution when a centre moves. Prescribed fins
+    // also need it as their surfaces deform around a fixed origin.
     if (MarkersNeedRedistribute()) {
         mContainer->Redistribute();
     }
@@ -738,12 +907,15 @@ void mParticle::UpdateLagrangianMarker() {
     }
 }
 
-// True (and remembers the current centres) if any particle centre differs from
-// the centres at the previous redistribute, or if there has been none yet.
+// Redistribute deforming fins, moved rigid bodies, and newly created markers.
+// Remember the current centres for the rigid-body fast path.
 bool mParticle::MarkersNeedRedistribute()
 {
     const int nk = static_cast<int>(particle_kernels.size());
-    bool moved = (static_cast<int>(m_redistributed_loc.size()) != nk);
+    // A prescribed fin deforms even when its origin stays fixed.
+    bool moved = (static_cast<int>(m_redistributed_loc.size()) != nk)
+              || std::any_of(particle_kernels.begin(), particle_kernels.end(),
+                  [](const kernel& body) { return is_prescribed_fin(body.geometry_type); });
     for (int k = 0; !moved && k < nk; ++k) {
         moved = (particle_kernels[k].location != m_redistributed_loc[k]);
     }
@@ -914,11 +1086,28 @@ void mParticle::ComputeLagrangianForce(Real dt)
             const Real Px = p.location[0];
             const Real Py = p.location[1];
             const Real Pz = p.location[2];
+            Real target_u = Ub;
+            Real target_v = Vb;
+            Real target_w = Wb;
 
-            auto Ur = (p.omega).crossProduct(RealVect(p_ptr[i].pos(0) - Px, p_ptr[i].pos(1) - Py, p_ptr[i].pos(2) - Pz));
-            FxP[i] = (Ub + Ur[0] - Up[i])/dt;
-            FyP[i] = (Vb + Ur[1] - Vp[i])/dt;
-            FzP[i] = (Wb + Ur[2] - Wp[i])/dt;
+            if (is_prescribed_fin(p.geometry_type)) {
+                const auto state = evaluate_fin_marker(p, p_ptr[i].id());
+                target_u = state.u;
+                target_v = state.v;
+                target_w = state.w;
+            } else {
+                const auto rotational_velocity = p.omega.crossProduct(
+                    RealVect(p_ptr[i].pos(0) - Px,
+                             p_ptr[i].pos(1) - Py,
+                             p_ptr[i].pos(2) - Pz));
+                target_u += rotational_velocity[0];
+                target_v += rotational_velocity[1];
+                target_w += rotational_velocity[2];
+            }
+
+            FxP[i] = (target_u - Up[i]) / dt;
+            FyP[i] = (target_v - Vp[i]) / dt;
+            FzP[i] = (target_w - Wp[i]) / dt;
         });
     }
     // if (verbose) mContainer->WriteAsciiFile(Concatenate("particle", 3));
@@ -1078,6 +1267,10 @@ void mParticle::ForceSpreading(MultiFab & EulerForce,
                 const auto id = ids[i];
                 auto loc_ptr = ps[id].location;
                 auto dv = ps[id].dv;
+                if (is_prescribed_fin(ps[id].geometry_type)) {
+                    const auto state = evaluate_fin_marker(ps[id], p_ptr[i].id());
+                    dv *= state.quadrature_scale;
+                }
                 ForceSpreading_cic(p_ptr[i], loc_ptr[0], loc_ptr[1], loc_ptr[2],
                                    fxP_ptr[i], fyP_ptr[i], fzP_ptr[i],
                                    mxP_ptr[i], myP_ptr[i], mzP_ptr[i],
@@ -1228,6 +1421,12 @@ void mParticle::UpdateParticlesReference(int iStep,
     //continue condition 6DOF
     for(auto& kernel : particle_kernels){
 
+        if (is_prescribed_fin(kernel.geometry_type)) {
+            // A prescribed fin is an open surface. It has no closed particle
+            // volume and its analytical motion must not enter rigid-body 6DOF.
+            continue;
+        }
+
         calculate_phi_nodal(phi_nodal, kernel);
         nodal_phi_to_pvf(pvf, phi_nodal);
 
@@ -1286,6 +1485,7 @@ void mParticle::UpdateParticlesReference(int iStep,
 // collision force. Only the I/O rank computes; callers broadcast afterwards.
 void mParticle::SixDOFUpdate(kernel& kernel, Real dt)
 {
+    if (is_prescribed_fin(kernel.geometry_type)) return;
     if (ParallelDescriptor::MyProc() != ParallelDescriptor::IOProcessorNumber()) return;
 
     for(auto idir : {0,1,2})
@@ -1394,6 +1594,8 @@ mParticle::PvfWorkList(const BoxArray& ba, const DistributionMapping& dm,
     const int nk = static_cast<int>(loc.size());
     for (int k = 0; k < nk; ++k) {
         auto const& kern = particle_kernels[k];
+        // Open fin surfaces have no closed-body volume fraction.
+        if (is_prescribed_fin(kern.geometry_type)) continue;
         const Real R = (kern.geometry_type == 2)
                      ? amrex::max(kern.radius, amrex::max(kern.radius2, kern.radius3)) : kern.radius;
         Box bbox = particle_index_box(loc[k], R);
@@ -1430,7 +1632,7 @@ void mParticle::UpdateParticlesFused(int iStep,
     const int vidx = ParticleProperties::euler_velocity_index;
 
     for (auto const& kern : particle_kernels) {
-        if (kern.geometry_type > 2) {
+        if (kern.geometry_type > 2 && !is_prescribed_fin(kern.geometry_type)) {
             Print() << "Particle (" << kern.id << ") has unsupported geometry_type: " << kern.geometry_type << "\n";
             Abort("Unsupported geometry type. Only geometry_type = 1 (sphere) and 2 (ellipsoid) are supported.");
         }
@@ -1521,6 +1723,7 @@ void mParticle::UpdateParticlesFused(int iStep,
         ParallelAllReduce::Sum(h_sums.data(), NS * nk, ParallelDescriptor::Communicator());
         for (int kidx = 0; kidx < nk; ++kidx) {
             auto& kern = particle_kernels[kidx];
+            if (is_prescribed_fin(kern.geometry_type)) continue;
             const Real* s = h_sums.data() + NS * kidx;
             kern.sum_u_new = RealVect(s[0], s[1],  s[2]);
             kern.sum_u_old = RealVect(s[3], s[4],  s[5]);
@@ -1534,7 +1737,9 @@ void mParticle::UpdateParticlesFused(int iStep,
         loop--;
     }
 
-    for (auto& kern : particle_kernels) RecordOldValue(kern);
+    for (auto& kern : particle_kernels) {
+        if (!is_prescribed_fin(kern.geometry_type)) RecordOldValue(kern);
+    }
 
     // ---- pvf of all particles: accumulate in particle order, valid cells only,
     //      ghost cells stay zero (as in the reference path) ----
@@ -1568,6 +1773,7 @@ void mParticle::UpdateParticles(int iStep,
 {
     BL_PROFILE("mParticle::UpdateParticles");
     if (verbose) Print() << "mParticle::UpdateParticles\n";
+    ib_time = time + dt;
     // start record
     auto UpdateParticlesStart = ParallelDescriptor::second();
 
@@ -1609,7 +1815,9 @@ void mParticle::UpdateParticles(int iStep,
         const int myproc = ParallelDescriptor::MyProc();
         const int nk = static_cast<int>(particle_kernels.size());
         for (int k = myproc; k < nk; k += nprocs) {
-            WriteIBForceAndMoment(iStep, time, dt, particle_kernels[k]);
+            const Real output_time = is_prescribed_fin(particle_kernels[k].geometry_type)
+                                   ? ib_time : time;
+            WriteIBForceAndMoment(iStep, output_time, dt, particle_kernels[k]);
         }
         BL_PROFILE_VAR_STOP(blp_csv);
     }
@@ -1619,20 +1827,27 @@ void mParticle::UpdateParticles(int iStep,
 
 void mParticle::DoParticleCollision(int model)
 {
-    if(particle_kernels.size() < 2 ) return ;
+    Vector<kernel*> rigid_bodies;
+    for (auto& body : particle_kernels) {
+        if (!is_prescribed_fin(body.geometry_type)) {
+            rigid_bodies.push_back(&body);
+        }
+    }
+    if(rigid_bodies.size() < 2 ) return ;
 
     if (verbose) Print() << "\tmParticle::DoParticleCollision\n";
 
     if(ParallelDescriptor::MyProc() == ParallelDescriptor::IOProcessorNumber()){
-        for(const auto& kernel : particle_kernels){
-            m_Collision.InsertParticle(kernel.location, kernel.velocity, kernel.radius, kernel.rho);
+        for(const auto* body : rigid_bodies){
+            m_Collision.InsertParticle(body->location, body->velocity,
+                                       body->radius, body->rho);
         }
 
         m_Collision.takeModel(model);
 
-        for(auto & particle_kernel : particle_kernels){
-            particle_kernel.Fcp = m_Collision.Particles.front().preForece
-                                * particle_kernel.Vp * particle_kernel.rho * m_gravity.vectorLength();
+        for(auto* body : rigid_bodies){
+            body->Fcp = m_Collision.Particles.front().preForece
+                      * body->Vp * body->rho * m_gravity.vectorLength();
             m_Collision.Particles.pop_front();
         }
     }
@@ -1833,6 +2048,35 @@ void mParticle::WriteParticleFile(int index)
 // which rank writes which particle (see UpdateParticles).
 void mParticle::WriteIBForceAndMoment(int step, Real time, Real dt, kernel& current_kernel)
 {
+    if (is_prescribed_fin(current_kernel.geometry_type)) {
+        const std::string file = "IB_Fin_" + std::to_string(current_kernel.id)
+                               + ".csv";
+        const bool new_file = !fs::exists(file);
+        std::ofstream output(file, std::ios::app);
+        if (!output.is_open()) {
+            Print() << "[DIBM] cannot open fin force file " << file << "\n";
+            return;
+        }
+        if (new_file) {
+            output << "step,time,phase,Fx,Fy,Fz,Mx,My,Mz\n";
+        }
+
+        const Real phase_direction = current_kernel.geometry_type == 4
+                                   ? -1.0 : 1.0;
+        const Real phase = phase_direction * 2.0 * Math::pi<Real>()
+                         * current_kernel.fin_frequency * time
+                         + current_kernel.fin_phase;
+        const Real rho = ParticleProperties::euler_fluid_rho;
+        output << step << ',' << time << ',' << phase << ','
+               << -rho * current_kernel.ib_force[0] << ','
+               << -rho * current_kernel.ib_force[1] << ','
+               << -rho * current_kernel.ib_force[2] << ','
+               << -rho * current_kernel.ib_moment[0] << ','
+               << -rho * current_kernel.ib_moment[1] << ','
+               << -rho * current_kernel.ib_moment[2] << '\n';
+        return;
+    }
+
     std::string file("IB_Particle_" + std::to_string(current_kernel.id) + ".csv");
     std::ofstream out_ib_force;
 
@@ -2045,6 +2289,11 @@ void Particles::Restart(Real gravity, Real h, int iStep)
     //deal in IO processor
     //start read csv file
     for(auto& kernel : particle->particle_kernels){
+        if (is_prescribed_fin(kernel.geometry_type)) {
+            // Prescribed geometry is reconstructed analytically and does not
+            // carry rigid-body state in the particle CSV file.
+            continue;
+        }
         //filename
         if(ParallelDescriptor::MyProc() == ParallelDescriptor::IOProcessorNumber()){
             std::string fileName = "IB_Particle_" + std::to_string(kernel.id) + ".csv";
@@ -2139,6 +2388,18 @@ void Particles::Initialize()
         p_file.queryarr("radius2",   ParticleProperties::_radius2);
         p_file.queryarr("radius3",   ParticleProperties::_radius3);
         p_file.queryarr("geometry_type", ParticleProperties::_geometry_type);
+        p_file.query("fin_length", ParticleProperties::fin_length);
+        p_file.query("fin_span", ParticleProperties::fin_span);
+        p_file.query("fin_amplitude_deg", ParticleProperties::fin_amplitude_deg);
+        p_file.query("fin_frequency", ParticleProperties::fin_frequency);
+        p_file.query("fin_wavelength", ParticleProperties::fin_wavelength);
+        p_file.query("fin_phase", ParticleProperties::fin_phase);
+        p_file.query("fin_wave_amplitude", ParticleProperties::fin_wave_amplitude);
+        p_file.query("fin_wave_number", ParticleProperties::fin_wave_number);
+        p_file.queryarr("fin_wave_phase_deg",
+                        ParticleProperties::fin_wave_phase_deg);
+        p_file.query("fin_n_chord", ParticleProperties::fin_n_chord);
+        p_file.query("fin_n_span", ParticleProperties::fin_n_span);
         p_file.query("RD",          ParticleProperties::rd);
         p_file.query("LOOP_NS",     ParticleProperties::loop_ns);
         p_file.query("LOOP_SOLID",  ParticleProperties::loop_solid);
