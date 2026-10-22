@@ -21,6 +21,8 @@
 #include <algorithm>
 #include <filesystem>
 #include <sstream>
+#include <limits>
+#include <iomanip>
 namespace fs = std::filesystem;
 
 #define GHOST_CELLS 2
@@ -1634,6 +1636,27 @@ void mParticle::SixDOFUpdate(kernel& kernel, Real dt)
     if (is_prescribed_fin(kernel.geometry_type)) return;
     if (ParallelDescriptor::MyProc() != ParallelDescriptor::IOProcessorNumber()) return;
 
+    // angular velocity and moment from world to body
+    const auto q0 = kernel.orientation_old;
+    RealVect omega_b = worldToBodyOffset(q0, kernel.omega_old);
+    RealVect moment_w = ((kernel.sum_t_new - kernel.sum_t_old) * ParticleProperties::euler_fluid_rho / dt
+                                - kernel.ib_moment * ParticleProperties::euler_fluid_rho
+                                + kernel.Tcp);
+    RealVect moment_b = worldToBodyOffset(q0, moment_w);
+    RealVect inertia_b{0, 0, 0}, angular_momt_b{0,0,0};
+    for (auto idir : {0, 1, 2})
+    {
+        inertia_b[idir] = cal_momentum(kernel.rho, kernel.radius, kernel.geometry_type, idir, kernel.radius2, kernel.radius3);
+        angular_momt_b[idir] = inertia_b[idir] * omega_b[idir];
+    }
+    RealVect gyro_b = omega_b.crossProduct(angular_momt_b);
+    RealVect acc_b{0,0,0};
+    for (auto idir : {0,1,2})
+    {
+        acc_b[idir] = (moment_b[idir] - gyro_b[idir]) / inertia_b[idir];
+    }
+    RealVect acc_w = afterRotation(q0, acc_b);
+
     for(auto idir : {0,1,2})
     {
         //TL
@@ -1670,12 +1693,10 @@ void mParticle::SixDOFUpdate(kernel& kernel, Real dt)
         }
         else if (kernel.RL[idir] == 2) {
             if(!ParticleProperties::Uhlmann){
-                kernel.omega[idir] = kernel.omega_old[idir]
-                                + ((kernel.sum_t_new[idir] - kernel.sum_t_old[idir]) * ParticleProperties::euler_fluid_rho / dt
-                                - kernel.ib_moment[idir] * ParticleProperties::euler_fluid_rho
-                                + kernel.Tcp[idir]) * dt / cal_momentum(kernel.rho, kernel.radius, kernel.geometry_type, idir, kernel.radius2, kernel.radius3);
-            }else{
+                kernel.omega[idir] = kernel.omega_old[idir] + acc_w[idir] * dt;
                 //Uhlmann
+            }
+            else{
                 kernel.omega[idir] = kernel.omega_old[idir]
                                 + ParticleProperties::euler_fluid_rho /(ParticleProperties::euler_fluid_rho - kernel.rho) * kernel.ib_moment[idir] * kernel.dv
                                 / cal_momentum(kernel.rho, kernel.radius, kernel.geometry_type, idir, kernel.radius2, kernel.radius3) * kernel.rho * dt;
@@ -2251,7 +2272,7 @@ void mParticle::WriteIBForceAndMoment(int step, Real time, Real dt, kernel& curr
 
     std::string head;
     if(!fs::exists(file)){
-        head = "iStep,time,X,Y,Z,Vx,Vy,Vz,Rx,Ry,Rz,Fx,Fy,Fz,Mx,My,Mz,Fcpx,Fcpy,Fcpz,Tcpx,Tcpy,Tcpz,SumUx,SumUy,SumUz,SumTx,SumTy,SumTz\n";
+        head = "iStep,time,X,Y,Z,Vx,Vy,Vz,Rx,Ry,Rz,Fx,Fy,Fz,Mx,My,Mz,Fcpx,Fcpy,Fcpz,Tcpx,Tcpy,Tcpz,SumUx,SumUy,SumUz,SumTx,SumTy,SumTz,qw,qx,qy,qz\n";
     }else{
         head = "";
     }
@@ -2260,6 +2281,7 @@ void mParticle::WriteIBForceAndMoment(int step, Real time, Real dt, kernel& curr
     if(!out_ib_force.is_open()){
         Print() << "[Particle] write particle file error , step: " << step;
     }else{
+        out_ib_force << std::setprecision(std::numeric_limits<Real>::max_digits10);
         out_ib_force << head << step << "," << time << ","
                      << current_kernel.location[0] << "," << current_kernel.location[1] << "," << current_kernel.location[2] << ","
                      << current_kernel.velocity[0] << "," << current_kernel.velocity[1] << "," << current_kernel.velocity[2] << ","
@@ -2273,7 +2295,11 @@ void mParticle::WriteIBForceAndMoment(int step, Real time, Real dt, kernel& curr
                      << (current_kernel.sum_u_new[2] - current_kernel.sum_u_old[2])/dt << ","
                      << (current_kernel.sum_t_new[0] - current_kernel.sum_t_old[0])/dt << ","
                      << (current_kernel.sum_t_new[1] - current_kernel.sum_t_old[1])/dt << ","
-                     << (current_kernel.sum_t_new[2] - current_kernel.sum_t_old[2])/dt << "\n";
+                     << (current_kernel.sum_t_new[2] - current_kernel.sum_t_old[2])/dt << ","
+                     << current_kernel.orientation[0] << ","
+                     << current_kernel.orientation[1] << ","
+                     << current_kernel.orientation[2] << ","
+                     << current_kernel.orientation[3] << "\n";
     }
     out_ib_force.close();
 }
