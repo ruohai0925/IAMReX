@@ -68,6 +68,11 @@
 <li class="toctree-l4"><a class="reference internal" href="#_CPPv4N9mParticle14ForceSpreadingERN5amrex8MultiFabEi"><code class="docutils literal notranslate"><span class="pre">ForceSpreading()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#_CPPv4NK9mParticle18VelocityCorrectionERN5amrex8MultiFabERN5amrex8MultiFabE4Real"><code class="docutils literal notranslate"><span class="pre">VelocityCorrection()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#_CPPv4N9mParticle15UpdateParticlesEi4RealRK8MultiFabRK8MultiFabR8MultiFabR8MultiFab4Real"><code class="docutils literal notranslate"><span class="pre">UpdateParticles()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N9mParticle24UpdateParticlesReferenceEiRK8MultiFabRK8MultiFabR8MultiFabR8MultiFab4Real"><code class="docutils literal notranslate"><span class="pre">UpdateParticlesReference()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N9mParticle20UpdateParticlesFusedEiRK8MultiFabRK8MultiFabR8MultiFab4Real"><code class="docutils literal notranslate"><span class="pre">UpdateParticlesFused()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N9mParticle12SixDOFUpdateER6kernel4Real"><code class="docutils literal notranslate"><span class="pre">SixDOFUpdate()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N9mParticle20BroadcastKernelStateEv"><code class="docutils literal notranslate"><span class="pre">BroadcastKernelState()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N9mParticle23MarkersNeedRedistributeEv"><code class="docutils literal notranslate"><span class="pre">MarkersNeedRedistribute()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#_CPPv4N9mParticle19DoParticleCollisionEi"><code class="docutils literal notranslate"><span class="pre">DoParticleCollision()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#_CPPv4N9mParticle14RecordOldValueER6kernel"><code class="docutils literal notranslate"><span class="pre">RecordOldValue()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#_CPPv4N9mParticle23ResolveLagrangianMarkerENSt6stringE"><code class="docutils literal notranslate"><span class="pre">ResolveLagrangianMarker()</span></code></a></li>
@@ -77,7 +82,10 @@
 <li class="toctree-l4"><a class="reference internal" href="#_CPPv4N9mParticle19GetPositionOfMarkerE6size_t"><code class="docutils literal notranslate"><span class="pre">GetPositionOfMarker()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#_CPPv4N9mParticle19syncKernelsToDeviceEv"><code class="docutils literal notranslate"><span class="pre">syncKernelsToDevice()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#_CPPv4N9mParticle9d_kernelsE"><code class="docutils literal notranslate"><span class="pre">d_kernels</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N9mParticle19m_redistributed_locE"><code class="docutils literal notranslate"><span class="pre">m_redistributed_loc</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N9mParticle10m_pvf_workE"><code class="docutils literal notranslate"><span class="pre">m_pvf_work</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#_CPPv4N9mParticle17RKPM_STENCIL_SIZEE"><code class="docutils literal notranslate"><span class="pre">RKPM_STENCIL_SIZE</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N9mParticle7PvfWorkE"><code class="docutils literal notranslate"><span class="pre">mParticle::PvfWork</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -312,6 +320,45 @@
 </dd></dl>
 
 <dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N9mParticle24UpdateParticlesReferenceEiRK8MultiFabRK8MultiFabR8MultiFabR8MultiFab4Real">
+<span id="_CPPv3N9mParticle24UpdateParticlesReferenceEiRK8MultiFabRK8MultiFabR8MultiFabR8MultiFab4Real"></span><span id="_CPPv2N9mParticle24UpdateParticlesReferenceEiRK8MultiFabRK8MultiFabR8MultiFabR8MultiFab4Real"></span><span id="mParticle::UpdateParticlesReference__i.MultiFabCR.MultiFabCR.MultiFabR.MultiFabR.Real"></span><span class="target" id="classmParticle_1a0d4970d31681f43e642b443200d55538"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">UpdateParticlesReference</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">iStep</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">MultiFab</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">Euler_old</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">MultiFab</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">Euler</span></span>, <span class="n"><span class="pre">MultiFab</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">phi_nodal</span></span>, <span class="n"><span class="pre">MultiFab</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">pvf</span></span>, <span class="n"><span class="pre">Real</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">dt</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N9mParticle24UpdateParticlesReferenceEiRK8MultiFabRK8MultiFabR8MultiFabR8MultiFab4Real" title="Link to this definition"></a><br /></dt>
+<dd><p>Reference pvf / 6DOF update (particle_inputs.pvf_method = 0): whole-domain level set, pvf and reductions for every particle. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N9mParticle20UpdateParticlesFusedEiRK8MultiFabRK8MultiFabR8MultiFab4Real">
+<span id="_CPPv3N9mParticle20UpdateParticlesFusedEiRK8MultiFabRK8MultiFabR8MultiFab4Real"></span><span id="_CPPv2N9mParticle20UpdateParticlesFusedEiRK8MultiFabRK8MultiFabR8MultiFab4Real"></span><span id="mParticle::UpdateParticlesFused__i.MultiFabCR.MultiFabCR.MultiFabR.Real"></span><span class="target" id="classmParticle_1a7da05a5a3d94a8c47fddb77ca75a7bca"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">UpdateParticlesFused</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">iStep</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">MultiFab</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">Euler_old</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">MultiFab</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">Euler</span></span>, <span class="n"><span class="pre">MultiFab</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">pvf</span></span>, <span class="n"><span class="pre">Real</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">dt</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N9mParticle20UpdateParticlesFusedEiRK8MultiFabRK8MultiFabR8MultiFab4Real" title="Link to this definition"></a><br /></dt>
+<dd><p>Bounding-box pvf / 6DOF update (particle_inputs.pvf_method = 1, default): per-particle work limited to the particle’s own cells, packed MPI. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N9mParticle12SixDOFUpdateER6kernel4Real">
+<span id="_CPPv3N9mParticle12SixDOFUpdateER6kernel4Real"></span><span id="_CPPv2N9mParticle12SixDOFUpdateER6kernel4Real"></span><span id="mParticle::SixDOFUpdate__kernelR.Real"></span><span class="target" id="classmParticle_1a00e0980e62c76118840a36922bcc6f12"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">SixDOFUpdate</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N9mParticle12SixDOFUpdateER6kernel4Real" title="mParticle::SixDOFUpdate::kernel"><span class="n"><span class="pre">kernel</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">kernel</span></span>, <span class="n"><span class="pre">Real</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">dt</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N9mParticle12SixDOFUpdateER6kernel4Real" title="Link to this definition"></a><br /></dt>
+<dd><p>6DOF update of one particle on the I/O rank (no communication). </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>kernel</strong> – Particle to update </p></li>
+<li><p><strong>dt</strong> – Time step size </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N9mParticle20BroadcastKernelStateEv">
+<span id="_CPPv3N9mParticle20BroadcastKernelStateEv"></span><span id="_CPPv2N9mParticle20BroadcastKernelStateEv"></span><span id="mParticle::BroadcastKernelState"></span><span class="target" id="classmParticle_1a733dc3f1cf8ef6b2a15b55f528f3ccdb"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">BroadcastKernelState</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N9mParticle20BroadcastKernelStateEv" title="Link to this definition"></a><br /></dt>
+<dd><p>Broadcast location/velocity/omega (+ *_old) of all particles from the I/O rank in one message. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N9mParticle23MarkersNeedRedistributeEv">
+<span id="_CPPv3N9mParticle23MarkersNeedRedistributeEv"></span><span id="_CPPv2N9mParticle23MarkersNeedRedistributeEv"></span><span id="mParticle::MarkersNeedRedistribute"></span><span class="target" id="classmParticle_1a79b7f20f6e42e1253f2523b0799a96a2"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">MarkersNeedRedistribute</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N9mParticle23MarkersNeedRedistributeEv" title="Link to this definition"></a><br /></dt>
+<dd><p>Whether the marker container must be redistributed: true for prescribed fins, moved particle centres, or markers not yet redistributed. </p>
+<p>Updates the remembered centres when it returns true. </p>
+</dd></dl>
+
+<dl class="cpp function">
 <dt class="sig sig-object cpp" id="_CPPv4N9mParticle19DoParticleCollisionEi">
 <span id="_CPPv3N9mParticle19DoParticleCollisionEi"></span><span id="_CPPv2N9mParticle19DoParticleCollisionEi"></span><span id="mParticle::DoParticleCollision__i"></span><span class="target" id="classmParticle_1a42f1f396227aff191b1720e94a622fcc"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">DoParticleCollision</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">model</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N9mParticle19DoParticleCollisionEi" title="Link to this definition"></a><br /></dt>
 <dd><p>Handle particle-particle collision interactions. </p>
@@ -413,6 +460,18 @@
 <dd><p>GPU-accessible copy of kernel data for use in device lambdas. </p>
 </dd></dl>
 
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N9mParticle19m_redistributed_locE">
+<span id="_CPPv3N9mParticle19m_redistributed_locE"></span><span id="_CPPv2N9mParticle19m_redistributed_locE"></span><span id="mParticle::m_redistributed_loc__Vector:RealVect:"></span><span class="target" id="classmParticle_1adb5f27f6f48989071b83d7d93ac9dacd"></span><span class="n"><span class="pre">Vector</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">RealVect</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">m_redistributed_loc</span></span></span><a class="headerlink" href="#_CPPv4N9mParticle19m_redistributed_locE" title="Link to this definition"></a><br /></dt>
+<dd><p>Particle centres at the time of the last marker Redistribute (see MarkersNeedRedistribute). </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N9mParticle10m_pvf_workE">
+<span id="_CPPv3N9mParticle10m_pvf_workE"></span><span id="_CPPv2N9mParticle10m_pvf_workE"></span><span id="mParticle::m_pvf_work__Vector:PvfWork:"></span><span class="target" id="classmParticle_1a43ed4d994dd60691207f1e6f0bcd5dae"></span><span class="n"><span class="pre">Vector</span></span><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="#_CPPv4N9mParticle7PvfWorkE" title="mParticle::PvfWork"><span class="n"><span class="pre">PvfWork</span></span></a><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">m_pvf_work</span></span></span><a class="headerlink" href="#_CPPv4N9mParticle10m_pvf_workE" title="Link to this definition"></a><br /></dt>
+<dd><p>Cached work list for UpdateParticlesFused (see PvfWorkList). </p>
+</dd></dl>
+
 </div>
 <div class="breathe-sectiondef docutils container">
 <p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-static-attributes">Public Static Attributes</p>
@@ -423,6 +482,14 @@
 </dd></dl>
 
 </div>
+<dl class="cpp struct">
+<dt class="sig sig-object cpp" id="_CPPv4N9mParticle7PvfWorkE">
+<span id="_CPPv3N9mParticle7PvfWorkE"></span><span id="_CPPv2N9mParticle7PvfWorkE"></span><span id="mParticle::PvfWork"></span><span class="target" id="structmParticle_1_1PvfWork"></span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">PvfWork</span></span></span><a class="headerlink" href="#_CPPv4N9mParticle7PvfWorkE" title="Link to this definition"></a><br /></dt>
+<dd><div class="docutils container">
+<em>#include &lt;DiffusedIB_Parallel.H&gt;</em></div>
+<p>One unit of pvf work: particle kidx on this rank’s grid <code class="docutils literal notranslate"><span class="pre">grid</span></code>, cells <code class="docutils literal notranslate"><span class="pre">ibx</span></code>. </p>
+</dd></dl>
+
 </dd></dl>
 
 </dd></dl>
@@ -440,7 +507,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2025, IAMReX Team.</p>
+    <p>&#169; Copyright 2026, IAMReX Team.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
