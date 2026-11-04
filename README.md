@@ -14,6 +14,9 @@
   <img src="https://img.shields.io/github/discussions/ruohai0925/IAMReX" alt="GitHub Discussions">
   </a>
   <br>
+  <a href="https://doi.org/10.5281/zenodo.17602905">
+  <img src="https://zenodo.org/badge/DOI/10.5281/zenodo.17602905.svg" alt="Zenodo DOI">
+  </a>
   <a href="https://joss.theoj.org/papers/10.21105/joss.08080">
   <img src="https://img.shields.io/badge/JOSS-10.21105%2Fjoss.08080-green" alt="JOSS">
   </a>
@@ -139,6 +142,10 @@ To cite IAMReX, please use
     eprint = {https://arc.aiaa.org/doi/pdf/10.2514/6.2025-1865},
 }
 ```
+
+To cite the IAMReX software itself (rather than the papers above), use
+[`CITATION.cff`](CITATION.cff) (or GitHub's "Cite this repository" button),
+or the archived Zenodo snapshot: [10.5281/zenodo.17602905](https://doi.org/10.5281/zenodo.17602905).
 
 ## License
 
