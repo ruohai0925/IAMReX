@@ -1,6 +1,19 @@
 <div align="center">
 <img src="./README_figures/IAMReX.png" alt="title" width="300">
 <p align="center">
+  <a href="https://github.com/ruohai0925/IAMReX/actions/workflows/test_IAMReX.yml">
+  <img src="https://github.com/ruohai0925/IAMReX/actions/workflows/test_IAMReX.yml/badge.svg?branch=development" alt="Build Status">
+  </a>
+  <a href="LICENSE">
+  <img src="https://img.shields.io/badge/License-BSD--3--Clause-blue.svg" alt="License">
+  </a>
+  <a href="https://api.reuse.software/info/github.com/ruohai0925/IAMReX">
+  <img src="https://api.reuse.software/badge/github.com/ruohai0925/IAMReX" alt="REUSE status">
+  </a>
+  <a href="https://github.com/ruohai0925/IAMReX/discussions">
+  <img src="https://img.shields.io/github/discussions/ruohai0925/IAMReX" alt="GitHub Discussions">
+  </a>
+  <br>
   <a href="https://joss.theoj.org/papers/10.21105/joss.08080">
   <img src="https://img.shields.io/badge/JOSS-10.21105%2Fjoss.08080-green" alt="JOSS">
   </a>

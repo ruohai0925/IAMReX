@@ -1,0 +1,44 @@
+# SPDX-FileCopyrightText: 2026 Yadong Zeng<zdsjtu@gmail.com>
+#
+# SPDX-License-Identifier: BSD-3-Clause
+
+name: Bug report
+description: Something in IAMReX is crashing, producing wrong results, or failing to build.
+labels: ["bug"]
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: What happened?
+      description: A clear description of the bug, and what you expected instead.
+    validations:
+      required: true
+  - type: textarea
+    id: inputs
+    attributes:
+      label: Inputs file / case
+      description: >
+        The inputs file (or a minimal case derived from Tutorials/) that reproduces
+        the problem. If it's a build failure, the exact GNUmakefile options instead.
+      render: shell
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant log / error output
+      render: shell
+  - type: input
+    id: version
+    attributes:
+      label: IAMReX version / commit
+      description: Output of `git -C IAMReX rev-parse HEAD`, or the release tag.
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: Compiler, MPI, CUDA/HIP version if relevant, OS, and how it was built (USE_MPI, USE_CUDA, DIM, PRECISION, ...).
+    validations:
+      required: true
