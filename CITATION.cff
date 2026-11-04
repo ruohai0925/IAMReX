@@ -11,6 +11,10 @@ repository-code: "https://github.com/ruohai0925/IAMReX"
 url: "https://ruohai0925.github.io/IAMReX/"
 license: BSD-3-Clause
 type: software
+identifiers:
+  - type: doi
+    value: "10.5281/zenodo.17602905"
+    description: "Archived snapshot of IAMReX on Zenodo, corresponding to the JOSS-reviewed release."
 authors:
   - family-names: Li
     given-names: Chun
