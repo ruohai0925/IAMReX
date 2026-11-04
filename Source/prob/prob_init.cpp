@@ -148,6 +148,30 @@ void NavierStokes::prob_initData ()
                                   domain, dx, problo, probhi, IC);
         }
 
+        else if ( 105 == probtype )
+        {
+            // Plane Couette flow: x is streamwise, y is the velocity-gradient
+            // direction. Constant wall velocities are specified independently
+            // in the inputs file. Initialize the shear without a wall spin-up.
+            const Real shear_rate = shearrate;
+            const Real y_mid = Real(0.5) * (problo[1] + probhi[1]);
+            const int j_lo = domain.smallEnd(1);
+            auto const& vel = S_new.array(mfi, Xvel);
+            auto const& scal = S_new.array(mfi, Density);
+            amrex::ParallelFor(vbx, [=] AMREX_GPU_DEVICE (int i, int j, int k) noexcept
+            {
+                const Real y = problo[1] + (j - j_lo + Real(0.5)) * dx[1];
+                vel(i,j,k,0) = IC.v_x + shear_rate * (y - y_mid);
+                vel(i,j,k,1) = IC.v_y;
+#if (AMREX_SPACEDIM == 3)
+                vel(i,j,k,2) = IC.v_z;
+#endif
+                scal(i,j,k,0) = IC.density;
+                for (int n = 1; n < nscal; ++n) {
+                    scal(i,j,k,n) = Real(0.0);
+                }
+            });
+        }
         else if ( 97 == probtype )
         {
             init_channel(vbx, P_new.array(mfi), S_new.array(mfi, Xvel),
