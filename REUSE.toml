@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: 2025 Shuai He<hswind53@gmail.com>
+# SPDX-FileCopyrightText: 2025 - 2026 Shuai He<hswind53@gmail.com>
 #
 # SPDX-License-Identifier: BSD-3-Clause
 
@@ -26,7 +26,7 @@ SPDX-License-Identifier = "LicenseRef-OpenSource"
 [[annotations]]
 path = "Docs/IAMReX_documentation/**/*"
 precedence = "aggregate"
-SPDX-FileCopyrightText = "2023 - 2025 Yadong Zeng<zdsjtu@gmail.com> & ZhuXu Li<1246206018@qq.com>"
+SPDX-FileCopyrightText = "2023 - 2026 Yadong Zeng<zdsjtu@gmail.com> & ZhuXu Li<1246206018@qq.com>"
 SPDX-License-Identifier = "BSD-3-Clause"
 
 [[annotations]]
@@ -38,7 +38,7 @@ SPDX-License-Identifier = "LicenseRef-OpenSource"
 [[annotations]]
 path = "Tutorials/**/*"
 precedence = "aggregate"
-SPDX-FileCopyrightText = "2016 - 2023 Berkeley Lab; 2023 - 2025 Yadong Zeng<zdsjtu@gmail.com>"
+SPDX-FileCopyrightText = "2016 - 2023 Berkeley Lab; 2023 - 2026 Yadong Zeng<zdsjtu@gmail.com>"
 SPDX-License-Identifier = "LicenseRef-OpenSource"
 
 [[annotations]]
@@ -50,7 +50,7 @@ SPDX-License-Identifier = "LicenseRef-OpenSource"
 [[annotations]]
 path = "Tools/plt_to_numpyArray/**/*"
 precedence = "aggregate"
-SPDX-FileCopyrightText = "2023 - 2025 Yadong Zeng<zdsjtu@gmail.com>"
+SPDX-FileCopyrightText = "2023 - 2026 Yadong Zeng<zdsjtu@gmail.com>"
 SPDX-License-Identifier = "BSD-3-Clause"
 
 [[annotations]]
@@ -75,30 +75,31 @@ path = [
      "Tutorials_profiling/TracerAdvection/**/*"
 ]
 precedence = "aggregate"
-SPDX-FileCopyrightText = "2016 - 2023 Berkeley Lab; 2023 - 2025 Yadong Zeng<zdsjtu@gmail.com>"
+SPDX-FileCopyrightText = "2016 - 2023 Berkeley Lab; 2023 - 2026 Yadong Zeng<zdsjtu@gmail.com>"
 SPDX-License-Identifier = "LicenseRef-OpenSource"
 
 [[annotations]]
 path = "JOSS_paper/**/*"
 precedence = "aggregate"
-SPDX-FileCopyrightText = "2023 - 2025 Yadong Zeng<zdsjtu@gmail.com>"
+SPDX-FileCopyrightText = "2023 - 2026 Yadong Zeng<zdsjtu@gmail.com>"
 SPDX-License-Identifier = "BSD-3-Clause"
 
 [[annotations]]
 path = "README_figures/**/*"
 precedence = "aggregate"
-SPDX-FileCopyrightText = "2023 - 2025 Yadong Zeng<zdsjtu@gmail.com>"
+SPDX-FileCopyrightText = "2023 - 2026 Yadong Zeng<zdsjtu@gmail.com>"
 SPDX-License-Identifier = "BSD-3-Clause"
 
 [[annotations]]
 path = [
     ".*",
     "IAMeX_Particle_Flow_CN.md",
+    "LICENSE",
     "license.txt",
     "README.md"
 ]
 precedence = "aggregate"
-SPDX-FileCopyrightText = "2023 - 2025 Yadong Zeng<zdsjtu@gmail.com>"
+SPDX-FileCopyrightText = "2023 - 2026 Yadong Zeng<zdsjtu@gmail.com>"
 SPDX-License-Identifier = "BSD-3-Clause"
 
 

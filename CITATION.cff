@@ -1,0 +1,75 @@
+# SPDX-FileCopyrightText: 2026 Yadong Zeng<zdsjtu@gmail.com>
+#
+# SPDX-License-Identifier: BSD-3-Clause
+
+cff-version: 1.2.0
+message: "If you use IAMReX in your research, please cite it using the metadata below, and the JOSS paper in preferred-citation."
+title: IAMReX
+version: v1.3
+date-released: "2026-10-26"
+repository-code: "https://github.com/ruohai0925/IAMReX"
+url: "https://ruohai0925.github.io/IAMReX/"
+license: BSD-3-Clause
+type: software
+authors:
+  - family-names: Li
+    given-names: Chun
+  - family-names: Li
+    given-names: Xuzhu
+  - family-names: Wang
+    given-names: Yiliang
+  - family-names: Liu
+    given-names: Dewen
+  - family-names: He
+    given-names: Shuai
+  - family-names: Huang
+    given-names: Boqiao
+  - family-names: Cheng
+    given-names: Haoran
+  - family-names: Li
+    given-names: Xiaokai
+  - family-names: Li
+    given-names: Wenzhuo
+  - family-names: Tang
+    given-names: Mingze
+  - family-names: Zhu
+    given-names: Zhengping
+  - family-names: Zeng
+    given-names: Yadong
+    email: zdsjtu@gmail.com
+preferred-citation:
+  type: article
+  title: "IAMReX: an adaptive framework for the multiphase flow and fluid-particle interaction problems"
+  journal: "Journal of Open Source Software"
+  volume: 10
+  issue: 115
+  start: "8080"
+  year: 2025
+  doi: "10.21105/joss.08080"
+  url: "https://doi.org/10.21105/joss.08080"
+  authors:
+    - family-names: Li
+      given-names: Chun
+    - family-names: Li
+      given-names: Xuzhu
+    - family-names: Wang
+      given-names: Yiliang
+    - family-names: Liu
+      given-names: Dewen
+    - family-names: He
+      given-names: Shuai
+    - family-names: Huang
+      given-names: Boqiao
+    - family-names: Cheng
+      given-names: Haoran
+    - family-names: Li
+      given-names: Xiaokai
+    - family-names: Li
+      given-names: Wenzhuo
+    - family-names: Tang
+      given-names: Mingze
+    - family-names: Zhu
+      given-names: Zhengping
+    - family-names: Zeng
+      given-names: Yadong
+      email: zdsjtu@gmail.com
