@@ -1,0 +1,25 @@
+# SPDX-FileCopyrightText: 2026 Yadong Zeng<zdsjtu@gmail.com>
+#
+# SPDX-License-Identifier: BSD-3-Clause
+
+name: Feature request
+description: Suggest a new solver, physics model, tutorial, or other enhancement.
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem would this solve?
+      description: What case or workflow is currently hard or impossible with IAMReX?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed approach
+      description: How you'd expect this to work (new ParmParse keys, a new geometry_type, a new Tutorials/ case, etc.), if you have one in mind.
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: Existing workarounds, or how comparable codes (IAMR, incflo, IBAMR, basilisk, ...) handle this, if relevant.

@@ -1,0 +1,9 @@
+# SPDX-FileCopyrightText: 2026 Yadong Zeng<zdsjtu@gmail.com>
+#
+# SPDX-License-Identifier: BSD-3-Clause
+
+blank_issues_enabled: true
+contact_links:
+  - name: Ask a question
+    url: https://github.com/ruohai0925/IAMReX/discussions
+    about: For usage questions and general discussion, please use GitHub Discussions instead of an issue.
