@@ -118,6 +118,31 @@ where :math:`\mathbf{R}_l^n = \left(\mathbf{X}^{n}_{l} - \mathbf{X}_{r}^{n}\righ
 
    \mathbf{X}_{r}^{n+1}=\mathbf{X}_{r}^{n}+\frac{\Delta t}{2}(\mathbf{U}_{r}^{n+1}+\mathbf{U}_{r}^{n}).
 
+Prescribed traveling-wave fins
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The rigid-body prescribed motion above assumes a fixed shape that only translates and rotates. Two further kinematic constraints, selected with ``geometry_type = 3`` and ``geometry_type = 4`` on the particle-input kernel, instead deform a thin open surface — a fin — according to a closed-form traveling wave. Lagrangian markers are placed on a structured :math:`N_{\mathrm{chord}} \times N_{\mathrm{span}}` grid (``fin_n_chord``, ``fin_n_span``) over the chordwise coordinate :math:`s \in [0, L]` (``fin_length``) and the spanwise coordinate :math:`r` (``fin_span``). The desired Lagrangian velocity used in Algorithm-1_ is the analytic time derivative of the marker position below, in place of the rigid-body :eq:`eq:pr1`. Because the surface deforms even when its reference origin is fixed, these markers are redistributed every step rather than only when their centroid moves.
+
+**Twisting fin** (``geometry_type = 3``): each chordwise station rotates about the chord axis, with the rotation phase advancing along the chord,
+
+.. math::
+
+   \mathbf{X}(s, r, t) = \mathbf{X}_0 + \left(s,\; r\cos\theta(s,t),\; r\sin\theta(s,t)\right), \qquad
+   \theta(s,t) = A \sin\left(2\pi f t - \frac{2\pi s}{\lambda} + \phi\right),
+
+with amplitude :math:`A` (``fin_amplitude_deg``, degrees), frequency :math:`f` (``fin_frequency``), wavelength :math:`\lambda` (``fin_wavelength``), and phase :math:`\phi` (``fin_phase``).
+
+**Transverse traveling-wave fin** (``geometry_type = 4``): the surface stays in a plane and undulates laterally,
+
+.. math::
+
+   \mathbf{X}(s, r, t) = \mathbf{X}_0 + \left(s,\; A\sin\theta(s,t),\; r\right), \qquad
+   \theta(s,t) = \frac{2\pi n s}{L} - 2\pi f t + \phi,
+
+with wave amplitude :math:`A` (``fin_wave_amplitude``), wave number :math:`n` (``fin_wave_number``), frequency :math:`f` (``fin_frequency``), and a phase :math:`\phi` given per fin by ``fin_wave_phase_deg`` (or by the shared ``fin_phase`` when only one fin is given). The chordwise marker quadrature weight is scaled by the local arc-length stretch :math:`\sqrt{1+(\partial_s y)^2}` so that the spanwise-integrated force stays consistent as the surface stretches.
+
+Both kinematics are incompatible with RKPM markers, the free-motion solve below, and the rigid-body collision model, since an open surface has no enclosed volume; their forces and moments are written to ``IB_Fin_<id>.csv`` rather than ``IB_Particle_<id>.csv``. See ``Tutorials/fin3d`` (a twisting fin in otherwise quiescent water) and ``Tutorials/fin3d_pure_wave`` (two transverse traveling-wave fins in a uniform inflow) for worked examples.
+
 Free motion
 ~~~~~~~~~~~
 
