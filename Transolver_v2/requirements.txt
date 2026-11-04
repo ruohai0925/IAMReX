@@ -1,0 +1,7 @@
+numpy
+pandas
+pyarrow
+torch
+
+# optional: enables training-curve plots in train_v2.py (skipped automatically if absent)
+matplotlib
