@@ -198,3 +198,5 @@ model = TransolverSlim(**ck["cfg"]); model.load_state_dict(ck["state_dict"]); mo
 
 `torch`（CPU 即可）、`numpy`、`pandas`、`pyarrow`；`matplotlib` 可选（缺失自动跳过绘图）。
 **不需要** physicsnemo / warp / s3fs / jaxtyping。
+
+见 `requirements.txt`：`pip install -r requirements.txt`。

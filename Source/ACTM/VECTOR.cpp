@@ -25,7 +25,6 @@ VECTOR VECTOR::operator-(const VECTOR &V) const
     ans.y = this->y - V.y;
     ans.z = this->z - V.z;
     return ans;
-    // TODO: 在此处插入 return 语句
 }
 
 VECTOR VECTOR::operator-() const

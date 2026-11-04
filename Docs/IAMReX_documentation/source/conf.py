@@ -14,7 +14,7 @@ import sphinx_rtd_theme
 subprocess.call('cd ../doxygen; make html', shell=True)
 
 project = 'IAMReX'
-copyright = '2025, IAMReX Team'
+copyright = '2026, IAMReX Team'
 author = 'IAMReX Team'
 release = '0.1.0'
 
