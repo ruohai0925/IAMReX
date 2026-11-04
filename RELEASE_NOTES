@@ -348,3 +348,40 @@ Removed the inherited GCC, CUDA, HIP and SYCL workflows, which had never run
   for IAMReX and referenced dependency scripts absent from this repository.
 Documentation updates: contact address, CONTRIBUTING, Test_IAMReX, RKPM tutorial
   and Tutorials_profiling READMEs.
+
+10/30/26
+Release v1.3 (October, 2026)
+Prescribed 3D traveling-wave fins in the parallel immersed boundary method,
+  with two new tutorials, Tutorials/fin3d and Tutorials/fin3d_pure_wave.
+GPU weak-scaling optimization of the parallel immersed boundary method, and
+  vectorization of the RKPM weight module.
+MPI is now optional: serial builds work through AMREX_USE_MPI guards.
+Level-set mass conservation: new ns.epsilon_massfix parameter and a
+  phase-volume diagnostic, with cross-validation notes and data under
+  Tools/ls2d-crosscheck.
+New semicoarsening parameter for the MLMG-based solves.
+Bug fixes: an off-by-one Lagrangian marker index that read past the end of
+  its array, LES strain-rate contraction and SGS density scaling, a
+  redistribution bug, wrong force data written to CSV, the delta-function
+  support test in level-set mass_fix, ellipsoid semi-axes validation, the
+  ellipsoid level set at FP32 precision, unsupported geometry_type values
+  now rejected instead of silently ignored, and level set phi computed only
+  for sphere particles where intended.
+
+11/4/26
+Release v1.4 (November, 2026)
+Documentation for the prescribed traveling-wave fin kinematics
+  (geometry_type = 3 and 4) added in v1.3.
+Added a root LICENSE file with the BSD-3-Clause text, so GitHub's license
+  detector recognizes the project; license.txt was prose pointing at
+  LICENSES/, not license text.
+Added CODE_OF_CONDUCT.md, SECURITY.md, and CITATION.cff, the last of which
+  also records the project's archived Zenodo DOI (10.5281/zenodo.17602905)
+  and enables GitHub's "Cite this repository" button.
+Added GitHub issue and pull request templates.
+Added build-status, license, REUSE-compliance, Discussions, and Zenodo DOI
+  badges to the README.
+Copyright year bumped to 2026 across source file headers and REUSE.toml.
+Pinned the draft-pdf workflow's openjournals-draft-action to a commit
+  instead of floating on @master, and added a missing requirements.txt for
+  Transolver_v2.
