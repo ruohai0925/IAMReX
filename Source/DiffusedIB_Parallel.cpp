@@ -748,7 +748,11 @@ void mParticle::InitParticles(const Vector<Real>& x,
             continue;
         }
 
-        mKernel.Vp = Math::pi<Real>() * 4 / 3 * Math::powi<3>(radius[real_index]);
+        if (mKernel.geometry_type == 2) {
+            mKernel.Vp = Math::pi<Real>() * 4 / 3 * radius[real_index] * radius2[real_index] * radius3[real_index];
+        } else {
+            mKernel.Vp = Math::pi<Real>() * 4 / 3 * Math::powi<3>(radius[real_index]);
+        }
 
         if (ParticleProperties::RKPM == 0) {
 
