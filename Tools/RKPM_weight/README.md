@@ -54,6 +54,27 @@ require Matplotlib, ML inference requires PyTorch, and MPMD transport requires
 `mpi4py`. The MPI implementation used by `mpi4py` must be compatible with the
 one used to build IAMReX.
 
+## Ellipsoid Surface Markers
+
+`generate_ellipsoid_points.py` generates a requested number of surface markers
+using E3 repulsion (NumPy and SciPy required). Both the command line and Python
+function interpret the three semi-axis lengths directly as x/y/z, in the
+supplied order. To put the long axis along x, supply its length first, as in
+`--axes 0.0655 0.0437 0.0437`.
+
+```bash
+python3 generate_ellipsoid_points.py -n 512 \
+  --axes 0.0655 0.0437 0.0437 --output ellipsoid_points.txt --plot-areas
+```
+
+The coordinate file uses `# X Y Z` followed by exactly N coordinate rows, ready
+for `main.py --geometry ... --body-frame`. The center defaults to the origin.
+Adjacent `.areas.csv` and `.areas.json` files report estimated surface Voronoi
+areas and their deviation from S/N; `--plot-areas` also writes a PNG and requires
+Matplotlib. All reports use the same final x/y/z semi-axes as the coordinates.
+Match `particle_inputs.radius`, `radius2`, and `radius3` to those final body-frame
+semi-axes when configuring an ellipsoid.
+
 ## Runtime Configuration File
 
 All Python-side runtime arguments can be stored in an AMReX-style `key = value`
