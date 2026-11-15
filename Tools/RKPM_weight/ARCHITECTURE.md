@@ -11,6 +11,12 @@ contracts. Update it in the same change whenever a module responsibility,
 dependency, runtime path, command-line option, data shape or MPMD contract
 changes.
 
+`generate_ellipsoid_points.py` is a standalone NumPy/SciPy preprocessing tool:
+E3 surface relaxation produces N-by-3 marker coordinates for the geometry
+input below, plus independent surface-area diagnostics. Both the CLI and Python
+API use the supplied x/y/z semi-axis order. Coordinates and area diagnostics
+share that axis order. This preprocessing runs separately from the weight solvers.
+
 ## System Architecture
 
 ```mermaid
