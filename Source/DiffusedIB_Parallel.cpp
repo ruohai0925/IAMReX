@@ -422,7 +422,7 @@ void CalculateSumT_cir (RealVect& sum,
 
     auto const& E_data = E.const_arrays();
     auto const& pvf_data = pvf.const_arrays();
-    const Real d = AMREX_D_TERM(dx[0], *dx[1], *dx[2]);   // cell volume, grid may be anisotropic
+    const Real d = AMREX_D_TERM(dx[0], *dx[1], *dx[2]);
     GpuTuple<Real, Real, Real> tmpSum = ParReduce(TypeList<ReduceOpSum,ReduceOpSum,ReduceOpSum>{}, TypeList<Real, Real, Real>{},E, IntVect{0},
     [=] AMREX_GPU_DEVICE (int box_no, int i, int j, int k) noexcept -> GpuTuple<Real, Real, Real>{
         auto E_ = E_data[box_no];
@@ -1804,7 +1804,7 @@ void mParticle::UpdateParticlesFused(int iStep,
     const int nk = static_cast<int>(particle_kernels.size());
     const auto dx  = ParticleProperties::dx;
     const auto plo = ParticleProperties::plo;
-    const Real dvol = AMREX_D_TERM(dx[0], *dx[1], *dx[2]);   // cell volume, grid may be anisotropic
+    const Real dvol = AMREX_D_TERM(dx[0], *dx[1], *dx[2]);
     const int vidx = ParticleProperties::euler_velocity_index;
 
     for (auto const& kern : particle_kernels) {
