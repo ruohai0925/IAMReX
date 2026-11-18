@@ -3,6 +3,13 @@
 Moved here from `taskpreparation/ls2d-baseline/` so that ls2d-baseline contains only the teaching code and its
 comparison with the papers. VTK/npy snapshots in `out_archive/` are git-ignored; each run directory keeps its `diag.csv`, `summary.txt` and log.
 
+Before running the Python scripts, activate a virtual environment and install
+[`requirements.txt`](requirements.txt) from this directory:
+
+```bash
+python3 -m pip install -r requirements.txt
+```
+
 | item | content |
 |---|---|
 | `PLAN.md` | the original plan / milestone log of ls2d-baseline (Chinese) |
