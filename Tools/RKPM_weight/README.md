@@ -42,6 +42,13 @@ installed. In the commands below, `python3` means that interpreter; activate a
 virtual environment first or replace `python3` with its absolute path when
 needed.
 
+From `Tools/RKPM_weight/`, install the standard dependencies from
+[`requirements.txt`](requirements.txt):
+
+```bash
+python3 -m pip install -r requirements.txt
+```
+
 NumPy is required for all modes. Point-cloud generation and visualization also
 require Matplotlib, ML inference requires PyTorch, and MPMD transport requires
 `mpi4py`. The MPI implementation used by `mpi4py` must be compatible with the

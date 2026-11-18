@@ -1,0 +1,5 @@
+# SPDX-FileCopyrightText: 2026 IAMReX contributors
+# SPDX-License-Identifier: BSD-3-Clause
+
+numpy
+matplotlib
