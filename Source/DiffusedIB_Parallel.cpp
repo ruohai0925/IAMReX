@@ -44,7 +44,7 @@ namespace ParticleProperties{
     Vector<Real> _radius2;
     Vector<Real> _radius3;
     Vector<int> _geometry_type;
-    Vector<Real> _orientation;
+    Vector<Real> _orientation{1.0, 0.0, 0.0, 0.0};
     Real rd{0.0};
     Vector<int> TLX{}, TLY{},TLZ{},RLX{},RLY{},RLZ{};
     int euler_finest_level{0};
@@ -2607,6 +2607,7 @@ void Particles::Initialize()
         p_file.query("pvf_method", ParticleProperties::pvf_method);
         // update with RKPM method
         p_file.query("RKPM", ParticleProperties::RKPM);
+        p_file.queryarr("orientation", ParticleProperties::_orientation, 0, 4);
 
         ParmParse ns("ns");
         ns.get("fluid_rho",      ParticleProperties::euler_fluid_rho);
