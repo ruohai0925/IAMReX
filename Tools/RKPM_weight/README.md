@@ -67,6 +67,12 @@ python3 generate_ellipsoid_points.py -n 512 \
   --axes 0.0655 0.0437 0.0437 --output ellipsoid_points.txt --plot-areas
 ```
 
+For a transverse ellipsoid with its long axis along y, use
+`--axes 0.0437 0.0655 0.0437 --mirror-axis y`. This requires an even marker
+count and reflects the first half across the plane `y = center_y` in the
+same order. E3 relaxation includes the full mirrored cloud in its energy.
+Generate the `.id` and `.lag` from the new coordinate file.
+
 The coordinate file uses `# X Y Z` followed by exactly N coordinate rows, ready
 for `main.py --geometry ... --body-frame`. The center defaults to the origin.
 Adjacent `.areas.csv` and `.areas.json` files report estimated surface Voronoi

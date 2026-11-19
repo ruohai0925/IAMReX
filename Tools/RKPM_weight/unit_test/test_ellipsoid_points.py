@@ -91,25 +91,59 @@ class EllipsoidPointTests(unittest.TestCase):
                     np.testing.assert_array_equal(rows["x"], points[:, 0])
                     self.assertAlmostEqual(float(rows["area"].sum()), report["total_surface_area"])
 
+    def test_cli_produces_mirror_pairs_around_translated_center(self):
+        center = np.array([2, 2.25, 2.25])
+        axes = np.array([0.04, 0.06, 0.04])
+        with tempfile.TemporaryDirectory() as directory:
+            output = Path(directory) / "markers.txt"
+            with contextlib.redirect_stdout(io.StringIO()):
+                main(["-n", "32", "--axes", *map(str, axes), "--center", *map(str, center),
+                      "--mirror-axis", "y", "--iterations", "10", "-o", str(output)])
+            points = np.loadtxt(output)
+        positive, negative = np.split(points - center, 2)
+        self.assertEqual(points.shape, (32, 3))
+        self.assertEqual(len(np.unique(points, axis=0)), 32)
+        self.assertTrue(np.all(positive[:, 1] > 0))
+        np.testing.assert_allclose(negative, positive * (1, -1, 1), atol=5e-16, rtol=0)
+        np.testing.assert_allclose(np.sum(((points - center) / axes)**2, axis=1),
+                                   1, atol=3e-14, rtol=0)
+
+    def test_mirror_axis_works_with_centroid_and_requires_even_count(self):
+        for normal_axis, mirror_axis in enumerate("xyz"):
+            with self.subTest(mirror_axis=mirror_axis):
+                points = generate_ellipsoid_points(24, (1, 1.5, 0.8), method="centroid",
+                                                   mirror_axis=mirror_axis, iterations=3)
+                positive, negative = np.split(points, 2)
+                sign = np.ones(3)
+                sign[normal_axis] = -1
+                np.testing.assert_array_equal(negative, positive * sign)
+                self.assertTrue(np.all(positive[:, normal_axis] > 0))
+        with self.assertRaisesRegex(ValueError, "even number of points"):
+            generate_ellipsoid_points(25, (1, 1.5, 0.8), mirror_axis="y")
+
     def test_e3_energy_and_gradient_against_pair_distances(self):
         axes = np.asarray((1.0, 1.5, 0.8))
-        angles = np.random.default_rng(15).uniform(0.2, 2.5, 16)
+        angles = np.random.default_rng(15).uniform(0.2, 1.4, 16)
 
-        def reference(vector):
+        def reference(vector, mirror):
             theta, phi = vector.reshape(-1, 2).T
             points = np.column_stack((np.sin(theta)*np.cos(phi),
                                       np.sin(theta)*np.sin(phi), np.cos(theta))) * axes
+            if mirror:
+                points = np.concatenate((points, points * (1, 1, -1)))
             return np.mean(pdist(points)**-3)
 
-        energy, gradient = _riesz3_energy_gradient(angles, axes, block_size=3)
-        self.assertAlmostEqual(energy, reference(angles))
-        finite = np.empty_like(angles)
-        for index in range(len(angles)):
-            plus, minus = angles.copy(), angles.copy()
-            plus[index] += 1e-6
-            minus[index] -= 1e-6
-            finite[index] = (reference(plus)-reference(minus))/2e-6
-        self.assertLess(np.linalg.norm(gradient-finite)/np.linalg.norm(finite), 2e-7)
+        for mirror in (False, True):
+            with self.subTest(mirror=mirror):
+                energy, gradient = _riesz3_energy_gradient(angles, axes, block_size=3, mirror=mirror)
+                self.assertAlmostEqual(energy, reference(angles, mirror))
+                finite = np.empty_like(angles)
+                for index in range(len(angles)):
+                    plus, minus = angles.copy(), angles.copy()
+                    plus[index] += 1e-6
+                    minus[index] -= 1e-6
+                    finite[index] = (reference(plus, mirror)-reference(minus, mirror))/2e-6
+                self.assertLess(np.linalg.norm(gradient-finite)/np.linalg.norm(finite), 2e-7)
 
     def test_e3_reports_energy_descent_and_iteration_limit(self):
         _, diagnostics = generate_ellipsoid_points(24, (1, 1.5, 1), iterations=1,
