@@ -26,13 +26,14 @@ from scipy.special import elliprg
 from scipy.stats import qmc
 
 
-def _surface_samples(count, axes, seed):
+def _surface_samples(count, axes, seed, *, positive_z=False):
     """Map sphere samples using the ellipsoid surface-area Jacobian.
 
     Under x=diag(a,b,c) u, dS=abc*||u/axes|| dOmega. Accepting a
     uniform sphere direction with probability min(axes)*||u/axes||
     therefore samples ellipsoid area, rather than solid angle.
     Scrambled Sobol samples reduce quadrature noise and are reproducible.
+    With positive_z, sample only the half above the z=0 plane.
     """
     engine = qmc.Sobol(d=3, scramble=True, seed=seed)
     batch = 1 << max(10, (2 * count - 1).bit_length())
@@ -40,7 +41,7 @@ def _surface_samples(count, axes, seed):
     remaining = count
     while remaining:
         draws = engine.random(batch)
-        z = 2.0 * draws[:, 0] - 1.0
+        z = 1.0 - draws[:, 0] if positive_z else 2.0 * draws[:, 0] - 1.0
         phi = 2.0 * np.pi * draws[:, 1]
         radius = np.sqrt(np.maximum(0.0, 1.0 - z * z))
         directions = np.column_stack((radius * np.cos(phi), radius * np.sin(phi), z))
@@ -53,7 +54,11 @@ def _surface_samples(count, axes, seed):
     return np.concatenate(accepted)
 
 
-def _riesz3_energy_gradient(angles, axes, block_size=256):
+def _reflect_z(points):
+    return points * (1, 1, -1)
+
+
+def _riesz3_energy_gradient(angles, axes, block_size=256, *, mirror=False):
     """Mean pair E3 energy and analytic angular gradient on a scaled ellipsoid.
 
     Blocking bounds temporary storage to O(block_size*N); all pairs remain
@@ -63,6 +68,8 @@ def _riesz3_energy_gradient(angles, axes, block_size=256):
     sine, cosine = np.sin(theta), np.cos(theta)
     sin_phi, cos_phi = np.sin(phi), np.cos(phi)
     points = np.column_stack((sine*cos_phi, sine*sin_phi, cosine)) * axes
+    if mirror:
+        points = np.concatenate((points, _reflect_z(points)))
     count = len(points)
     pair_count = count * (count - 1) / 2
     cartesian_gradient = np.empty_like(points)
@@ -81,20 +88,31 @@ def _riesz3_energy_gradient(angles, axes, block_size=256):
         cartesian_gradient[start:stop] = -3 * (
             weights.sum(axis=1)[:, None] * points[start:stop] - weighted_points
         ) / pair_count
+    if mirror:
+        # A change in a seed point also moves its reflected partner.
+        direct, reflected = np.split(cartesian_gradient, 2)
+        cartesian_gradient = direct + _reflect_z(reflected)
     theta_derivative = np.column_stack((cosine*cos_phi, cosine*sin_phi, -sine)) * axes
-    phi_derivative = np.column_stack((-sine*sin_phi, sine*cos_phi, np.zeros(count))) * axes
+    phi_derivative = np.column_stack((-sine*sin_phi, sine*cos_phi, np.zeros_like(sine))) * axes
     gradient = np.column_stack((np.sum(cartesian_gradient*theta_derivative, axis=1),
                                 np.sum(cartesian_gradient*phi_derivative, axis=1)))
     return 0.5 * energy / pair_count, gradient.ravel()
 
 
-def _relax_riesz3(points, axes, iterations):
+def _relax_riesz3(points, axes, iterations, *, mirror):
     """Minimize E3 with an angular surface constraint and L-BFGS-B."""
     directions = points / axes
     angles = np.column_stack((np.arccos(np.clip(directions[:, 2], -1, 1)),
                               np.arctan2(directions[:, 1], directions[:, 0])))
-    initial_energy = _riesz3_energy_gradient(angles.ravel(), axes)[0]
-    result = minimize(_riesz3_energy_gradient, angles.ravel(), args=(axes,), jac=True,
+
+    def objective(values):
+        return _riesz3_energy_gradient(values, axes, mirror=mirror)
+
+    initial_energy = objective(angles.ravel())[0]
+    # The reflected points take part in the same objective. Constrain the
+    # independent points to the positive half of the ellipsoid.
+    bounds = [(0.0, np.pi/2), (None, None)] * len(points) if mirror else None
+    result = minimize(objective, angles.ravel(), jac=True, bounds=bounds,
                       method="L-BFGS-B", options={"maxiter": iterations, "maxls": 40,
                       "maxfun": 50*iterations + 1, "ftol": 2e-13, "gtol": 1e-8,
                       "maxcor": 15})
@@ -116,7 +134,8 @@ def _relax_riesz3(points, axes, iterations):
 
 def generate_ellipsoid_points(
     num_points, axes, center=(0.0, 0.0, 0.0), *, iterations=None,
-    samples_per_point=64, seed=0, method="riesz3", return_diagnostics=False,
+    samples_per_point=64, seed=0, method="riesz3", mirror_axis=None,
+    return_diagnostics=False,
 ):
     """Return an (N,3) array using E3 repulsion by default.
 
@@ -124,6 +143,9 @@ def generate_ellipsoid_points(
     Angular parameterization keeps every iterate on the ellipsoid. The old
     sampled-centroid method remains available with method='centroid'. Neither
     method certifies equal-area cells or a global energy minimum.
+    Set mirror_axis to 'x', 'y', or 'z' to reflect across the plane through
+    center normal to that axis. An even count is required. The positive half
+    comes first, followed by its reflected points in the same order.
     With return_diagnostics=True, return (points, optimization_diagnostics).
     """
     axes = np.asarray(axes, dtype=float)
@@ -136,6 +158,11 @@ def generate_ellipsoid_points(
         raise ValueError("center must contain three finite coordinates")
     if method not in ("riesz3", "centroid"):
         raise ValueError("method must be 'riesz3' or 'centroid'")
+    if mirror_axis is not None and mirror_axis not in ("x", "y", "z"):
+        raise ValueError("mirror_axis must be 'x', 'y', 'z', or None")
+    mirror = mirror_axis is not None
+    if mirror and num_points % 2:
+        raise ValueError("mirror symmetry requires an even number of points")
     if iterations is None:
         iterations = 3000 if method == "riesz3" else 80
     if not isinstance(iterations, (int, np.integer)) or iterations < 0:
@@ -145,10 +172,16 @@ def generate_ellipsoid_points(
     if not isinstance(seed, (int, np.integer)) or seed < 0:
         raise ValueError("seed must be a nonnegative integer")
 
+    # Use the internal z coordinate as the normal to the reflection plane.
+    coordinate_order = np.arange(3)
+    if mirror:
+        normal_axis = "xyz".index(mirror_axis)
+        coordinate_order[[normal_axis, 2]] = coordinate_order[[2, normal_axis]]
     # Work in units of the largest semi-axis, independent of coordinate units.
     scale = axes.max()
-    unit_axes = axes / scale
-    points = _surface_samples(num_points, unit_axes, seed)
+    unit_axes = axes[coordinate_order] / scale
+    independent_count = num_points // 2 if mirror else num_points
+    points = _surface_samples(independent_count, unit_axes, seed, positive_z=mirror)
     diagnostics = {
         "method": method, "seed": int(seed), "requested_max_iterations": int(iterations),
         "iterations": 0, "converged": num_points == 1,
@@ -158,19 +191,23 @@ def generate_ellipsoid_points(
     if method == "riesz3":
         diagnostics.update(energy_exponent=3, force_magnitude_power=4,
                            energy_coordinate_scale=float(scale))
+    if mirror:
+        diagnostics["mirror_axis"] = mirror_axis
     if iterations and num_points > 1 and method == "riesz3":
-        points, optimization = _relax_riesz3(points, unit_axes, iterations)
+        points, optimization = _relax_riesz3(points, unit_axes, iterations, mirror=mirror)
         diagnostics.update(optimization)
     elif iterations and num_points > 1:
-        samples = _surface_samples(max(4096, samples_per_point * num_points),
-                                   unit_axes, seed + 1)
+        # Each sample in the positive half is at least as close to a seed as
+        # to its reflection, so nearest-marker queries need only that half.
+        samples = _surface_samples(max(4096, samples_per_point * independent_count),
+                                   unit_axes, seed + 1, positive_z=mirror)
         for iteration in range(iterations):
             _, labels = cKDTree(points).query(samples)
-            counts = np.bincount(labels, minlength=num_points)
+            counts = np.bincount(labels, minlength=independent_count)
             centroids = points.copy()
             occupied = counts > 0
             for axis in range(3):
-                sums = np.bincount(labels, weights=samples[:, axis], minlength=num_points)
+                sums = np.bincount(labels, weights=samples[:, axis], minlength=independent_count)
                 centroids[occupied, axis] = sums[occupied] / counts[occupied]
             normals = points / unit_axes**2
             normals /= np.linalg.norm(normals, axis=1)[:, None]
@@ -181,6 +218,8 @@ def generate_ellipsoid_points(
             movement *= np.minimum(0.8, 0.15 / np.maximum(lengths, 1e-30))[:, None]
             updated = points + movement
             updated /= np.linalg.norm(updated / unit_axes, axis=1)[:, None]
+            if mirror:
+                updated[:, 2] = np.abs(updated[:, 2])
             change = np.max(np.linalg.norm(updated - points, axis=1))
             points = updated
             if change < 1e-6 / np.sqrt(num_points):
@@ -189,7 +228,14 @@ def generate_ellipsoid_points(
                            message="Centroid displacement tolerance reached" if change < 1e-6 / np.sqrt(num_points)
                            else "Centroid iteration limit reached",
                            max_displacement_normalized=float(change))
-    points = points * scale + center
+    if mirror:
+        points = np.concatenate((points, _reflect_z(points)))
+    points = points[:, coordinate_order] * scale + center
+    if mirror:
+        positive = points[:independent_count, normal_axis]
+        negative = points[independent_count:, normal_axis]
+        if np.any(positive <= center[normal_axis]) or np.any(negative >= center[normal_axis]):
+            raise ValueError("a mirror pair collapsed onto the symmetry plane")
     return (points, diagnostics) if return_diagnostics else points
 
 
@@ -355,6 +401,9 @@ def main(argv=None):
                         help="placement method (default: riesz3, energy sum(1/r**3))")
     parser.add_argument("--iterations", type=int, default=None,
                         help="iteration limit (default: E3 3000, centroid 80; 0 disables)")
+    parser.add_argument("--mirror-axis", choices=("x", "y", "z"),
+                        help="mirror across the plane through the center normal to this axis "
+                             "(even point count)")
     parser.add_argument("--samples-per-point", type=int, default=64,
                         help="centroid-method quadrature samples per marker (default: 64; minimum: 8)")
     parser.add_argument("--seed", type=int, default=0, help="reproducible sampling seed (default: 0)")
@@ -370,7 +419,7 @@ def main(argv=None):
         points, optimization = generate_ellipsoid_points(
             args.num_points, axes, args.center, iterations=args.iterations,
             samples_per_point=args.samples_per_point, seed=args.seed, method=args.method,
-            return_diagnostics=True,
+            mirror_axis=args.mirror_axis, return_diagnostics=True,
         )
         areas, standard_errors, report = estimate_marker_areas(
             points, axes, args.center, samples_per_point=args.area_samples_per_point,
