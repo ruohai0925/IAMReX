@@ -1636,26 +1636,36 @@ void mParticle::SixDOFUpdate(kernel& kernel, Real dt)
     if (is_prescribed_fin(kernel.geometry_type)) return;
     if (ParallelDescriptor::MyProc() != ParallelDescriptor::IOProcessorNumber()) return;
 
-    // angular velocity and moment from world to body
     const auto q0 = kernel.orientation_old;
-    RealVect omega_b = worldToBodyOffset(q0, kernel.omega_old);
-    RealVect moment_w = ((kernel.sum_t_new - kernel.sum_t_old) * ParticleProperties::euler_fluid_rho / dt
-                                - kernel.ib_moment * ParticleProperties::euler_fluid_rho
-                                + kernel.Tcp);
-    RealVect moment_b = worldToBodyOffset(q0, moment_w);
-    RealVect inertia_b{0, 0, 0}, angular_momt_b{0,0,0};
-    for (auto idir : {0, 1, 2})
-    {
-        inertia_b[idir] = cal_momentum(kernel.rho, kernel.radius, kernel.geometry_type, idir, kernel.radius2, kernel.radius3);
-        angular_momt_b[idir] = inertia_b[idir] * omega_b[idir];
+    RealVect acc_w{0, 0, 0};
+    if (kernel.RL[0] == 2 || kernel.RL[1] == 2 || kernel.RL[2] == 2) {
+        const Real rho_f = ParticleProperties::euler_fluid_rho;
+        const bool use_uhlmann = ParticleProperties::Uhlmann != 0;
+        // A rigid interior fluid subtracts its inertia from the particle inertia
+        // (Moriche et al., Eq. (17)). The IB moment already includes marker volumes.
+        const Real inertia_density = use_uhlmann ? kernel.rho - rho_f : kernel.rho;
+        AMREX_ALWAYS_ASSERT_WITH_MESSAGE(inertia_density != 0.0,
+                                        "Free rotation requires nonzero inertia density.");
+        const RealVect ib_moment_w = kernel.ib_moment * rho_f;
+        const RealVect moment_w = use_uhlmann
+            ? kernel.Tcp - ib_moment_w
+            : (kernel.sum_t_new - kernel.sum_t_old) * rho_f / dt - ib_moment_w + kernel.Tcp;
+
+        const RealVect omega_b = worldToBodyOffset(q0, kernel.omega_old);
+        const RealVect moment_b = worldToBodyOffset(q0, moment_w);
+        RealVect inertia_b{0, 0, 0}, angular_momt_b{0, 0, 0};
+        for (auto idir : {0, 1, 2}) {
+            inertia_b[idir] = cal_momentum(inertia_density, kernel.radius, kernel.geometry_type,
+                                           idir, kernel.radius2, kernel.radius3);
+            angular_momt_b[idir] = inertia_b[idir] * omega_b[idir];
+        }
+        const RealVect gyro_b = omega_b.crossProduct(angular_momt_b);
+        RealVect acc_b{0, 0, 0};
+        for (auto idir : {0, 1, 2}) {
+            acc_b[idir] = (moment_b[idir] - gyro_b[idir]) / inertia_b[idir];
+        }
+        acc_w = afterRotation(q0, acc_b);
     }
-    RealVect gyro_b = omega_b.crossProduct(angular_momt_b);
-    RealVect acc_b{0,0,0};
-    for (auto idir : {0,1,2})
-    {
-        acc_b[idir] = (moment_b[idir] - gyro_b[idir]) / inertia_b[idir];
-    }
-    RealVect acc_w = afterRotation(q0, acc_b);
 
     for(auto idir : {0,1,2})
     {
@@ -1692,22 +1702,14 @@ void mParticle::SixDOFUpdate(kernel& kernel, Real dt)
         else if (kernel.RL[idir] == 1) {
         }
         else if (kernel.RL[idir] == 2) {
-            if(!ParticleProperties::Uhlmann){
-                kernel.omega[idir] = kernel.omega_old[idir] + acc_w[idir] * dt;
-                //Uhlmann
-            }
-            else{
-                kernel.omega[idir] = kernel.omega_old[idir]
-                                + ParticleProperties::euler_fluid_rho /(ParticleProperties::euler_fluid_rho - kernel.rho) * kernel.ib_moment[idir] * kernel.dv
-                                / cal_momentum(kernel.rho, kernel.radius, kernel.geometry_type, idir, kernel.radius2, kernel.radius3) * kernel.rho * dt;
-            }
+            kernel.omega[idir] = kernel.omega_old[idir] + acc_w[idir] * dt;
         }
         else {
             Print() << "Particle (" << kernel.id << ") has wrong RL"<< direction_str[idir] <<" value\n";
             Abort("Stop here!");
         }
     }
-    kernel.orientation = advanceOrientation(kernel.orientation_old, kernel.omega, dt);
+    kernel.orientation = advanceOrientation(q0, kernel.omega, dt);
 }
 
 // Broadcast location/velocity/omega (+ their *_old) of all particles from the
