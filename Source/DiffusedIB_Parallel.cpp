@@ -2521,8 +2521,6 @@ void Particles::Restart(Real gravity, Real h, int iStep)
                 if(line <= iStep) {
                     continue;
                 }
-                //old location
-                //iStep,time,X,Y,Z,Vx,Vy,Vz,Rx,Ry,Rz,Fx,Fy,Fz,Mx,My,Mz,Fcpx,Fcpy,Fcpz,Tcpx,Tcpy,Tcpz
                 if(line == iStep + 1){
                     std::stringstream ss(lineData);
                     std::string data;
@@ -2540,9 +2538,16 @@ void Particles::Restart(Real gravity, Real h, int iStep)
                     kernel.omega[1] = dataStruct[9];
                     kernel.omega[2] = dataStruct[10];
 
-                    kernel.location_old = kernel.location;
-                    kernel.velocity_old = kernel.velocity;
-                    kernel.omega_old    = kernel.omega;
+                    // Older CSV rows end before the quaternion columns.
+                    constexpr std::size_t quaternion_start = 29; // Column qw, after SumTz.
+                    if (dataStruct.size() > quaternion_start) {
+                        if (dataStruct.size() < quaternion_start + kernel.orientation.size()) {
+                            Abort("Incomplete particle quaternion in " + fileName +
+                                  " at line " + std::to_string(line));
+                        }
+                        std::copy_n(dataStruct.begin() + quaternion_start, kernel.orientation.size(),
+                                    kernel.orientation.begin());
+                    }
                     break;
                 }
                 else
@@ -2556,10 +2561,8 @@ void Particles::Restart(Real gravity, Real h, int iStep)
         ParallelDescriptor::Bcast(&kernel.location[0], 3, ParallelDescriptor::IOProcessorNumber());
         ParallelDescriptor::Bcast(&kernel.velocity[0], 3,ParallelDescriptor::IOProcessorNumber());
         ParallelDescriptor::Bcast(&kernel.omega[0], 3,ParallelDescriptor::IOProcessorNumber());
-
-        ParallelDescriptor::Bcast(&kernel.location_old[0], 3, ParallelDescriptor::IOProcessorNumber());
-        ParallelDescriptor::Bcast(&kernel.velocity_old[0], 3,ParallelDescriptor::IOProcessorNumber());
-        ParallelDescriptor::Bcast(&kernel.omega_old[0], 3,ParallelDescriptor::IOProcessorNumber());
+        ParallelDescriptor::Bcast(kernel.orientation.data(), kernel.orientation.size(), ParallelDescriptor::IOProcessorNumber());
+        particle->RecordOldValue(kernel);
     }
 
     isInitial = true;
