@@ -122,6 +122,13 @@ struct kernel{
     RealVect sum_t_new{0.0,0.0,0.0};
     RealVect sum_t_old{0.0,0.0,0.0};
 
+    // Interior sums of the last completed step, taken before the AMR sync of that step
+    int presync_step{-2};
+    RealVect presync_sum_u{0.0,0.0,0.0};
+    RealVect presync_sum_t{0.0,0.0,0.0};
+    RealVect presync_loc{0.0,0.0,0.0};
+    RealVect presync_loc_next{0.0,0.0,0.0};
+
     RealVect Fcp{0.0,0.0,0.0};
     RealVect Tcp{0.0,0.0,0.0};
 
@@ -341,6 +348,23 @@ public:
      * @param dt Time step size
      */
     void SixDOFUpdate(kernel& kernel, Real dt);
+
+    /**
+     * Replace the "old" interior momentum sums, which were taken from Euler_old
+     * (after the AMR sync of the previous step), by the previous step's sums
+     * taken before that sync, so the sync increment is not lost (see the .cpp).
+     * Falls back to the Euler_old sums when the previous step is not available
+     * (first step, restart).
+     * @param kernel Particle whose sum_u_new/sum_t_new were just computed
+     * @param iStep Current coarse step
+     * @param dt Time step size
+     */
+    void UsePreSyncOldSums(kernel& kernel, int iStep, Real dt);
+
+    /**
+     * Store this step's final pre-sync sums for the next step.
+     */
+    void CommitPreSyncSums(kernel& kernel, int iStep);
 
     /**
      * Broadcast location/velocity/omega (+ *_old) of all particles from the I/O rank in one message.
