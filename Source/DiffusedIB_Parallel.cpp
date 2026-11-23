@@ -62,6 +62,7 @@ namespace ParticleProperties{
     int delta_type{1};
     int reduce_method{0};  // 0 = original ReduceSum loop, 1 = ParticleReduce 6-tuple + packed all-reduce
     int pvf_method{1};     // 0 = reference per-particle whole-domain phi/pvf path, 1 = bounding-box fused kernels + packed MPI
+    int sync_diag{0};      // 1 = print the AMR sync increment of the interior momentum every step
 
     int write_freq{1};
     bool init_particle_from_file{false};
@@ -1601,6 +1602,8 @@ void mParticle::UpdateParticlesReference(int iStep,
                 ParallelAllReduce::Sum(kernel.sum_t_new.dataPtr(), 3, ParallelDescriptor::Communicator());
                 ParallelAllReduce::Sum(kernel.sum_t_old.dataPtr(), 3, ParallelDescriptor::Communicator());
 
+            UsePreSyncOldSums(kernel, iStep, dt);
+
             // 6DOF (I/O rank only), then broadcast the new state
             SixDOFUpdate(kernel, dt);
             ParallelDescriptor::Bcast(&kernel.location[0],3,ParallelDescriptor::IOProcessorNumber());
@@ -1621,12 +1624,45 @@ void mParticle::UpdateParticlesReference(int iStep,
 
         }
 
+        if (iStep > ParticleProperties::start_step) CommitPreSyncSums(kernel, iStep);
         RecordOldValue(kernel);
         MultiFab::Add(AllParticlePVF, pvf, 0, 0, 1, 0); // do not copy ghost cell values
     }
     BL_PROFILE_VAR_STOP(blp_phipvf);
     // calculate the pvf based on the information of all particles
     MultiFab::Copy(pvf, AllParticlePVF, 0, 0, 1, pvf.nGrow());
+}
+
+// Taking the "old" sums from the previous step's pre-sync sums
+void mParticle::UsePreSyncOldSums(kernel& kern, int iStep, Real dt)
+{
+    // presync_loc_next: torque-arm origin of this iteration's sum_t_new
+    kern.presync_loc_next = kern.location;
+    if (kern.presync_step != iStep - 1) return;   // first step or restart: keep Euler_old sums
+
+    const RealVect post_u = kern.sum_u_old;
+    const RealVect post_t = kern.sum_t_old;
+    kern.sum_u_old = kern.presync_sum_u;
+    // Same arm origin as sum_t_new: int (x-c)xu = int (x-c0)xu - (c-c0) x int u
+    kern.sum_t_old = kern.presync_sum_t
+                   - (kern.location - kern.presync_loc).crossProduct(kern.presync_sum_u);
+
+    if (ParticleProperties::sync_diag) {
+        const RealVect du = (post_u - kern.sum_u_old) / dt;
+        const RealVect dt_ = (post_t - kern.sum_t_old) / dt;
+        Print() << std::setprecision(8)
+                << "[DIBM] sync increment / dt, particle " << kern.id << ", step " << iStep
+                << " : u " << du[0] << " " << du[1] << " " << du[2]
+                << " , t " << dt_[0] << " " << dt_[1] << " " << dt_[2] << "\n";
+    }
+}
+
+void mParticle::CommitPreSyncSums(kernel& kern, int iStep)
+{
+    kern.presync_step  = iStep;
+    kern.presync_sum_u = kern.sum_u_new;
+    kern.presync_sum_t = kern.sum_t_new;
+    kern.presync_loc   = kern.presync_loc_next;
 }
 
 // 6DOF update of one particle from its momentum sums, IB force/moment and
@@ -1919,6 +1955,7 @@ void mParticle::UpdateParticlesFused(int iStep,
             kern.sum_u_old = RealVect(s[3], s[4],  s[5]);
             kern.sum_t_new = RealVect(s[6], s[7],  s[8]);
             kern.sum_t_old = RealVect(s[9], s[10], s[11]);
+            UsePreSyncOldSums(kern, iStep, dt);
             SixDOFUpdate(kern, dt);
         }
         BroadcastKernelState();
@@ -1928,7 +1965,9 @@ void mParticle::UpdateParticlesFused(int iStep,
     }
 
     for (auto& kern : particle_kernels) {
-        if (!is_prescribed_fin(kern.geometry_type)) RecordOldValue(kern);
+        if (is_prescribed_fin(kern.geometry_type)) continue;
+        if (iStep > ParticleProperties::start_step) CommitPreSyncSums(kern, iStep);
+        RecordOldValue(kern);
     }
 
     // ---- pvf of all particles: accumulate in particle order, valid cells only,
@@ -2610,6 +2649,7 @@ void Particles::Initialize()
         p_file.query("delta_type", ParticleProperties::delta_type);
         p_file.query("reduce_method", ParticleProperties::reduce_method);
         p_file.query("pvf_method", ParticleProperties::pvf_method);
+        p_file.query("sync_diag", ParticleProperties::sync_diag);
         // update with RKPM method
         p_file.query("RKPM", ParticleProperties::RKPM);
         p_file.queryarr("orientation", ParticleProperties::_orientation, 0, 4);
