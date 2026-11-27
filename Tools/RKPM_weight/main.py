@@ -45,6 +45,7 @@ CONFIG_VALUE_KEYS = {
     "device": ("device", str),
     "body_frame": ("body_frame", None),
     "angle": ("angle", float),
+    "axes": ("axes", lambda value: list(map(float, value.split()))),
     "check_action": ("check_action", str),
     "check_interval": ("check_interval", int),
     "sum_tolerance": ("sum_tolerance", float),
@@ -180,6 +181,7 @@ def generate_from_geometry(args, grid, solver):
         args.geometry,
         center=center,
         angle=args.angle,
+        axes=args.axes,
     )
 
     if center is None:
@@ -401,6 +403,14 @@ def parse_args(argv=None):
         help="Rotation of the --geometry point cloud around the z-axis in degrees",
     )
     parser.add_argument(
+        "--axes",
+        nargs=3,
+        type=float,
+        metavar=("A", "B", "C"),
+        default=config_defaults.get("axes"),
+        help="Semi-axes of the ellipsoid carrying the markers, in grid length units",
+    )
+    parser.add_argument(
         "--check-action",
         choices=("off", "warn", "abort"),
         default=config_defaults.get("check_action", "off"),
@@ -429,6 +439,8 @@ def parse_args(argv=None):
         parser.error("--solver must be either rkpm or ml")
     if args.transport not in {"file", "mpmd"}:
         parser.error("--transport must be either file or mpmd")
+    if args.axes is not None and (args.transport != "file" or args.geometry is None):
+        parser.error("--axes requires --geometry and --transport file")
     if (
         args.transport == "file"
         and args.geometry is not None

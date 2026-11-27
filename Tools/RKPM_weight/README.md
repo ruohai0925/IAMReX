@@ -133,6 +133,15 @@ frame. In a runtime configuration file, `body_frame = true` selects body-frame
 coordinates and `body_frame = false` explicitly selects world-frame
 coordinates.
 
+For ellipsoid point clouds, pass the semi-axes of the marker surface using
+`--axes A B C` or `axes = A B C` in the runtime configuration file. Use the
+same length units as the point cloud and grid. The tool divides the estimated
+ellipsoid surface area equally among the markers. Omitting `--axes` estimates
+the semi-axes from half the input cloud's span in each direction before applying
+`--angle`. This estimate assumes the ellipsoid's principal axes align with the
+input coordinate axes and the cloud samples near the axis endpoints. Supply
+the semi-axes explicitly if the input cloud is already tilted.
+
 Read marker positions and stencils from existing `.id/.lag` files and recompute
 only the ML weights:
 
