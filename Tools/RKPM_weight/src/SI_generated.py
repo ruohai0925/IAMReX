@@ -52,10 +52,12 @@ def cylinder_area(radius, height):
 #      depend only on relative coordinates and are independent of the origin.
 #
 # Inputs: domain bounds, finest-cell size, point-cloud path, optional body-frame
-# center and z-axis rotation angle in degrees. Outputs include affected Eulerian points,
-# transformed Lagrangian points, nearest grid points, support parameters and all
-# per-marker support domains.
-def generate_grid(prob_lo, prob_hi, dx_finest, geometry_file=None, center=None, angle=0.0):
+# center, z-axis rotation angle in degrees, and marker-surface ellipsoid semi-axes.
+# Outputs include affected Eulerian points, transformed Lagrangian points,
+# nearest grid points, support parameters and all per-marker support domains.
+def generate_grid(
+    prob_lo, prob_hi, dx_finest, geometry_file=None, center=None, angle=0.0, *, axes=None
+):
 
     prob_lo = np.asarray(prob_lo, dtype=float)
     prob_hi = np.asarray(prob_hi, dtype=float)
@@ -70,6 +72,18 @@ def generate_grid(prob_lo, prob_hi, dx_finest, geometry_file=None, center=None, 
     else:
         raise NameError("A Lagrangian marker-coordinate file is required")
         # lagrangian_points = load_lagrangian_from_id_file('rkpm_mappings.id')
+
+    # Estimate missing semi-axes from the input cloud before applying --angle.
+    if axes is None:
+        axes = np.ptp(lagrangian_points, axis=0) / 2.0
+        axis_source = "input point-cloud bounds"
+    else:
+        axes = np.asarray(axes, dtype=float)
+        if axes.shape != (3,) or not np.all(np.isfinite(axes) & (axes > 0.0)):
+            raise ValueError("axes must contain three finite, positive ellipsoid semi-axes")
+        axis_source = "specified"
+    print(f"[geometry] ellipsoid semi-axes ({axis_source}): {axes.tolist()}")
+
     # Translate body-frame coordinates to world coordinates.
     if center is not None:
         center = np.asarray(center, dtype=float)
@@ -98,10 +112,6 @@ def generate_grid(prob_lo, prob_hi, dx_finest, geometry_file=None, center=None, 
             "Check the --geometry coordinate system or use --body-frame to "
             "translate the point cloud into the domain."
         )
-    ranges = pmax - pmin  # = np.ptp(lagrangian_points, axis=0)
-    print('ranges', ranges[0], ranges[1], ranges[2])
-    print('ranges', ranges[0]/2, ranges[1]/2, ranges[2]/2)
-
     # Expand finest-grid global indices and clamp them to [0, n_fine-1].
     min_ijk = containing_cell_indices(pmin, prob_lo, dx_finest)
     max_ijk = containing_cell_indices(pmax, prob_lo, dx_finest)
@@ -118,9 +128,7 @@ def generate_grid(prob_lo, prob_hi, dx_finest, geometry_file=None, center=None, 
 
     # Estimate marker area and thickness.
     Ne = len(lagrangian_points)
-    area = ellipsoid_area_approx(ranges[0]/2, ranges[1]/2, ranges[2]/2) / Ne
-    # area = ellipsoid_area_approx(0.0437, 0.0437, 0.0655) / Ne
-    # area = cylinder_area(0.03815, 0.1145) / Ne
+    area = ellipsoid_area_approx(*axes) / Ne
     thickness = min(dx, dy, dz)
     V_lag = area * thickness
     print(f"Vl: {V_lag}, area:{area}, frac: {V_lag / cell_volume}")

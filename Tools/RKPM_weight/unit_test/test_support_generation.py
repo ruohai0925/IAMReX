@@ -68,6 +68,33 @@ class SupportGenerationTests(unittest.TestCase):
         expected_affected = np.unique(np.concatenate(all_cells), axis=0)
         np.testing.assert_array_equal(affected_cells, expected_affected)
 
+    def test_marker_volume_is_invariant_under_rotation(self):
+        cloud_axes = (0.38, 0.24, 0.15)
+        positive_points = np.diag(cloud_axes)
+        points = np.concatenate((positive_points, -positive_points))
+        prob_lo, prob_hi = [-2.0] * 3, [2.0] * 3
+        dx = [0.1, 0.125, 0.2]
+        explicit_axes = (0.4, 0.25, 0.2)
+
+        with tempfile.TemporaryDirectory() as directory:
+            geometry = Path(directory) / "markers.txt"
+            np.savetxt(geometry, points)
+            for axes, expected_axes in ((None, cloud_axes), (explicit_axes, explicit_axes)):
+                surface_area = SI_generated.ellipsoid_area_approx(*expected_axes)
+                expected_volume = surface_area * min(dx) / len(points)
+                for angle in (0.0, 45.0, 90.0):
+                    with self.subTest(axes=axes, angle=angle):
+                        generated = SI_generated.generate_grid(
+                            prob_lo,
+                            prob_hi,
+                            dx,
+                            geometry_file=geometry,
+                            center=[0.2, 0.1, -0.05],
+                            angle=angle,
+                            axes=axes,
+                        )
+                        np.testing.assert_allclose(generated[-1], expected_volume, rtol=1e-14)
+
 
 if __name__ == "__main__":
     unittest.main()
