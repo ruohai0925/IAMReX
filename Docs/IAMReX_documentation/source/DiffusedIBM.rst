@@ -118,6 +118,30 @@ where :math:`\mathbf{R}_l^n = \left(\mathbf{X}^{n}_{l} - \mathbf{X}_{r}^{n}\righ
 
    \mathbf{X}_{r}^{n+1}=\mathbf{X}_{r}^{n}+\frac{\Delta t}{2}(\mathbf{U}_{r}^{n+1}+\mathbf{U}_{r}^{n}).
 
+Spherical and ellipsoidal particles
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Select a rigid particle shape with ``geometry_type`` in the parameter group
+named by ``particle.input``. For example, use the ``particle_inputs.`` prefix
+below when ``particle.input = particle_inputs``.
+
+* ``geometry_type = 1`` (the default) describes a sphere. Set ``radius`` to
+  the particle radius. The other two radii are unused.
+* ``geometry_type = 2`` describes an ellipsoid. Set ``radius``, ``radius2``,
+  and ``radius3`` to the positive semi-axes :math:`a`, :math:`b`, and
+  :math:`c`, respectively. These are half the full widths. If ``radius2``
+  or ``radius3`` is omitted, that semi-axis defaults to ``radius``.
+
+For example, these shape parameters come from
+``Tutorials/Jang_E2830Re03p65/inputs.3d.flow_past_ellipsoid``:
+
+.. code-block:: text
+
+   particle_inputs.geometry_type = 2
+   particle_inputs.radius = 0.0437
+   particle_inputs.radius2 = 0.0437
+   particle_inputs.radius3 = 0.0655
+
 Prescribed traveling-wave fins
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
